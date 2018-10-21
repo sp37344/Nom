@@ -2,11 +2,32 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import firebase from 'firebase';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
+
+  componentWillMount() {
+    var config = {
+      apiKey: "AIzaSyA6q1rjqcHFDOx8gujyKKlTvv_ozmEN94A",
+      authDomain: "nom-app-ae9ce.firebaseapp.com",
+      databaseURL: "https://nom-app-ae9ce.firebaseio.com",
+      projectId: "nom-app-ae9ce",
+      storageBucket: "nom-app-ae9ce.appspot.com",
+      messagingSenderId: "868719673669"
+    };
+    firebase.initializeApp(config);
+  }
+
+  var ref = firebase.database().ref("users");
+  var query = ref.orderByChild("database/username").equalTo("some_data");
+  query.once("value", function(snapshot) {
+    snapshot.forEach(function(child) {
+      console.log(child.key, child.val().bio);
+    });
+  });
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
