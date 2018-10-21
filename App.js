@@ -21,8 +21,8 @@ export default class App extends React.Component {
     firebase.initializeApp(config);
   }
 
-  var ref = firebase.database().ref("users");
-  var query = ref.orderByChild("database/username").equalTo("some_data");
+  var ref = firebase.database().ref("Consumers");
+  var query = ref.orderByChild("database/email").equalTo("janetlee2016@gmail.com");
   query.once("value", function(snapshot) {
     snapshot.forEach(function(child) {
       console.log(child.key, child.val().bio);
