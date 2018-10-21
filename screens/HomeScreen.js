@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -18,21 +19,29 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
+        {/* <View> 
+          <Text>Nom</Text>
+        </View> */}
+      
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <Image
+            {/* <Image
               source={
                 __DEV__
                   ? require('../assets/images/robot-dev.png')
                   : require('../assets/images/robot-prod.png')
               }
               style={styles.welcomeImage}
-            />
+            /> */}
+
+            <Text style={styles.nomText}>Nom</Text>
           </View>
 
           <View style={styles.getStartedContainer}>
+          {/*
             {this._maybeRenderDevelopmentModeWarning()}
 
             <Text style={styles.getStartedText}>Get started by opening</Text>
@@ -44,23 +53,34 @@ export default class HomeScreen extends React.Component {
             <Text style={styles.getStartedText}>
               Change this text and your app will automatically reload.
             </Text>
+            */}
+
+            <Text style={styles.userSelectionText}>I am a ...</Text>
+            <Button
+              onPress={() => navigate('UserSignUp')}
+              title='USER'
+            />
+            <Button
+              onPress={() => navigate('RestaurantSignUp')}
+              title='RESTAURANT'
+            />
           </View>
 
-          <View style={styles.helpContainer}>
+          {/* <View style={styles.helpContainer}>
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
               <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
             </TouchableOpacity>
-          </View>
-        </ScrollView>
+          </View> */}
+        </ScrollView> 
 
-        <View style={styles.tabBarInfoContainer}>
+        {/* <View style={styles.tabBarInfoContainer}>
           <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
 
           <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
             <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
           </View>
-        </View>
-      </View>
+        </View> */}
+      </View> 
     );
   }
 
@@ -103,6 +123,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  nomText: {
+    fontSize: 64,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 100,
+    textAlign: 'center',
+  },
+  userSelectionText: {
+    fontSize: 24,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 100,
+    textAlign: 'center',
+  },
   developmentModeText: {
     marginBottom: 20,
     color: 'rgba(0,0,0,0.4)',
@@ -115,8 +147,8 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: 200,
+    marginBottom: 100,
   },
   welcomeImage: {
     width: 100,
@@ -127,7 +159,7 @@ const styles = StyleSheet.create({
   },
   getStartedContainer: {
     alignItems: 'center',
-    marginHorizontal: 50,
+    marginHorizontal: 100,
   },
   homeScreenFilename: {
     marginVertical: 7,
