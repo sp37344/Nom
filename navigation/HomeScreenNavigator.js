@@ -4,8 +4,9 @@ import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 
 // import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import UserSignUp from '../screens/UserSignUpScreen';
-import RestaurantSignUp from '../screens/RestaurantSignUpScreen';
+import UserSignIn from '../screens/UserSignInScreen';
+import RestaurantSignIn from '../screens/RestaurantSignInScreen';
+
 // import SettingsScreen from '../screens/SettingsScreen';
 
 const HomeStack = createStackNavigator({
@@ -27,7 +28,7 @@ const HomeStack = createStackNavigator({
 // };
 
 const UserStack = createStackNavigator({
-  UserSignUp: UserSignUp,
+  UserSignIn: UserSignIn,
 });
 
 // LinksStack.navigationOptions = {
@@ -41,7 +42,7 @@ const UserStack = createStackNavigator({
 // };
 
 const RestaurantStack = createStackNavigator({
-  RestaurantSignUp: RestaurantSignUp,
+  RestaurantSignIn: RestaurantSignIn,
 });
 
 // SettingsStack.navigationOptions = {

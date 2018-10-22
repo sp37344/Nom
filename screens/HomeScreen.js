@@ -57,11 +57,11 @@ export default class HomeScreen extends React.Component {
 
             <Text style={styles.userSelectionText}>I am a ...</Text>
             <Button
-              onPress={() => navigate('UserSignUp')}
+              onPress={() => navigate('UserSignIn')}
               title='USER'
             />
             <Button
-              onPress={() => navigate('RestaurantSignUp')}
+              onPress={() => navigate('RestaurantSignIn')}
               title='RESTAURANT'
             />
           </View>
