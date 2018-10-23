@@ -21,13 +21,32 @@ export default class App extends React.Component {
     firebase.initializeApp(config);
   }
 
-  var ref = firebase.database().ref("Consumers");
-  var query = ref.orderByChild("database/email").equalTo("janetlee2016@gmail.com");
-  query.once("value", function(snapshot) {
-    snapshot.forEach(function(child) {
-      console.log(child.key, child.val().bio);
+  addNewFoodListing(String restaurantID) {
+    var ref = firebase.database().ref("Food");
+    var query = ref.orderByChild("database/ID").equalTo(oldFoodID);
+    query.once("value", function(snapshot) {
+      snapshot.ref.update(
+        // add updated fields here
+      )
+      // snapshot.forEach(function(child) {
+      //   console.log(child.key, child.val().bio);
+      // });
     });
-  });
+  }
+
+  editExistingFoodListing(String oldFoodID) {
+    var ref = firebase.database().ref("Food");
+    var query = ref.orderByChild("database/ID").equalTo(oldFoodID);
+    query.once("value", function(snapshot) {
+      snapshot.ref.update(
+        // add updated fields here
+      )
+      // snapshot.forEach(function(child) {
+      //   console.log(child.key, child.val().bio);
+      // });
+    });
+  }
+
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
