@@ -8,8 +8,9 @@ import {
   View, 
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
+import styles from '../styles';
 
-export default class UserSignUpScreen extends React.Component {
+export default class UserSignInScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +20,7 @@ export default class UserSignUpScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'UserSignIn',
+    title: 'User Sign In',
   };
 
   render() {
@@ -29,6 +30,7 @@ export default class UserSignUpScreen extends React.Component {
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Email </Text> 
           <TextInput 
+            onFocus={() => this.setState({email: ''})}
             onChangeText={(text) => this.setState({email: text})}
             style={styles.input}
             value={this.state.email}
@@ -46,7 +48,7 @@ export default class UserSignUpScreen extends React.Component {
         <View style={styles.inputContainer}>
           <Text> New user? Sign up </Text>
           <Text 
-            onPress={() => void(0)}
+            onPress={() => navigate('UserSignUp')}
             style={styles.link}>
             here. 
           </Text>
@@ -66,32 +68,3 @@ export default class UserSignUpScreen extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  buttons: {
-    paddingTop: 40,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  input: {
-    fontSize: 24,
-    color: 'rgba(96,100,109, 1)',
-    flex: 1,
-  },
-  inputContainer: {
-    paddingTop: 40,
-    paddingLeft: 15,
-    paddingRight: 10,
-    flex: 1,
-    flexDirection: 'row',
-  },
-  label: {
-    fontSize: 24,
-    color: 'rgba(0, 122, 255, 1)',
-    paddingRight: 10,
-  },
-  link: {
-    color: 'rgba(0, 122, 255, 1)',
-  }
-});
