@@ -7,9 +7,9 @@ import { ScrollView,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 
-export default class RestaurantSignUpScreen extends React.Component {
+export default class RestaurantPostScreen extends React.Component {
   static navigationOptions = {
-    title: 'RestaurantSignUp',
+    title: 'RestaurantPost',
   };
 
   render() {
@@ -22,10 +22,6 @@ export default class RestaurantSignUpScreen extends React.Component {
               title='back'
             />
         </View>
-        <Button
-              onPress={() => navigate('Home')}
-              title='Already have an account? >'
-            />
       </ScrollView>
     );
   }
