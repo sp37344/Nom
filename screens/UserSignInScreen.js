@@ -10,33 +10,23 @@ import {
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
 
-export default class UserSignUpScreen extends React.Component {
+export default class UserSignInScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Your name here',
       email: 'example@gmail.com',
       password: '',
     };
   }
 
   static navigationOptions = {
-    title: 'User Sign Up',
+    title: 'User Sign In',
   };
 
   render() {
     const { navigate } = this.props.navigation;
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Name </Text> 
-          <TextInput 
-            onFocus={() => this.setState({name: ''})}
-            onChangeText={(text) => this.setState({name: text})}
-            style={styles.input}
-            value={this.state.name}
-          />
-        </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Email </Text> 
           <TextInput 
@@ -56,9 +46,9 @@ export default class UserSignUpScreen extends React.Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text> Already have an account? Sign in </Text>
+          <Text> New user? Sign up </Text>
           <Text 
-            onPress={() => navigate('UserSignIn')}
+            onPress={() => navigate('UserSignUp')}
             style={styles.link}>
             here. 
           </Text>
@@ -70,10 +60,11 @@ export default class UserSignUpScreen extends React.Component {
           />
           <Button
             onPress={() => navigate('Home')}
-            title='Go Home'
+            title='Go Back'
           />
         </View>
       </ScrollView>
     );
   }
 }
+

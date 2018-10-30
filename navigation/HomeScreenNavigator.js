@@ -4,61 +4,35 @@ import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 
 // import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import UserSignIn from '../screens/UserSignInScreen';
+import RestaurantSignIn from '../screens/RestaurantSignInScreen';
 import UserSignUp from '../screens/UserSignUpScreen';
 import RestaurantSignUp from '../screens/RestaurantSignUpScreen';
-// import SettingsScreen from '../screens/SettingsScreen';
+import RestaurantVerification from '../screens/RestaurantVerificationScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
 
-// HomeStack.navigationOptions = {
-//   tabBarLabel: 'Home',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={
-//         Platform.OS === 'ios'
-//           ? `ios-information-circle${focused ? '' : '-outline'}`
-//           : 'md-information-circle'
-//       }
-//     />
-//   ),
-// };
-
 const UserStack = createStackNavigator({
+  UserSignIn: UserSignIn,
+});
+
+const RestaurantStack = createStackNavigator({
+  RestaurantSignIn: RestaurantSignIn,
+});
+
+const UserSignUpStack = createStackNavigator({
   UserSignUp: UserSignUp,
 });
 
-// LinksStack.navigationOptions = {
-//   tabBarLabel: 'Links',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
-//     />
-//   ),
-// };
-
-const RestaurantStack = createStackNavigator({
+const RestaurantSignUpStack = createStackNavigator({
   RestaurantSignUp: RestaurantSignUp,
 });
 
-// SettingsStack.navigationOptions = {
-//   tabBarLabel: 'Settings',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
-//     />
-//   ),
-// };
-
-// export default createBottomTabNavigator({
-//   HomeStack,
-//   LinksStack,
-//   SettingsStack,
-// });
+const RestaurantVerificationStack = createStackNavigator({
+  RestaurantVerification: RestaurantVerification,
+});
 
 export default createSwitchNavigator({
   // You could add another route here for authentication.
@@ -66,4 +40,7 @@ export default createSwitchNavigator({
   HomeStack, 
   UserStack, 
   RestaurantStack,
+  UserSignUpStack, 
+  RestaurantSignUpStack,
+  RestaurantVerificationStack,
 });
