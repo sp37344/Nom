@@ -16,9 +16,6 @@ const styles = StyleSheet.create({
 	codeHighlightText: {
 		color: 'rgba(96,100,109, 0.8)',
 	},
-	contentContainer: {
-		paddingTop: 30,
-	},
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',
@@ -77,11 +74,24 @@ const styles = StyleSheet.create({
 	navigationFilename: {
 		marginTop: 5,
 	},
+	newPostContainer: {
+		paddingTop: 30,
+		paddingLeft: 15,
+		paddingRight: 30,
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+	},
 	nomText: {
 		fontSize: 64,
 		color: 'rgba(96,100,109, 1)',
 		lineHeight: 100,
 		textAlign: 'center',
+	},
+	postContainer: {
+		paddingTop: 30,
+		paddingLeft: 15,
+		paddingRight: 15,
 	},
 	tabBarInfoContainer: {
 		position: 'absolute',

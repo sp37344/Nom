@@ -1,12 +1,12 @@
 import React from 'react';
 import { createSwitchNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
-import HomeScreenNavigator from './HomeScreenNavigator';
+import AuthNavigator from './AuthNavigator';
+import RestaurantNavigator from './RestaurantNavigator';
 
 export default createSwitchNavigator({
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
-  Home: HomeScreenNavigator,
+  Auth: AuthNavigator,
+  Restaurant: RestaurantNavigator,
 });

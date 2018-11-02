@@ -58,10 +58,6 @@ export default class UserSignInScreen extends React.Component {
             onPress={() => void(0)}
             title='Submit'
           />
-          <Button
-            onPress={() => navigate('Home')}
-            title='Go Back'
-          />
         </View>
       </ScrollView>
     );
