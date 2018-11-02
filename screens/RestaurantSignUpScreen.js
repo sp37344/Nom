@@ -83,10 +83,6 @@ export default class RestaurantSignUpScreen extends React.Component {
             title='Go Home'
           />
         </View>
-        <Button
-              onPress={() => navigate('Home')}
-              title='Already have an account? >'
-            />
       </ScrollView>
     );
   }

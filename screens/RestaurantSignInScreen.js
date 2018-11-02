@@ -55,12 +55,8 @@ export default class RestaurantSignInScreen extends React.Component {
         </View>
         <View style={styles.buttons}>
           <Button
-            onPress={() => void(0)}
+            onPress={() => navigate('Restaurant')}
             title='Submit'
-          />
-          <Button
-            onPress={() => navigate('Home')}
-            title='Go Back'
           />
         </View>
       </ScrollView>
