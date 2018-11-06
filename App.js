@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
-import styles from './styles';
+import Firebase from './components/Firebase';
 
 export default class App extends React.Component {
   state = {
@@ -55,3 +55,11 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});

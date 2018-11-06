@@ -5,12 +5,18 @@ import TabBarIcon from '../components/TabBarIcon';
 
 import RestaurantPost from '../screens/RestaurantPostScreen';
 import RestaurantNewPost from '../screens/RestaurantNewPostScreen';
+import RestaurantViewPost from '../screens/RestaurantViewPostScreen';
+import RestaurantViewFilledPost from '../screens/RestaurantViewFilledPostScreen';
+import RestaurantEditPost from '../screens/RestaurantEditPostScreen';
 import RestaurantProfile from '../screens/RestaurantProfileScreen';
 import RestaurantSettingsScreen from '../screens/RestaurantSettingsScreen';
 
 const RestaurantPostStack = createStackNavigator({
   RestaurantPost: RestaurantPost,
   RestaurantNewPost: RestaurantNewPost,
+  RestaurantViewPost: RestaurantViewPost,
+  RestaurantEditPost: RestaurantEditPost,
+  RestaurantViewFilledPost: RestaurantViewFilledPost,
 });
 
 RestaurantPostStack.navigationOptions = {
