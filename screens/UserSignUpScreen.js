@@ -2,11 +2,11 @@
 import React from 'react';
 import {
   Button,
-  ScrollView, 
-  StyleSheet, 
-  Text, 
+  ScrollView,
+  StyleSheet,
+  Text,
   TextInput,
-  View, 
+  View,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
@@ -62,8 +62,8 @@ export default class UserSignUpScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Name </Text> 
-          <TextInput 
+          <Text style={styles.label}> Name </Text>
+          <TextInput
             onFocus={() => this.setState({name: ''})}
             onChangeText={(text) => this.setState({name: text})}
             style={styles.input}
@@ -71,8 +71,8 @@ export default class UserSignUpScreen extends React.Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Email </Text> 
-          <TextInput 
+          <Text style={styles.label}> Email </Text>
+          <TextInput
             onFocus={() => this.setState({email: ''})}
             onChangeText={(text) => this.setState({email: text})}
             style={styles.input}
@@ -80,8 +80,8 @@ export default class UserSignUpScreen extends React.Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Password </Text> 
-          <TextInput 
+          <Text style={styles.label}> Password </Text>
+          <TextInput
             onChangeText={(text) => this.setState({password: text})}
             secureTextEntry={true}
             style={styles.input}
@@ -90,15 +90,16 @@ export default class UserSignUpScreen extends React.Component {
         </View>
         <View style={styles.inputContainer}>
           <Text> Already have an account? Sign in </Text>
-          <Text 
+          <Text
             onPress={() => navigate('UserSignIn')}
             style={styles.link}>
-            here. 
+            here.
           </Text>
         </View>
         <View style={styles.buttons}>
           <Button
-            onPress={() => this.writeUserData(this.state.email, this.state.name, this.state.password)}
+            onPress={() =>
+              this.writeUserData(this.state.email, this.state.name, this.state.password)}
             title='Submit'
           />
         </View>

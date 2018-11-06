@@ -1,11 +1,13 @@
 import React from 'react';
 import { 
+  ImageBackground,
   Button,
   ScrollView, 
   View, 
   StyleSheet, 
   Text, 
   TextInput,
+  TouchableOpacity,
   Platform,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
@@ -22,20 +24,64 @@ export default class RestaurantProfileScreen extends React.Component {
     title: 'Business Profile',
   };
 
+  renderDetail = () => {
+    return (
+      <View>
+        <Text style={styles.detailText}>For Sale Property Details</Text>
+        <Text style={styles.subDetailText}>{this.props.detail}</Text>
+      </View>
+    )
+  }
+
+  renderDescription = () => {
+    return (
+      <View>
+        <Text style={styles.restaurantText}>Nom Cafe</Text>
+        <Text style={styles.descriptionText}>1 Nassau St., Princeton NJ 08544</Text>
+      </View>
+    )
+  }
+
+  renderContactHeader = () => {
+    const { img } = this.props
+    return (
+      <View style={styles.headerContainer}>
+        <View style={styles.coverContainer}>
+          <ImageBackground
+            source={{
+              uri: 'https://www.bandarrestaurant.com/wp-content/uploads/2018/04/Bandar-Lobby.jpg',
+            }}
+            style={styles.coverImage}
+          >
+          </ImageBackground>
+        </View>
+      </View>
+    )
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.newPostContainer}>
-          <Text onPress={() => navigate("RestaurantNewPost")} style={styles.label}> New Post </Text>
-          <Ionicons
-            name={Platform.OS === "ios" ? "ios-add-circle" : "md-add-circle"}
-            color="black"
-            size={30}
-            onPress={() => navigate("RestaurantNewPost")}
-          />
+      <View style={styles.mainViewStyle}>
+        <ScrollView style={styles.scroll}>
+          <View style={[styles.container, this.props.containerStyle]}>
+            <View style={styles.cardContainer}>
+              {this.renderContactHeader()}
+            </View>
+          </View>
+          <View style={styles.productRow}>{this.renderDescription()}</View>
+          <View style={styles.productRow}>{this.renderDetail()}</View>
+        </ScrollView>
+        <View style={styles.footer}>
+          <TouchableOpacity style={styles.buttonFooter}>
+            <Text style={styles.textFooter}>CALL</Text>
+          </TouchableOpacity>
+          <View style={styles.borderCenter} />
+          <TouchableOpacity style={styles.buttonFooter}>
+            <Text style={styles.textFooter}>EMAIL</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     );
   }
 }
