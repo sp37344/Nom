@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Button,
@@ -9,8 +10,11 @@ import {
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
+import App from '../App.js';
+import * as firebase from 'firebase';
 
 export default class UserSignUpScreen extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +27,35 @@ export default class UserSignUpScreen extends React.Component {
   static navigationOptions = {
     title: 'User Sign Up',
   };
+
+  writeUserData(email,name,password) {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        firebase.database().ref('users/').push({
+            email,
+            name,
+            password
+        }).then((data)=> {
+            //success callback
+            console.log('data ' , data)
+            this.props.navigation.navigate('UserSignIn');
+        }).catch((error)=> {
+            //error callback
+            console.log('error ' , error)
+        })
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+      });
+  }
 
   render() {
     const { navigate } = this.props.navigation;
@@ -65,12 +98,8 @@ export default class UserSignUpScreen extends React.Component {
         </View>
         <View style={styles.buttons}>
           <Button
-            onPress={() => void(0)}
+            onPress={() => this.writeUserData(this.state.email, this.state.name, this.state.password)}
             title='Submit'
-          />
-          <Button
-            onPress={() => navigate('Home')}
-            title='Go Home'
           />
         </View>
       </ScrollView>
