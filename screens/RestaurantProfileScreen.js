@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { MonoText } from '../components/StyledText';
 import styles from '../styles';
 
@@ -27,7 +27,7 @@ export default class RestaurantProfileScreen extends React.Component {
   renderDetail = () => {
     return (
       <View>
-        <Text style={styles.detailText}>For Sale Property Details</Text>
+        <Text style={styles.detailText}>description</Text>
         <Text style={styles.subDetailText}>{this.props.detail}</Text>
       </View>
     )
@@ -37,6 +37,12 @@ export default class RestaurantProfileScreen extends React.Component {
     return (
       <View>
         <Text style={styles.restaurantText}>Nom Cafe</Text>
+        <FontAwesome
+            name="edit"
+            color="gray"
+            size={22}
+            onPress={() => navigate("RestaurantNewPost")}
+          />
         <Text style={styles.descriptionText}>1 Nassau St., Princeton NJ 08544</Text>
       </View>
     )

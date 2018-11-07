@@ -26,6 +26,9 @@ export default class RestaurantProfileScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <ScrollView style={styles.container}>
+        <View>
+          <Text onPress={() => navigate("Home")}>Logout</Text>
+        </View>
       </ScrollView>
     );
   }
