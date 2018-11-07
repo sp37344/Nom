@@ -132,7 +132,7 @@ componentDidMount() {
           price: '$4.50'
         },
       ]
-      console.log(this.state.availab)
+
       return (
         <ScrollView style={styles.container}>
           <View style={styles.newPostContainer}>
