@@ -7,9 +7,12 @@ import {
   Text,
   TextInput,
   Platform,
+  DatePickerIOS,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ExpoLinksView } from '@expo/samples';
+import Picker from 'react-native-picker';
+import DatePicker from 'react-native-date-picker';
 import styles from '../styles';
 import App from '../App.js';
 import * as firebase from 'firebase';
@@ -17,12 +20,15 @@ import * as firebase from 'firebase';
 export default class RestaurantNewPostScreen extends React.Component {
   constructor(props) {
     super(props);
+    var today = new Date();
     this.state = {
       item: 'Item Name',
+      quantity: 'Quantity',
       description: 'List description of dish',
       dietaryRestrictions: 'List dietary restrictions here',
-      cuisine: 'List cuisine types here'
+      cuisine: 'List cuisine types here',
       // dietaryRestrictions: [],
+      expirationDate: today.getDate(),
     };
   }
 
@@ -30,12 +36,14 @@ export default class RestaurantNewPostScreen extends React.Component {
     title: 'New Post',
   };
 
-  restaurantPostFood(item, description, dietaryRestrictions, cuisine) {
+  restaurantPostFood(item, quantity, description, expirationDate, dietaryRestrictions, cuisine) {
     var user = firebase.auth().currentUser;
     var restaurant = user.email;
     firebase.database().ref('food/').push({
       item,
+      quantity,
       description,
+      expirationDate,
       restaurant,
       dietaryRestrictions,
       cuisine
@@ -76,6 +84,15 @@ export default class RestaurantNewPostScreen extends React.Component {
           />
         </View>
         <View style={styles.inputContainer}>
+          <Text style={styles.label}> Quantity: </Text>
+          <TextInput
+            onFocus={() => this.setState({quantity: ''})}
+            onChangeText={(text) => this.setState({quantity: text})}
+            style={styles.input}
+            value={this.state.quantity}
+          />
+        </View>
+        <View style={styles.inputContainer}>
           <Text style={styles.label}> Description: </Text>
           <TextInput
             onFocus={() => this.setState({description: ''})}
@@ -111,9 +128,12 @@ export default class RestaurantNewPostScreen extends React.Component {
             containerStyle={styles.searchContainer}
             placeholder='Search' />
         </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Expiration Date: </Text>
+        </View>
         <View style={styles.buttons}>
           <Button
-            onPress={() => this.restaurantPostFood(this.state.item, this.state.description, this.state.dietaryRestrictions, this.state.cuisine)}
+            onPress={() => this.restaurantPostFood(this.state.item, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)}
             title='Submit'
           />
         </View>

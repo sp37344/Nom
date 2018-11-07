@@ -1,12 +1,15 @@
 import React from 'react';
-import {
+import { 
   Button,
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
+  ScrollView, 
+  View, 
+  StyleSheet, 
+  Text, 
   TextInput,
+  ImageBackground,
+  TouchableOpacity,
 } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
 import App from '../App.js';
@@ -24,68 +27,79 @@ export default class RestaurantEditProfileScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Restaurant Registration',
+    title: 'Edit Profile',
   };
+
+  renderDetail = () => {
+    return (
+      <View>
+        <Text style={styles.detailText}>description</Text>
+        <Text style={styles.subDetailText}>{this.props.detail}</Text>
+      </View>
+    )
+  }
+
+  renderDescription = () => {
+    const { navigate } = this.props.navigation;
+    return (
+      <View>
+        <TextInput 
+          onFocus={() => this.setState({name: ''})}
+          onChangeText={(text) => this.setState({name: text})}
+          style={styles.restaurantEditText}
+          value={this.state.name}
+        />
+        <TextInput 
+            onFocus={() => this.setState({address: ''})}
+            onChangeText={(text) => this.setState({address: text})}
+            style={styles.descriptionEditText}
+            value={this.state.address}
+          />
+      </View>
+    )
+  }
+
+  renderContactHeader = () => {
+    const { img } = this.props
+    return (
+      <View style={styles.headerContainer}>
+        <View style={styles.coverContainer}>
+          <ImageBackground
+            source={{
+              uri: 'https://www.bandarrestaurant.com/wp-content/uploads/2018/04/Bandar-Lobby.jpg',
+            }}
+            style={styles.coverImage}
+          >
+          </ImageBackground>
+        </View>
+      </View>
+    )
+  }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Name </Text>
-          <TextInput
-            onFocus={() => this.setState({name: ''})}
-            onChangeText={(text) => this.setState({name: text})}
-            style={styles.input}
-            value={this.state.name}
-          />
+      <View style={styles.mainViewStyle}>
+        <ScrollView style={styles.scroll}>
+          <View style={[styles.container, this.props.containerStyle]}>
+            <View style={styles.cardContainer}>
+              {this.renderContactHeader()}
+            </View>
+          </View>
+          <View style={styles.productRow}>{this.renderDescription()}</View>
+          <View style={styles.productRow}>{this.renderDetail()}</View>
+        </ScrollView>
+        <View style={styles.footer}>
+          <TouchableOpacity style={styles.buttonFooter}>
+            <Text style={styles.textFooter}>CALL</Text>
+          </TouchableOpacity>
+          <View style={styles.borderCenter} />
+          <TouchableOpacity style={styles.buttonFooter}>
+            <Text style={styles.textFooter}>EMAIL</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Address </Text>
-          <TextInput
-            onFocus={() => this.setState({address: ''})}
-            onChangeText={(text) => this.setState({address: text})}
-            style={styles.input}
-            value={this.state.address}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Phone Number </Text>
-          <TextInput
-            onFocus={() => this.setState({phone: ''})}
-            onChangeText={(text) => this.setState({phone: text})}
-            style={styles.input}
-            value={this.state.phone}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Email </Text>
-          <TextInput
-            onFocus={() => this.setState({email: ''})}
-            onChangeText={(text) => this.setState({email: text})}
-            style={styles.input}
-            value={this.state.email}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text> Already have an account? Sign in </Text>
-          <Text
-            onPress={() => navigate('RestaurantSignIn')}
-            style={styles.link}>
-            here.
-          </Text>
-        </View>
-        <View style={styles.buttons}>
-          <Button
-            onPress={() => navigate('RestaurantVerification')}
-            title='Submit'
-          />
-          <Button
-            onPress={() => navigate('Home')}
-            title='Go Home'
-          />
-        </View>
-      </ScrollView>
+      </View>
     );
   }
 }
+

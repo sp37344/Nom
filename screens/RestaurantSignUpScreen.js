@@ -21,6 +21,7 @@ export default class RestaurantSignUpScreen extends React.Component {
       address: 'Restaurant Address',
       phone: 'Phone Number',
       email: 'example@gmail.com',
+      active: 1,
     };
   }
 
@@ -36,7 +37,8 @@ export default class RestaurantSignUpScreen extends React.Component {
             password,
             address,
             phone,
-            email
+            email,
+            active
         }).then((data)=> {
             //success callback
             console.log('data ' , data)

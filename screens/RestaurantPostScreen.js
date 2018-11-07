@@ -11,7 +11,6 @@ import {
 import { ListItem } from 'react-native-elements'
 import { ExpoLinksView } from '@expo/samples';
 import { Ionicons } from '@expo/vector-icons';
-import { MonoText } from '../components/StyledText';
 import styles from '../styles';
 import App from '../App.js';
 import * as firebase from 'firebase';
@@ -78,14 +77,61 @@ export default class RestaurantPostScreen extends React.Component {
     })
   }
 
+  getFilledList() {
+    return new Promise(function (resolve, reject) {
+      var user = firebase.auth().currentUser;
+      var restaurant = user.email;
+      console.log('Getting restaurant available list')
+      var filledList = [];
+      var query = firebase.database().ref('food/').orderByChild("restaurant").equalTo(restaurant);
+      query.once("value")
+        .then(function(snapshot) {
+          snapshot.forEach(function(childSnapshot) {
+            console.log(childSnapshot.child("item").val());
+            console.log(childSnapshot.child("description").val());
+            console.log(childSnapshot.child("price").val());
+            console.log(childSnapshot.child("restaurant").val());
+            console.log(childSnapshot.child("dietaryRestrictions").val());
+            console.log(childSnapshot.child("cuisine").val());
+
+            filledList.push(
+            { item: childSnapshot.child("item").val(),
+              description: childSnapshot.child("description").val(),
+              price: childSnapshot.child("price").val(),
+              dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
+              cuisine: childSnapshot.child("cuisine").val()
+            });
+
+          })
+        })
+        .then(function() {
+          console.log('AVAILABLE LIST IN FUNCTION');
+          console.log(filledList);
+          // return availableList;
+          resolve(filledList);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject('error: ', error);
+        })
+    })
+  }
+
 
 componentDidMount() {
   this.getAvailableList().then((availableList) => {
-    console.log('promise returned')
+    console.log('promise returned');
     this.setState({
-      availableList: availableList,
-      isLoading: false
+      availableList: availableList
+      // isLoading: false
     });
+    this.getFilledList().then((filledList) => {
+      console.log('filled list promise returned');
+      this.setState({
+        filledList: filledList,
+        isLoading: false
+      })
+    })
   }, (error) => {
     alert(error);
   })
@@ -99,7 +145,7 @@ componentDidMount() {
 
 
   render() {
-    if (this.state.isLoading == true || this.state.availableList == undefined) {
+    if (this.state.isLoading == true || this.state.availableList == undefined || this.state.filledList == undefined) {
       return (
         <View style={styles.postContainer}>
           <Text style={styles.label}>
@@ -167,7 +213,7 @@ componentDidMount() {
             </Text>
             <View>
               {
-                filledList.map((item, i) => (
+                this.state.filledList.map((item, i) => (
                   <ListItem
                     key={i}
                     title={item.item}

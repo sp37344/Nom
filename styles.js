@@ -40,6 +40,13 @@ const styles = StyleSheet.create({
 		height: Dimensions.get('window').width * (3 / 4),
 		width: Dimensions.get('window').width,
 	},
+	descriptionEditText: {
+		marginBottom: 4,
+		color: '#d3d3d3',
+		fontSize: 16,
+		fontWeight: '400',
+		letterSpacing: 1,
+	},
 	descriptionText: {
 		marginBottom: 4,
 		color: Colors.gray,
@@ -113,6 +120,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 	},
+	itemsContainer: {
+		height: 130, 
+	},
 	label: {
 		fontSize: 24,
 		color: 'rgba(0, 122, 255, 1)',
@@ -155,10 +165,18 @@ const styles = StyleSheet.create({
 	productRow: {
 		margin: 25,
 	},
+	restaurantEditText: {
+		marginBottom: 5,
+		letterSpacing: 1,
+		paddingRight: 15,
+		color: '#d3d3d3',
+		fontSize: 36,
+		fontWeight: '400',
+	},
 	restaurantText: {
 		marginBottom: 5,
 		letterSpacing: 1,
-
+		paddingRight: 15,
 		color: Colors.black,
 		fontSize: 36,
 		fontWeight: '400',

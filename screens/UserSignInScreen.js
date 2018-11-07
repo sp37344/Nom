@@ -28,7 +28,7 @@ export default class UserSignInScreen extends React.Component {
   verifyUserSignIn(email, password) {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('User');
       })
       .catch(function(error) {
         // Handle Errors here.

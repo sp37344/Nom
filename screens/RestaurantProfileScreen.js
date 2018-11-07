@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { MonoText } from '../components/StyledText';
 import styles from '../styles';
 import App from '../App.js';
@@ -29,16 +29,26 @@ export default class RestaurantProfileScreen extends React.Component {
   renderDetail = () => {
     return (
       <View>
-        <Text style={styles.detailText}>For Sale Property Details</Text>
+        <Text style={styles.detailText}>description</Text>
         <Text style={styles.subDetailText}>{this.props.detail}</Text>
       </View>
     )
   }
 
   renderDescription = () => {
+    const { navigate } = this.props.navigation;
     return (
       <View>
-        <Text style={styles.restaurantText}>Nom Cafe</Text>
+        <View style={{flex:1, flexDirection:'row'}}>
+          <Text style={styles.restaurantText}>Nom Cafe</Text>
+          <FontAwesome
+            style={{alignSelf:'center'}}
+            name="edit"
+            color="gray"
+            size={22}
+            onPress={() => navigate("EditProfile")}
+          />
+        </View>
         <Text style={styles.descriptionText}>1 Nassau St., Princeton NJ 08544</Text>
       </View>
     )
@@ -73,6 +83,7 @@ export default class RestaurantProfileScreen extends React.Component {
           </View>
           <View style={styles.productRow}>{this.renderDescription()}</View>
           <View style={styles.productRow}>{this.renderDetail()}</View>
+        {/* <Text onPress={() => navigate("Stats")}>Stats</Text> */}
         </ScrollView>
         <View style={styles.footer}>
           <TouchableOpacity style={styles.buttonFooter}>

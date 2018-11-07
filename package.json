@@ -19,8 +19,13 @@
     "firebase": "^5.5.7",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-native-date-picker": "^2.2.0",
     "react-native-elements": "^0.19.1",
     "react-native-firebase": "^5.1.0",
+    "react-native-picker": "^4.3.7",
+    "react-native-settings-list": "^1.8.0",
+    "react-native-svg": "^6.2.2",
+    "react-native-svg-charts": "^5.2.0",
     "react-native-vector-icons": "^6.0.2",
     "react-navigation": "^2.18.0",
     "whatwg-fetch": "^2.0.4"
