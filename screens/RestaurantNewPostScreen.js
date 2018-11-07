@@ -12,6 +12,7 @@ import {
 import { SearchBar } from 'react-native-elements';
 import { ExpoLinksView } from '@expo/samples';
 import Picker from 'react-native-picker';
+import DatePicker from 'react-native-date-picker';
 import styles from '../styles';
 import App from '../App.js';
 import * as firebase from 'firebase';
@@ -126,7 +127,11 @@ export default class RestaurantNewPostScreen extends React.Component {
               date={this.state.expirationDate}
               style={{borderBottomWidth: 1, borderColor: '#d7dbe2',backgroundColor:'white'}}
               mode="date"
-              onDateChange={this.onStartTimeChange}/>
+              onDateChange={this.onStartTimeChange}/> 
+        {/* <DatePicker
+          date={this.state.expirationDate}
+          onDateChange={date => this.setState({ date })}
+        /> */}
         <View style={styles.buttons}>
           <Button
             onPress={() => this.restaurantPostFood(this.state.item, this.state.description, this.state.dietaryRestrictions, this.state.cuisine)}
