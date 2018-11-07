@@ -1,16 +1,18 @@
 import React from 'react';
-import { 
+import {
   Button,
-  ScrollView, 
-  View, 
-  StyleSheet, 
-  Text, 
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
   TextInput,
   Platform,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
+import App from '../App.js';
+import * as firebase from 'firebase';
 
 export default class RestaurantNewPostScreen extends React.Component {
   constructor(props) {
@@ -45,8 +47,8 @@ export default class RestaurantNewPostScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Item: </Text> 
-          <TextInput 
+          <Text style={styles.label}> Item: </Text>
+          <TextInput
             onFocus={() => this.setState({item: ''})}
             onChangeText={(text) => this.setState({item: text})}
             style={styles.input}
@@ -54,8 +56,8 @@ export default class RestaurantNewPostScreen extends React.Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Description: </Text> 
-          <TextInput 
+          <Text style={styles.label}> Description: </Text>
+          <TextInput
             onFocus={() => this.setState({description: ''})}
             onChangeText={(text) => this.setState({description: text})}
             style={styles.input}
@@ -63,8 +65,8 @@ export default class RestaurantNewPostScreen extends React.Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Ingredients: </Text> 
-          <TextInput 
+          <Text style={styles.label}> Ingredients: </Text>
+          <TextInput
             onFocus={() => this.setState({ingredients: ''})}
             onChangeText={(text) => this.setState({ingredients: text})}
             style={styles.input}
@@ -72,7 +74,7 @@ export default class RestaurantNewPostScreen extends React.Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Item: </Text> 
+          <Text style={styles.label}> Item: </Text>
           <SearchBar
             lightTheme
             round

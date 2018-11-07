@@ -1,16 +1,18 @@
 import React from 'react';
-import { 
+import {
   Button,
-  ScrollView, 
-  View, 
-  StyleSheet, 
-  Text, 
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
   TextInput,
   Platform,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
+import App from '../App.js';
+import * as firebase from 'firebase';
 
 export default class RestaurantViewPostScreen extends React.Component {
   constructor(props) {
