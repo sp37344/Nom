@@ -41,7 +41,7 @@ export default class RestaurantPostScreen extends React.Component {
       },
     ]
 
-    const filledList = [
+    const soldList = [
       {
         item: 'cake',
         price: '$3.50'
@@ -57,7 +57,14 @@ export default class RestaurantPostScreen extends React.Component {
       {
         item: 'french toast',
         price: '$4.50'
-      },
+      }
+    ]
+
+    const unSoldList = [
+      {
+        item: 'pastry',
+        price: '$1.50'
+      }
     ]
 
     return (
@@ -73,9 +80,9 @@ export default class RestaurantPostScreen extends React.Component {
         </View>
         <View style={styles.postContainer}>
           <Text style={styles.label}>
-            Available Orders
+            Available Items
           </Text>
-          <View>
+          <ScrollView style={styles.itemsContainer} showsVerticalScrollIndicator>
             {
               availableList.map((item, i) => (
                 <ListItem
@@ -86,15 +93,15 @@ export default class RestaurantPostScreen extends React.Component {
                 />
               ))
             }
-          </View>
+          </ScrollView>
         </View>
         <View style={styles.postContainer}>
           <Text style={styles.label}>
-            Filled Orders
+            Sold Items
           </Text>
-          <View>
+          <ScrollView style={styles.itemsContainer} showsVerticalScrollIndicator>
             {
-              filledList.map((item, i) => (
+              soldList.map((item, i) => (
                 <ListItem
                   key={i}
                   title={item.item}
@@ -103,7 +110,24 @@ export default class RestaurantPostScreen extends React.Component {
                 />
               ))
             }
-          </View>
+          </ScrollView>
+        </View>
+        <View style={styles.postContainer}>
+          <Text style={styles.label}>
+            Unsold Items
+          </Text>
+          <ScrollView style={styles.itemsContainer} showsVerticalScrollIndicator>
+            {
+              unSoldList.map((item, i) => (
+                <ListItem
+                  key={i}
+                  title={item.item}
+                  subtitle={item.price}
+                  onPress={() => navigate("RestaurantViewFilledPost")}
+                />
+              ))
+            }
+          </ScrollView>
         </View>
       </ScrollView>
     );

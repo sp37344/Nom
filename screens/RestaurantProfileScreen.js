@@ -34,15 +34,19 @@ export default class RestaurantProfileScreen extends React.Component {
   }
 
   renderDescription = () => {
+    const { navigate } = this.props.navigation;
     return (
       <View>
-        <Text style={styles.restaurantText}>Nom Cafe</Text>
-        <FontAwesome
+        <View style={{flex:1, flexDirection:'row'}}>
+          <Text style={styles.restaurantText}>Nom Cafe</Text>
+          <FontAwesome
+            style={{alignSelf:'center'}}
             name="edit"
             color="gray"
             size={22}
-            onPress={() => navigate("RestaurantNewPost")}
+            onPress={() => navigate("EditProfile")}
           />
+        </View>
         <Text style={styles.descriptionText}>1 Nassau St., Princeton NJ 08544</Text>
       </View>
     )
