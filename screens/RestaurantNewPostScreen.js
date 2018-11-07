@@ -20,14 +20,39 @@ export default class RestaurantNewPostScreen extends React.Component {
     this.state = {
       item: 'Item Name',
       description: 'List description of dish',
-      ingredients: 'List ingredients here',
-      dietaryRestrictions: [],
+      dietaryRestrictions: 'List dietary restrictions here',
+      cuisine: 'List cuisine types here'
+      // dietaryRestrictions: [],
     };
   }
 
   static navigationOptions = {
     title: 'New Post',
   };
+
+
+
+  restaurantPostFood(item, description, dietaryRestrictions, cuisine) {
+    var user = firebase.auth().currentUser;
+    var restaurant = user.email;
+    // firebase.database().ref('restaurants/').orderByChild('email').equalTo(currentUser.email).on("child_added", function(snapshot) {
+    //   console.log(snapshot.key);
+      firebase.database().ref('food/').push({
+        item,
+        description,
+        restaurant,
+        dietaryRestrictions,
+        cuisine
+      }).then((data) => {
+        // success callback
+        console.log('data ', data)
+        this.props.navigation.navigate('RestaurantPost');
+      }).catch((error) => {
+        // error callback
+        console.log('error ', error)
+      })
+    // });
+  }
 
   render() {
     const { navigate } = this.props.navigation;
@@ -65,12 +90,21 @@ export default class RestaurantNewPostScreen extends React.Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Ingredients: </Text>
+          <Text style={styles.label}> Dietary Restrictions: </Text>
           <TextInput
-            onFocus={() => this.setState({ingredients: ''})}
-            onChangeText={(text) => this.setState({ingredients: text})}
+            onFocus={() => this.setState({dietaryRestrictions: ''})}
+            onChangeText={(text) => this.setState({dietaryRestrictions: text})}
             style={styles.input}
-            value={this.state.ingredients}
+            value={this.state.dietaryRestrictions}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Cuisine Type: </Text>
+          <TextInput
+            onFocus={() => this.setState({cuisine: ''})}
+            onChangeText={(text) => this.setState({cuisine: text})}
+            style={styles.input}
+            value={this.state.cuisine}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -81,6 +115,12 @@ export default class RestaurantNewPostScreen extends React.Component {
             showLoading
             containerStyle={styles.searchContainer}
             placeholder='Search' />
+        </View>
+        <View style={styles.buttons}>
+          <Button
+            onPress={() => this.restaurantPostFood(this.state.item, this.state.description, this.state.dietaryRestrictions, this.state.cuisine)}
+            title='Submit'
+          />
         </View>
       </ScrollView>
     );

@@ -28,6 +28,7 @@ export default class RestaurantPostScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
 
+    console.log(firebase.User)
     const availableList = [
       {
         item: 'muffins',
