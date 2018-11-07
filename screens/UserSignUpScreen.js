@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Button,
@@ -13,6 +14,7 @@ import App from '../App.js';
 import * as firebase from 'firebase';
 
 export default class UserSignUpScreen extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -99,10 +101,6 @@ export default class UserSignUpScreen extends React.Component {
             onPress={() =>
               this.writeUserData(this.state.email, this.state.name, this.state.password)}
             title='Submit'
-          />
-          <Button
-            onPress={() => navigate('Home')}
-            title='Go Home'
           />
         </View>
       </ScrollView>
