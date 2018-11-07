@@ -1,14 +1,16 @@
 import React from 'react';
-import { 
+import {
   Button,
-  ScrollView, 
-  View, 
-  StyleSheet, 
-  Text, 
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
   TextInput,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
+import App from '../App.js';
+import * as firebase from 'firebase';
 
 export default class RestaurantVerificationScreen extends React.Component {
   static navigationOptions = {
@@ -20,9 +22,9 @@ export default class RestaurantVerificationScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.getStartedText}> 
+          <Text style={styles.getStartedText}>
             Thank you for your application! We will review your restaurant information and provide you with a temporary password within 1-3 business days.
-          </Text> 
+          </Text>
         </View>
         <View style={styles.buttons}>
           <Button
@@ -34,4 +36,3 @@ export default class RestaurantVerificationScreen extends React.Component {
     );
   }
 }
-

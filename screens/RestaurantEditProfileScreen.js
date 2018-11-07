@@ -12,6 +12,8 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
+import App from '../App.js';
+import * as firebase from 'firebase';
 
 export default class RestaurantEditProfileScreen extends React.Component {
   constructor(props) {

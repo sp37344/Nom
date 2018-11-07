@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
+import {
   Button,
-  ScrollView, 
-  View, 
-  StyleSheet, 
-  Text, 
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
   TextInput,
   Platform,
 } from 'react-native';
@@ -17,6 +17,8 @@ import {
 import { MonoText } from '../components/StyledText';
 import SettingsList from 'react-native-settings-list';
 import styles from '../styles';
+import App from '../App.js';
+import * as firebase from 'firebase';
 
 export default class RestaurantProfileScreen extends React.Component {
   constructor(props) {

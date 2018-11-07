@@ -14,7 +14,7 @@ import App from '../App.js';
 import * as firebase from 'firebase';
 
 export default class UserSignUpScreen extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
