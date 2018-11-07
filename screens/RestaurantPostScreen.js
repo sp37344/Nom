@@ -11,7 +11,6 @@ import {
 import { ListItem } from 'react-native-elements'
 import { ExpoLinksView } from '@expo/samples';
 import { Ionicons } from '@expo/vector-icons';
-import { MonoText } from '../components/StyledText';
 import styles from '../styles';
 import App from '../App.js';
 import * as firebase from 'firebase';
