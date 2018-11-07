@@ -124,10 +124,10 @@ export default class RestaurantNewPostScreen extends React.Component {
           <Text style={styles.label}> Expiration Date: </Text>
         </View>
         <DatePickerIOS
-              date={this.state.expirationDate}
-              style={{borderBottomWidth: 1, borderColor: '#d7dbe2',backgroundColor:'white'}}
-              mode="date"
-              onDateChange={this.onStartTimeChange}/> 
+          date={this.state.expirationDate}
+          style={{borderBottomWidth: 1, borderColor: '#d7dbe2',backgroundColor:'white'}}
+          mode="date"
+        /> 
         {/* <DatePicker
           date={this.state.expirationDate}
           onDateChange={date => this.setState({ date })}
