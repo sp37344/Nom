@@ -23,12 +23,14 @@ export default class RestaurantNewPostScreen extends React.Component {
     var today = new Date();
     this.state = {
       item: 'Item Name',
+      price: 'Price',
       quantity: 'Quantity',
       description: 'List description of dish',
       dietaryRestrictions: 'List dietary restrictions here',
       cuisine: 'List cuisine types here',
       // dietaryRestrictions: [],
       expirationDate: today.getDate(),
+      active: 1,
     };
   }
 
@@ -36,17 +38,20 @@ export default class RestaurantNewPostScreen extends React.Component {
     title: 'New Post',
   };
 
-  restaurantPostFood(item, quantity, description, expirationDate, dietaryRestrictions, cuisine) {
+  restaurantPostFood(item, price, quantity, description, expirationDate, dietaryRestrictions, cuisine) {
     var user = firebase.auth().currentUser;
     var restaurant = user.email;
+    var active = 1;
     firebase.database().ref('food/').push({
       item,
+      price,
       quantity,
       description,
       expirationDate,
       restaurant,
       dietaryRestrictions,
-      cuisine
+      cuisine,
+      active
     }).then((data) => {
       // success callback
       console.log('data ', data)
@@ -81,6 +86,15 @@ export default class RestaurantNewPostScreen extends React.Component {
             onChangeText={(text) => this.setState({item: text})}
             style={styles.input}
             value={this.state.item}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Price: $</Text>
+          <TextInput
+            onFocus={() => this.setState({price: ''})}
+            onChangeText={(text) => this.setState({price: text})}
+            style={styles.input}
+            value={this.state.price}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -133,7 +147,7 @@ export default class RestaurantNewPostScreen extends React.Component {
         </View>
         <View style={styles.buttons}>
           <Button
-            onPress={() => this.restaurantPostFood(this.state.item, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)}
+            onPress={() => this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)}
             title='Submit'
           />
         </View>
