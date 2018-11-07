@@ -83,6 +83,7 @@ export default class RestaurantProfileScreen extends React.Component {
           </View>
           <View style={styles.productRow}>{this.renderDescription()}</View>
           <View style={styles.productRow}>{this.renderDetail()}</View>
+          <Text onPress={() => navigate("Stats")}>Stats</Text>
         </ScrollView>
         <View style={styles.footer}>
           <TouchableOpacity style={styles.buttonFooter}>

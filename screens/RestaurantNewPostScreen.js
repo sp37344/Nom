@@ -7,9 +7,11 @@ import {
   Text,
   TextInput,
   Platform,
+  DatePickerIOS,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ExpoLinksView } from '@expo/samples';
+import Picker from 'react-native-picker';
 import styles from '../styles';
 import App from '../App.js';
 import * as firebase from 'firebase';
@@ -21,8 +23,9 @@ export default class RestaurantNewPostScreen extends React.Component {
       item: 'Item Name',
       description: 'List description of dish',
       dietaryRestrictions: 'List dietary restrictions here',
-      cuisine: 'List cuisine types here'
+      cuisine: 'List cuisine types here',
       // dietaryRestrictions: [],
+      expirationDate: new Date(),
     };
   }
 
@@ -116,6 +119,14 @@ export default class RestaurantNewPostScreen extends React.Component {
             containerStyle={styles.searchContainer}
             placeholder='Search' />
         </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Expiration Date: </Text>
+        </View>
+        <DatePickerIOS
+              date={this.state.expirationDate}
+              style={{borderBottomWidth: 1, borderColor: '#d7dbe2',backgroundColor:'white'}}
+              mode="date"
+              onDateChange={this.onStartTimeChange}/>
         <View style={styles.buttons}>
           <Button
             onPress={() => this.restaurantPostFood(this.state.item, this.state.description, this.state.dietaryRestrictions, this.state.cuisine)}
