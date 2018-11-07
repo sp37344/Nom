@@ -30,28 +30,23 @@ export default class RestaurantNewPostScreen extends React.Component {
     title: 'New Post',
   };
 
-
-
   restaurantPostFood(item, description, dietaryRestrictions, cuisine) {
     var user = firebase.auth().currentUser;
     var restaurant = user.email;
-    // firebase.database().ref('restaurants/').orderByChild('email').equalTo(currentUser.email).on("child_added", function(snapshot) {
-    //   console.log(snapshot.key);
-      firebase.database().ref('food/').push({
-        item,
-        description,
-        restaurant,
-        dietaryRestrictions,
-        cuisine
-      }).then((data) => {
-        // success callback
-        console.log('data ', data)
-        this.props.navigation.navigate('RestaurantPost');
-      }).catch((error) => {
-        // error callback
-        console.log('error ', error)
-      })
-    // });
+    firebase.database().ref('food/').push({
+      item,
+      description,
+      restaurant,
+      dietaryRestrictions,
+      cuisine
+    }).then((data) => {
+      // success callback
+      console.log('data ', data)
+      this.props.navigation.navigate('RestaurantPost');
+    }).catch((error) => {
+      // error callback
+      console.log('error ', error)
+    })
   }
 
   render() {
