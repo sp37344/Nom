@@ -30,6 +30,7 @@ export default class RestaurantSignUpScreen extends React.Component {
   };
 
   writeRestaurantData(name, password, address, phone, email) {
+    var active = 1;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         firebase.database().ref('restaurants/').push({

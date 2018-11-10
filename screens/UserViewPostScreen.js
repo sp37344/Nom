@@ -31,8 +31,26 @@ export default class UserViewPostScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
+    const item = navigation.getParam(item, 'Bread');
+    const price = navigation.getParam(price, '3.00');
+    console.log(item);
+    console.log(price);
+
     return (
       <ScrollView style={styles.container}>
+      <View>
+        <Text style={styles.label}>
+          {JSON.stringify(item)}
+          ${JSON.stringify(price)}
+        </Text>
+        <View
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: 1,
+          }}
+        />
+      </View>
       </ScrollView>
     );
   }

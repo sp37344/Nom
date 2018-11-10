@@ -81,7 +81,7 @@ export default class RestaurantPostScreen extends React.Component {
     return new Promise(function (resolve, reject) {
       var user = firebase.auth().currentUser;
       var restaurant = user.email;
-      console.log('Getting restaurant available list')
+      console.log('Getting restaurant filled list')
       var filledList = [];
       var query = firebase.database().ref('food/').orderByChild("restaurant").equalTo(restaurant);
       query.once("value")
@@ -105,7 +105,7 @@ export default class RestaurantPostScreen extends React.Component {
           })
         })
         .then(function() {
-          console.log('AVAILABLE LIST IN FUNCTION');
+          console.log('FILLED LIST IN FUNCTION');
           console.log(filledList);
           // return availableList;
           resolve(filledList);
