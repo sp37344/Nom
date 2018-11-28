@@ -136,7 +136,18 @@ export default class RestaurantPostScreen extends React.Component {
                       key={j}
                       title={item.item}
                       subtitle={item.price}
-                      onPress={() => navigate("UserViewPost")} // and u pass props here
+                      onPress={() => navigate("UserViewPost",
+                      {
+                        item: item.item,
+                        price: item.price,
+                        description: item.description,
+                        dietaryRestrictions: item.dietaryRestrictions,
+                        quantity: item.quantity,
+                        restaurant: item.restaurant,
+                        expirationDate: item.expirationDate,
+                        postedDate: item.postedDate
+                      }
+                    )} // and u pass props here
                     />
                   ))}
                 </View>
