@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ExpoLinksView } from '@expo/samples';
+import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles';
 import App from '../App.js';
 import * as firebase from 'firebase';
@@ -45,20 +46,79 @@ export default class UserViewPostScreen extends React.Component {
     var user = firebase.auth().currentUser;
     var email = user.email;
     var userOrderQuery = firebase.database().ref('activeOrders/').orderByChild("userEmail").equalTo(email);
+    console.log('going through query')
     await userOrderQuery.once("value")
       .then(async function(orderSnapshot) {
+        // check if the user already has an active order
         if (orderSnapshot) {
+          if (orderSnapshot.child("email").val() == null) {
+            console.log("yikes");
+          }
+          console.log('user already has active order');
+          console.log(orderSnapshot);
+          if (orderSnapshot.equals(null)) {
+            console.log('null boi');
+          }
+          if (orderSnapshot.equals(NULL)) {
+            console.log('NULL boi');
+          }
+          if (orderSnapshot == null) {
+            console.log('this is null');
+          }
+          if (orderSnapshot == NULL) {
+            console.log('this is NULL');
+          }
           var foodItems = orderSnapshot.child("foodItems").val();
-          foodItems.forEach(foodItem) {
+          var alreadyInOrder = false;
+          foodItems.forEach(function(foodItem) {
             // if the food item already exists in the order, update the quantity
             // modify this so that the user can specify the quantity they want
             if (foodItem = item) {
-              foodItem.quantity++;
+              alreadyInOrder = true;
+              foodItem.quantity+=quantity;
+              var subtotal = foodItem.quantity * foodItem.price;
+              orderSnapshot.total += (quantity * foodItem.price);
             }
+          });
+          // if the item is not in the order, add it to the food item array and update
+          // the subtotal and total accordingly
+          if (!alreadyInOrder) {
+            orderSnapshot.child("foodItems").val().push({
+              item: item,
+              price: price,
+              description: description,
+              quantity: quantity,
+              subtotal: quantity * price,
+              dietaryRestrictions: dietaryRestrictions,
+              postedDate: postedDate,
+              expirationDate: expirationDate
+            });
+            // orderSnapshot.child("total").val() += (quantity * price);
           }
         }
         else {
-
+          console.log("user does not have order in active orders db");
+          var orderID = 'order' + email;
+          var currentTime = new Date();
+          var total = price * quantity;
+          firebase.database().ref('activeOrders/').set({
+            orderID: {
+              foodItems: {
+                item: item,
+                price: price,
+                description: description,
+                quantity: quantity,
+                subtotal: total,
+                dietaryRestrictions: dietaryRestrictions,
+                postedDate: postedDate,
+                expirationDate: expirationDate
+              },
+              userEmail: email,
+              restaurant: restaurant,
+              orderTime: currentTime,
+              total: total,
+            }
+          });
         }
       })
   }
@@ -154,7 +214,8 @@ export default class UserViewPostScreen extends React.Component {
           color="gray"
           size={22}
           onPress={() =>
-            alert("Item added to cart")
+            this.addOrder()
+            // alert("Item added to cart");
           }
         />
       </View>
