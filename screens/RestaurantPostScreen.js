@@ -43,7 +43,7 @@ export default class RestaurantPostScreen extends React.Component {
       var restaurant = user.email;
       console.log('Getting restaurant available list')
       var availableList = [];
-      var query = firebase.database().ref('food/').orderByChild("restaurant").equalTo(restaurant);
+      var query = firebase.database().ref('activeFood/').orderByChild("restaurant").equalTo(restaurant);
       query.once("value")
         .then(function(snapshot) {
           snapshot.forEach(function(childSnapshot) {
@@ -59,9 +59,10 @@ export default class RestaurantPostScreen extends React.Component {
               description: childSnapshot.child("description").val(),
               price: childSnapshot.child("price").val(),
               dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
-              cuisine: childSnapshot.child("cuisine").val()
+              cuisine: childSnapshot.child("cuisine").val(),
+              expirationDate: childSnapshot.child("expirationDate").val(),
+              datePosted: childSnapshot.child("datePosted").val()
             });
-
           })
         })
         .then(function() {
@@ -83,7 +84,7 @@ export default class RestaurantPostScreen extends React.Component {
       var restaurant = user.email;
       console.log('Getting restaurant filled list')
       var filledList = [];
-      var query = firebase.database().ref('food/').orderByChild("restaurant").equalTo(restaurant);
+      var query = firebase.database().ref('activeFood/').orderByChild("restaurant").equalTo(restaurant);
       query.once("value")
         .then(function(snapshot) {
           snapshot.forEach(function(childSnapshot) {
@@ -99,7 +100,9 @@ export default class RestaurantPostScreen extends React.Component {
               description: childSnapshot.child("description").val(),
               price: childSnapshot.child("price").val(),
               dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
-              cuisine: childSnapshot.child("cuisine").val()
+              cuisine: childSnapshot.child("cuisine").val(),
+              expirationDate: childSnapshot.child("expirationDate").val(),
+              datePosted: childSnapshot.child("datePosted").val()
             });
 
           })

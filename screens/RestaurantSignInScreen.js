@@ -24,60 +24,12 @@ export default class RestaurantSignInScreen extends React.Component {
   static navigationOptions = {
     title: 'Restaurant Sign In',
   };
-/*
-  async getRestaurantAvailableList() {
-    var user = firebase.auth().currentUser;
-    var restaurant = user.email;
-    console.log('Getting restaurant available list')
-    var availableList = [];
-    var query = firebase.database().ref('food/').orderByChild("restaurant").equalTo(restaurant);
-    await query.once("value")
-      .then(async function(snapshot) {
-        snapshot.forEach( function(childSnapshot) {
-          console.log(childSnapshot.child("item").val());
-          console.log(childSnapshot.child("description").val());
-          console.log(childSnapshot.child("price").val());
-          console.log(childSnapshot.child("restaurant").val());
-          console.log(childSnapshot.child("dietaryRestrictions").val());
-          console.log(childSnapshot.child("cuisine").val());
 
-          availableList.push(
-          { item: childSnapshot.child("item").val(),
-            description: childSnapshot.child("description").val(),
-            price: childSnapshot.child("price").val(),
-            dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
-            cuisine: childSnapshot.child("cuisine").val()
-          });
-
-        })
-      })
-      .then(async function() {
-        console.log('AVAILABLE LIST IN FUNCTION');
-        console.log(availableList);
-        return availableList;
-      })
-  }
-
-  dummyFunction = () => {
-    return this.getRestaurantAvailableList().then(result => result);
-  }
-*/
   async verifyRestaurantSignIn(email, password) {
-    /*var list;
-    list = this.dummyFunction();
-    await this.getRestaurantAvailableList().then(async (response) => {
-      list = response;
-    })
-    console.log("response", list);*/
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
           this.props.navigation.navigate('Restaurant');
         })
-        /*
-          var list =  await this.getRestaurantAvailableList();
-          console.log("list ", list);
-          this.props.navigation.navigate('Restaurant', {availableList: list});
-          */
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;

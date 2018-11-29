@@ -42,7 +42,7 @@ export default class UserViewPostScreen extends React.Component {
     const quantity = navigation.getParam('quantity', "4");
     const restaurant = navigation.getParam('restaurant', "Panera");
     const expirationDate = navigation.getParam('expirationDate', "9:00PM today")
-    const postedDate = navigation.getParam('postedDate', "2:45PM today")
+    const datePosted = navigation.getParam('datePosted', "2:45PM today")
     var user = firebase.auth().currentUser;
     var email = user.email;
     var userOrderQuery = firebase.database().ref('activeOrders/').orderByChild("userEmail").equalTo(email);
@@ -50,30 +50,93 @@ export default class UserViewPostScreen extends React.Component {
     await userOrderQuery.once("value")
       .then(async function(orderSnapshot) {
         // check if the user already has an active order
-        if (orderSnapshot) {
-          if (orderSnapshot.child("email").val() == null) {
-            console.log("yikes");
-          }
+        if (orderSnapshot.child("email").val() == null) {
+          console.log("user does not have order in active orders db");
+          var orderID = 'order' + email;
+          console.log('ORDERID', orderID);
+          var currentTime = new Date();
+          // var quantityNumber = parseInt(quantity, 10);
+          var orderTime = currentTime.valueOf();
+          var total = price * quantity;
+          console.log(item);
+          console.log(price);
+          console.log("QUANTITY", quantity);
+          console.log(description);
+          console.log("TOTAL", total);
+          console.log(dietaryRestrictions);
+          console.log(datePosted);
+          console.log(expirationDate);
+          console.log(email);
+          console.log("RESTAURANT", restaurant);
+          console.log(orderTime);
+          console.log(total);
+
+          var postData = {
+            userEmail: email,
+            restaurant,
+            orderTime,
+            total
+          };
+
+          // Get a key for the new post.
+          var newPostKey = firebase.database().ref('activeOrders/').push().key;
+
+          // Update the post.
+          var updates = {};
+          updates[newPostKey] = postData;
+
+          firebase.database().ref('activeOrders/').update(updates)
+            .then((data) => {
+              console.log('data', data);
+              var foodItemsRef = firebase.database().ref('activeOrders/' + newPostKey).child("foodItems");
+              foodItemsRef.push({
+                item,
+                price,
+                description,
+                quantity,
+                subtotal: total,
+                dietaryRestrictions,
+                datePosted,
+                expirationDate
+              });
+
+          // var foodItemsRef = firebase.database().ref('activeOrders/' + newPostKey).child("foodItems");
+          // foodItemsRef.push({
+          //   item,
+          //   price,
+          //   description,
+          //   quantity,
+          //   subtotal,
+          //   dietaryRestrictions,
+          //   datePosted,
+          //   expirationDate
+          // });
+          //
+          // firebase.database().ref('activeOrders/').push({
+          //   userEmail: email,
+          //   restaurant,
+          //   orderTime,
+          //   total
+          // }).then((data) => {
+          //   // success callback
+          //   console.log('data ', data)
+          //
+          //   this.props.navigation.navigate('RestaurantPost');
+          }).catch((error) => {
+            // error callback
+            console.log('error ', error)
+          })
+        }
+        else {
           console.log('user already has active order');
           console.log(orderSnapshot);
-          if (orderSnapshot.equals(null)) {
-            console.log('null boi');
-          }
-          if (orderSnapshot.equals(NULL)) {
-            console.log('NULL boi');
-          }
-          if (orderSnapshot == null) {
-            console.log('this is null');
-          }
-          if (orderSnapshot == NULL) {
-            console.log('this is NULL');
-          }
           var foodItems = orderSnapshot.child("foodItems").val();
           var alreadyInOrder = false;
           foodItems.forEach(function(foodItem) {
             // if the food item already exists in the order, update the quantity
             // modify this so that the user can specify the quantity they want
             if (foodItem = item) {
+              console.log('FOOD ITEM IN THE DATABASE');
               alreadyInOrder = true;
               foodItem.quantity+=quantity;
               var subtotal = foodItem.quantity * foodItem.price;
@@ -83,97 +146,13 @@ export default class UserViewPostScreen extends React.Component {
           // if the item is not in the order, add it to the food item array and update
           // the subtotal and total accordingly
           if (!alreadyInOrder) {
-            orderSnapshot.child("foodItems").val().push({
-              item: item,
-              price: price,
-              description: description,
-              quantity: quantity,
-              subtotal: quantity * price,
-              dietaryRestrictions: dietaryRestrictions,
-              postedDate: postedDate,
-              expirationDate: expirationDate
-            });
-            // orderSnapshot.child("total").val() += (quantity * price);
+            console.log('NOT ALREADY IN ORDER');
           }
-        }
-        else {
-          console.log("user does not have order in active orders db");
-          var orderID = 'order' + email;
-          var currentTime = new Date();
-          var total = price * quantity;
-          firebase.database().ref('activeOrders/').set({
-            orderID: {
-              foodItems: {
-                item: item,
-                price: price,
-                description: description,
-                quantity: quantity,
-                subtotal: total,
-                dietaryRestrictions: dietaryRestrictions,
-                postedDate: postedDate,
-                expirationDate: expirationDate
-              },
-              userEmail: email,
-              restaurant: restaurant,
-              orderTime: currentTime,
-              total: total,
-            }
-          });
         }
       })
   }
-  async getAvailablePosts() {
-    var foodList = [];
-    var restaurantAvailableList = [];
-    var restaurantQuery = firebase.database().ref('restaurants/').orderByChild("active").equalTo(1);
-    await restaurantQuery.once("value")
-      .then(async function(snapshot) {
-        snapshot.forEach(function(restaurantSnapshot) {
-          // console.log(restaurantSnapshot.child("email").val());
-          var restaurantEmail = restaurantSnapshot.child("email").val();
-          var restaurant = restaurantSnapshot.child("name").val();
-          restaurantAvailableList.push({
-            restaurant: restaurant,
-            email: restaurantEmail
-          })
-        })
-        // console.log("Restaurant Available List after getting all restaurants:")
-        // console.log(restaurantAvailableList);
-        await Promise.all(restaurantAvailableList.map(async function(restaurant) {
-          // console.log('restaurant', restaurant.restaurant);
-          // console.log('email', restaurant.email);
-          var foodQuery = firebase.database().ref('food/').orderByChild("restaurant").equalTo(restaurant.email);
-          await foodQuery.once("value")
-            .then(async function(snapshot) {
-              var foodAvailableList = [];
-              await snapshot.forEach(function(childSnapshot) {
-                // add logic here to only show active food listings
-                if (childSnapshot.child("active").val() == 1) {
-                  // console.log("Food item in populate food list function", childSnapshot.child("item").val());
-                  foodAvailableList.push({
-                    item: childSnapshot.child("item").val(),
-                    description: childSnapshot.child("description").val(),
-                    price: childSnapshot.child("price").val(),
-                    dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
-                    cuisine: childSnapshot.child("cuisine").val()
-                  });
-                }
-              })
-              // console.log("availableList after the for each", foodAvailableList);
-              if (foodAvailableList.length > 0) {
-                foodList.push ({
-                  name: restaurant.restaurant,
-                  available: foodAvailableList
-                })
-                // console.log("availableList IN FOR EACH SNAPSHOT ", foodList);
-              }
-            })
-          }
-        ))
-      })
-      console.log("RETURNING AVAILABLE LIST", foodList);
-      return foodList;
-  }
+
+
 
 
   render() {

@@ -29,7 +29,7 @@ export default class RestaurantNewPostScreen extends React.Component {
       dietaryRestrictions: 'List dietary restrictions here',
       cuisine: 'List cuisine types here',
       // dietaryRestrictions: [],
-      expirationDate: today.getDate(),
+      expirationDate: new Date(),
       active: 1,
     };
   }
@@ -41,17 +41,22 @@ export default class RestaurantNewPostScreen extends React.Component {
   restaurantPostFood(item, price, quantity, description, expirationDate, dietaryRestrictions, cuisine) {
     var user = firebase.auth().currentUser;
     var restaurant = user.email;
-    var active = 1;
-    firebase.database().ref('food/').push({
+    console.log(typeof restaurant);
+    var today = new Date();
+    var datePosted = today.valueOf();
+    var expirationDate_value = expirationDate.valueOf();
+    console.log("datePosted", datePosted);
+    console.log("expirationDate", expirationDate_value);
+    firebase.database().ref('activeFood/').push({
       item,
       price,
       quantity,
       description,
-      expirationDate,
+      expirationDate: expirationDate_value,
       restaurant,
       dietaryRestrictions,
       cuisine,
-      active
+      datePosted
     }).then((data) => {
       // success callback
       console.log('data ', data)
@@ -94,6 +99,7 @@ export default class RestaurantNewPostScreen extends React.Component {
             onFocus={() => this.setState({price: ''})}
             onChangeText={(text) => this.setState({price: text})}
             style={styles.input}
+            keyboardType='numeric'
             value={this.state.price}
           />
         </View>
@@ -103,6 +109,7 @@ export default class RestaurantNewPostScreen extends React.Component {
             onFocus={() => this.setState({quantity: ''})}
             onChangeText={(text) => this.setState({quantity: text})}
             style={styles.input}
+            keyboardType='numeric'
             value={this.state.quantity}
           />
         </View>
@@ -145,6 +152,11 @@ export default class RestaurantNewPostScreen extends React.Component {
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Expiration Date: </Text>
         </View>
+        <DatePickerIOS
+              date={this.state.expirationDate}
+              style={{borderBottomWidth: 1, borderColor: '#d7dbe2',backgroundColor:'white'}}
+              mode="date"
+              onDateChange={expirationDate => this.setState({expirationDate})}/>
         <View style={styles.buttons}>
           <Button
             onPress={() => this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)}

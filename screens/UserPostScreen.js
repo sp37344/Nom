@@ -55,24 +55,25 @@ export default class RestaurantPostScreen extends React.Component {
         // console.log("Restaurant Available List after getting all restaurants:")
         // console.log(restaurantAvailableList);
         await Promise.all(restaurantAvailableList.map(async function(restaurant) {
-          // console.log('restaurant', restaurant.restaurant);
-          // console.log('email', restaurant.email);
-          var foodQuery = firebase.database().ref('food/').orderByChild("restaurant").equalTo(restaurant.email);
+          console.log('restaurant', restaurant.restaurant);
+          console.log('email', restaurant.email);
+          var foodQuery = firebase.database().ref('activeFood/').orderByChild("restaurant").equalTo(restaurant.email);
           await foodQuery.once("value")
             .then(async function(snapshot) {
               var foodAvailableList = [];
               await snapshot.forEach(function(childSnapshot) {
-                // add logic here to only show active food listings
-                if (childSnapshot.child("active").val() == 1) {
-                  // console.log("Food item in populate food list function", childSnapshot.child("item").val());
-                  foodAvailableList.push({
-                    item: childSnapshot.child("item").val(),
-                    description: childSnapshot.child("description").val(),
-                    price: childSnapshot.child("price").val(),
-                    dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
-                    cuisine: childSnapshot.child("cuisine").val()
-                  });
-                }
+                // console.log("Food item in populate food list function", childSnapshot.child("item").val());
+                foodAvailableList.push({
+                  item: childSnapshot.child("item").val(),
+                  description: childSnapshot.child("description").val(),
+                  price: childSnapshot.child("price").val(),
+                  dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
+                  cuisine: childSnapshot.child("cuisine").val(),
+                  expirationDate: childSnapshot.child("expirationDate").val(),
+                  datePosted: childSnapshot.child("datePosted").val(),
+                  quantity: childSnapshot.child("quantity").val(),
+                  restaurant: childSnapshot.child("restaurant").val()
+                });
               })
               // console.log("availableList after the for each", foodAvailableList);
               if (foodAvailableList.length > 0) {
@@ -145,7 +146,7 @@ export default class RestaurantPostScreen extends React.Component {
                         quantity: item.quantity,
                         restaurant: item.restaurant,
                         expirationDate: item.expirationDate,
-                        postedDate: item.postedDate
+                        datePosted: item.datePosted
                       }
                     )} // and u pass props here
                     />
