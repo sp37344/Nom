@@ -45,17 +45,18 @@ export default class UserViewPostScreen extends React.Component {
     const datePosted = navigation.getParam('datePosted', "2:45PM today")
     var user = firebase.auth().currentUser;
     var email = user.email;
-    var userOrderQuery = firebase.database().ref('activeOrders/').orderByChild("userEmail").equalTo(email);
+    var userOrderQuery = firebase.database().ref('activeOrders/').orderByChild("userEmail").equalTo(email).limitToFirst(1);
     console.log('going through query')
-    await userOrderQuery.once("value")
-      .then(async function(orderSnapshot) {
+    await userOrderQuery.on("child_added", function(orderSnapshot) {
+      // .then(async function(orderSnapshot) {
+        console.log('ORDER SNAPSHOT: ', orderSnapshot);
+        console.log('userEmail value: ',orderSnapshot.child("userEmail").val());
         // check if the user already has an active order
-        if (orderSnapshot.child("email").val() == null) {
+        if (orderSnapshot.child("userEmail").val() == null) {
           console.log("user does not have order in active orders db");
           var orderID = 'order' + email;
           console.log('ORDERID', orderID);
           var currentTime = new Date();
-          // var quantityNumber = parseInt(quantity, 10);
           var orderTime = currentTime.valueOf();
           var total = price * quantity;
           console.log(item);
@@ -86,42 +87,19 @@ export default class UserViewPostScreen extends React.Component {
           updates[newPostKey] = postData;
 
           firebase.database().ref('activeOrders/').update(updates)
-            .then((data) => {
-              console.log('data', data);
-              var foodItemsRef = firebase.database().ref('activeOrders/' + newPostKey).child("foodItems");
-              foodItemsRef.push({
-                item,
-                price,
-                description,
-                quantity,
-                subtotal: total,
-                dietaryRestrictions,
-                datePosted,
-                expirationDate
-              });
-
-          // var foodItemsRef = firebase.database().ref('activeOrders/' + newPostKey).child("foodItems");
-          // foodItemsRef.push({
-          //   item,
-          //   price,
-          //   description,
-          //   quantity,
-          //   subtotal,
-          //   dietaryRestrictions,
-          //   datePosted,
-          //   expirationDate
-          // });
-          //
-          // firebase.database().ref('activeOrders/').push({
-          //   userEmail: email,
-          //   restaurant,
-          //   orderTime,
-          //   total
-          // }).then((data) => {
-          //   // success callback
-          //   console.log('data ', data)
-          //
-          //   this.props.navigation.navigate('RestaurantPost');
+          .then((data) => {
+            console.log('success!');
+            var foodItemsRef = firebase.database().ref('activeOrders/' + newPostKey).child("foodItems");
+            foodItemsRef.push({
+              item,
+              price,
+              description,
+              quantity,
+              subtotal: total,
+              dietaryRestrictions,
+              datePosted,
+              expirationDate
+            });
           }).catch((error) => {
             // error callback
             console.log('error ', error)
@@ -129,25 +107,45 @@ export default class UserViewPostScreen extends React.Component {
         }
         else {
           console.log('user already has active order');
-          console.log(orderSnapshot);
-          var foodItems = orderSnapshot.child("foodItems").val();
-          var alreadyInOrder = false;
-          foodItems.forEach(function(foodItem) {
-            // if the food item already exists in the order, update the quantity
-            // modify this so that the user can specify the quantity they want
-            if (foodItem = item) {
-              console.log('FOOD ITEM IN THE DATABASE');
-              alreadyInOrder = true;
-              foodItem.quantity+=quantity;
-              var subtotal = foodItem.quantity * foodItem.price;
-              orderSnapshot.total += (quantity * foodItem.price);
-            }
-          });
+          // console.log(orderSnapshot);
+          var snapshotKey = orderSnapshot.key;
+          // console.log('key', snapshotKey);
+          var foodItemsQuery = firebase.database().ref('activeOrders/' + snapshotKey + '/foodItems/').orderByChild("item").equalTo(item).limitToFirst(1);
+          // console.log('FOOD ITEMS QUERY');
+          // console.log(foodItemsQuery);
+          // Edit the listing and update appropriately if it exists
+          foodItemsQuery.on("child_added", function(snapshot) {
+            var total = price * quantity;
+            var currentTime = new Date();
+            var orderTime = currentTime.valueOf();
+            var postData = {
+              item,
+              price,
+              description,
+              quantity,
+              subtotal: total,
+              dietaryRestrictions,
+              datePosted,
+              expirationDate
+            };
+
+            var foodItemKey = snapshot.key;
+            // Write the new post's data simultaneously in the posts list and the user's post list.
+            var updates = {};
+            // updates['activeOrders/' + snapshotKey] = {
+            //   userEmail: email,
+            //   restaurant,
+            //   orderTime: 9999,
+            //   total
+            // }
+            updates['activeOrders/' + snapshotKey + '/foodItems/' + foodItemKey] = postData;
+
+            firebase.database().ref().update(updates);
+          })
+
           // if the item is not in the order, add it to the food item array and update
           // the subtotal and total accordingly
-          if (!alreadyInOrder) {
-            console.log('NOT ALREADY IN ORDER');
-          }
+
         }
       })
   }
