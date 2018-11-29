@@ -107,6 +107,8 @@ export default class UserViewPostScreen extends React.Component {
         }
         else {
           console.log('user already has active order');
+          var isInOrder = false;
+          var total = price * quantity;
           // console.log(orderSnapshot);
           var snapshotKey = orderSnapshot.key;
           // console.log('key', snapshotKey);
@@ -115,7 +117,8 @@ export default class UserViewPostScreen extends React.Component {
           // console.log(foodItemsQuery);
           // Edit the listing and update appropriately if it exists
           foodItemsQuery.on("child_added", function(snapshot) {
-            var total = price * quantity;
+            isInOrder = true;
+
             var currentTime = new Date();
             var orderTime = currentTime.valueOf();
             var postData = {
@@ -142,6 +145,21 @@ export default class UserViewPostScreen extends React.Component {
 
             firebase.database().ref().update(updates);
           })
+
+          if (!isInOrder) {
+            console.log('is not in order');
+            var foodItemsRef = firebase.database().ref('activeOrders/' + snapshotKey).child("foodItems");
+            foodItemsRef.push({
+              item,
+              price,
+              description,
+              quantity,
+              subtotal: total,
+              dietaryRestrictions,
+              datePosted,
+              expirationDate
+            });
+          }
 
           // if the item is not in the order, add it to the food item array and update
           // the subtotal and total accordingly
