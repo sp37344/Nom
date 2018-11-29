@@ -38,7 +38,6 @@ RestaurantPostStack.navigationOptions = {
 const RestaurantProfileStack = createStackNavigator({
   Profile: RestaurantProfile,
   EditProfile: RestaurantEditProfile,
-  Stats: RestaurantStats,
 });
 
 RestaurantProfileStack.navigationOptions = {
@@ -47,6 +46,20 @@ RestaurantProfileStack.navigationOptions = {
     <TabBarIcon
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+    />
+  ),
+};
+
+const RestaurantStatsStack = createStackNavigator({
+  RestaurantStats: RestaurantStats,
+});
+
+RestaurantStatsStack.navigationOptions = {
+  tabBarLabel: 'Statistics',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
     />
   ),
 };
@@ -68,5 +81,6 @@ RestaurantSettingsStack.navigationOptions = {
 export default createBottomTabNavigator({
   RestaurantPostStack,
   RestaurantProfileStack,
+  RestaurantStatsStack,
   RestaurantSettingsStack,
 });
