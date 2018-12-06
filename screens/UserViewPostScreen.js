@@ -18,39 +18,65 @@ export default class UserViewPostScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dish: 'Dish Name',
-      details: 'List description of dish',
-      ingredients: '',
-      dietaryRestrictions: '',
+      item: 'Muffins',
+      price: '$2.50',
+      quantity: 5,
+      description: 'Standard Bread',
+      ingredients: 'Egg, Milk, Nuts',
+      dietaryRestrictions: 'None',
+      moneySaved: '$4.50',
+      foodWaste: '5 oz.',
     };
+    // Make these props.
   }
 
   static navigationOptions = {
     title: 'View Post',
   };
+  // TODO: We could make this completely dynamic depending on db implementation
 
+  // For the button return not available if error from requesting buy 
   render() {
     const { navigate } = this.props.navigation;
-    const { navigation } = this.props;
-    const item = navigation.getParam(item, 'Bread');
-    const price = navigation.getParam(price, '3.00');
-    console.log(item);
-    console.log(price);
-
     return (
       <ScrollView style={styles.container}>
-      <View>
-        <Text style={styles.label}>
-          {JSON.stringify(item)}
-          ${JSON.stringify(price)}
-        </Text>
-        <View
-          style={{
-            borderBottomColor: 'black',
-            borderBottomWidth: 1,
-          }}
-        />
-      </View>
+      <View style={styles.inputContainer}>
+          <Text style={styles.label}> Item </Text>
+          <Text style={styles.tabBarInfoText}> {this.state.item} </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Price </Text>
+          <Text style={styles.tabBarInfoText}>  {this.state.price } </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Quantity </Text>
+          <Text style={styles.tabBarInfoText}>  {this.state.quantity } </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Description </Text>
+          <Text style={styles.tabBarInfoText}>  {this.state.description } </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Ingredients </Text>
+          <Text style={styles.tabBarInfoText}> {this.state.ingredients} </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Item </Text>
+          <Text style={styles.tabBarInfoText}> {this.state.dietaryRestrictions} </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Money Saved </Text>
+          <Text style={styles.tabBarInfoText}>  {this.state.moneySaved } </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Food Waste </Text>
+          <Text style={styles.tabBarInfoText}>  {this.state.foodWaste } </Text>
+        </View>
+        <View style={styles.buttons}>
+          <Button
+            title='Purchase'
+          />
+        </View>
       </ScrollView>
     );
   }

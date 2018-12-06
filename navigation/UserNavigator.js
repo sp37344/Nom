@@ -13,6 +13,9 @@ import RestaurantSettingsScreen from '../screens/RestaurantSettingsScreen';
 
 import UserPost from '../screens/UserPostScreen';
 import UserViewPost from '../screens/UserViewPostScreen';
+import UserProfile from '../screens/UserProfileScreen';
+import UserEditProfile from '../screens/UserEditProfileScreen';
+import UserSettings from '../screens/UserSettingsScreen';
 
 // Posts for User
 const UserPostStack = createStackNavigator({
@@ -40,7 +43,8 @@ UserPostStack.navigationOptions = {
 
 // User Profile
 const UserProfileStack = createStackNavigator({
-  Profile: RestaurantProfile,
+  UserProfile: UserProfile,
+  UserEditProfile: UserEditProfile,
 });
 
 UserProfileStack.navigationOptions = {
@@ -54,7 +58,7 @@ UserProfileStack.navigationOptions = {
 };
 
 const UserSettingsStack = createStackNavigator({
-  RestaurantSettings: RestaurantSettingsScreen,
+  Settings: UserSettings,
 });
 
 UserSettingsStack.navigationOptions = {

@@ -12,8 +12,48 @@ const styles = StyleSheet.create({
 		borderWidth: 0.5,
 		borderColor: '#FFA890',
 	},
-	buttons: {
-		paddingTop: 40,
+	breakLine: {
+      borderBottomColor: '#d3d3d3',
+      borderBottomWidth: 1,
+      marginLeft: 7,
+      width: '80%',
+    },
+	buttonTransparent: {
+     // opacity: .75,
+	    borderColor: 'white',
+	    borderWidth: 1,
+	    borderRadius: 26,
+	    marginLeft: 60,
+	    marginRight: 60,
+	    marginBottom: 20,
+	    color: 'white',
+	    fontSize: 20,
+	    fontWeight: 'bold',
+	    overflow: 'hidden',
+	    padding: 12,
+	    textAlign:'center',
+    },
+    buttonOpaque: {
+     // opacity: .75,
+     	backgroundColor: '#ffaa00',
+	    borderColor: 'white',
+	    borderWidth: 1,
+	    borderRadius: 26,
+	    marginLeft: 60,
+	    marginRight: 60,
+	    marginBottom: 20,
+	    color: 'white',
+	    fontSize: 20,
+	    fontWeight: 'bold',
+	    overflow: 'hidden',
+	    padding: 12,
+	    textAlign:'center',
+    },
+    buttonSection:{
+		width: '100%',
+		height: '30%',
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 	buttonFooter: {
 		alignItems: 'center',
@@ -104,6 +144,11 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		color: '#2e78b7',
 	},
+	homeContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		backgroundColor: '#ffaa00',
+	},
 	homeScreenFilename: {
 		marginVertical: 7,
 	},
@@ -126,10 +171,52 @@ const styles = StyleSheet.create({
 	label: {
 		fontSize: 24,
 		color: 'rgba(0, 122, 255, 1)',
-		paddingRight: 10,
+		paddingTop: 10,
+		paddingRight: 25,
+	},
+	labelRestaurant: {
+		textAlign: 'center',
+		fontSize: 32,
+		fontWeight: 'bold',
+		color: 'white',
+		paddingTop: 10,
+		paddingBottom: 10,
+		textDecorationLine: 'underline',
 	},
 	link: {
 		color: 'rgba(0, 122, 255, 1)',
+	},
+	loginContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		backgroundColor: '#fff',
+		paddingTop: 100,
+		alignItems: 'center',
+	},
+	loginField: { // Wraps login label and input
+		borderBottomColor: 'rgba(96,100,109, 1)',
+		borderBottomWidth: 1,
+		marginBottom: 10,
+
+	},
+	loginInput: {
+		fontSize: 24,
+		color: 'rgba(96,100,109, 1)',
+		width: 240,
+
+	},
+	loginInputContainer: {
+
+	},
+	loginLabel: {
+		fontSize: 18,
+		color: '#ffaa00',
+	},
+	loginTitle: {
+		fontSize: 26,
+		color: 'rgba(96,100,109, 1)',
+		marginBottom: 20,
+		textAlign: 'center',
 	},
 	mainViewStyle: {
 		flex: 1,
@@ -151,11 +238,18 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		color: 'rgba(0, 122, 255, 1)',
 	},
-	nomText: {
-		fontSize: 64,
-		color: 'rgba(96,100,109, 1)',
-		lineHeight: 100,
+	nomTextAndroid: {
+		fontSize: 96,
+		color: 'white',
 		textAlign: 'center',
+		fontFamily: 'Roboto',
+	},
+	nomTextIOS: {
+		fontSize: 96,
+		color: 'white',
+		textAlign: 'center',
+		fontFamily: 'bold',
+		fontFamily: 'Avenir-Light',
 	},
 	postContainer: {
 		paddingTop: 30,
@@ -185,6 +279,13 @@ const styles = StyleSheet.create({
 		backgroundColor: '#FFF',
 		flex: 1,
 		marginBottom: 55,
+	},
+	searchContainer: {
+		paddingTop: 25,
+		paddingLeft: 15,
+		paddingRight: 15,
+		paddingBottom: 15,
+		flexDirection: 'row',
 	},
 	subDetailText: {
 		color: Colors.black,
@@ -237,6 +338,29 @@ const styles = StyleSheet.create({
 		paddingTop: 40,
 		paddingLeft: 15,
 		paddingRight: 15,
+	},
+	userPostContainer: {
+		paddingLeft: 15,
+		paddingRight: 15,
+	},
+	userPostLabel: {
+		fontSize: 24,
+		marginTop: 12,
+		marginLeft: 18,
+	},
+	userProfileName: {
+		marginBottom: 5,
+		letterSpacing: 1,
+		color: Colors.black,
+		fontSize: 36,
+		fontWeight: '400',
+	},
+	userProfileSubtitle: {
+		marginBottom: 5,
+		letterSpacing: 1,
+		color: Colors.black,
+		fontSize: 28,
+		fontWeight: '400',
 	},
 	userSelectionText: {
 		fontSize: 24,

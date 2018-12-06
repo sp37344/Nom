@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
@@ -16,13 +17,14 @@ export default class RestaurantSignInScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'example@gmail.com',
+      email: '',
       password: '',
     };
   }
 
   static navigationOptions = {
-    title: 'Restaurant Sign In',
+    // title: 'Restaurant Sign In',
+    header: null,
   };
 /*
   async getRestaurantAvailableList() {
@@ -94,31 +96,33 @@ export default class RestaurantSignInScreen extends React.Component {
         console.log(error);
       });
   }
-
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Email </Text>
+      <View style={styles.loginContainer}>
+        <View style={styles.loginInputContainer}>
+        <View style={styles.loginField}>
+          <Text style={styles.loginTitle}> Restaurant Login </Text>
+          <Text style={styles.loginLabel}>email</Text>
           <TextInput
             onFocus={() => this.setState({email: ''})}
             onChangeText={(text) => this.setState({email: text})}
-            style={styles.input}
+            style={styles.loginInput}
             value={this.state.email}
           />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Password </Text>
+          </View>
+          <View style={styles.loginField}>
+          <Text style={styles.loginLabel}>password</Text>
           <TextInput
             onChangeText={(text) => this.setState({password: text})}
             secureTextEntry={true}
-            style={styles.input}
+            style={styles.loginInput}
             value={this.state.password}
           />
+          </View>
         </View>
         <View style={styles.inputContainer}>
-          <Text> New restaurant? Register </Text>
+          <Text> New user? Register </Text>
           <Text
             onPress={() => navigate('RestaurantSignUp')}
             style={styles.link}>
@@ -126,12 +130,56 @@ export default class RestaurantSignInScreen extends React.Component {
           </Text>
         </View>
         <View style={styles.buttons}>
-          <Button
+        <TouchableOpacity onPress={this.handlPress}>
+          <Text 
             onPress={() => this.verifyRestaurantSignIn(this.state.email, this.state.password)}
-            title='Submit'
-          />
+            style={styles.buttonOpaque}
+            textDecorationLine={'underline'}>
+            Log In
+          </Text>
+        </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     );
   }
 }
+//   render() {
+//     const { navigate } = this.props.navigation;
+//     return (
+//       <ScrollView style={styles.container}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}> Email </Text>
+//           <TextInput
+//             onFocus={() => this.setState({email: ''})}
+//             onChangeText={(text) => this.setState({email: text})}
+//             style={styles.input}
+//             value={this.state.email}
+//           />
+//         </View>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}> Password </Text>
+//           <TextInput
+//             onChangeText={(text) => this.setState({password: text})}
+//             secureTextEntry={true}
+//             style={styles.input}
+//             value={this.state.password}
+//           />
+//         </View>
+//         <View style={styles.inputContainer}>
+//           <Text> New restaurant? Register </Text>
+//           <Text
+//             onPress={() => navigate('RestaurantSignUp')}
+//             style={styles.link}>
+//             here.
+//           </Text>
+//         </View>
+//         <View style={styles.buttons}>
+//           <Button
+//             onPress={() => this.verifyRestaurantSignIn(this.state.email, this.state.password)}
+//             title='Submit'
+//           />
+//         </View>
+//       </ScrollView>
+//     );
+//   }
+// }
