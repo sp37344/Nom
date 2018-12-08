@@ -20,6 +20,22 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		flex: 1,
 	},
+	buttonOpaque: {
+     // opacity: .75,
+     	backgroundColor: '#ffaa00',
+	    borderColor: 'white',
+	    borderWidth: 1,
+	    borderRadius: 26,
+	    marginLeft: 60,
+	    marginRight: 60,
+	    marginBottom: 20,
+	    color: 'white',
+	    fontSize: 20,
+	    fontWeight: 'bold',
+	    overflow: 'hidden',
+	    padding: 12,
+	    textAlign:'center',
+    },
 	buttonTransparent: {
      // opacity: .75,
 	    borderColor: 'white',
@@ -150,6 +166,35 @@ const styles = StyleSheet.create({
 	},
 	link: {
 		color: 'rgba(0, 122, 255, 1)',
+	},
+	loginContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		backgroundColor: '#fff',
+		paddingTop: 100,
+		alignItems: 'center',
+	},
+	loginField: { // Wraps login label and input
+		borderBottomColor: 'rgba(96,100,109, 1)',
+		borderBottomWidth: 1,
+		marginBottom: 10,
+
+	},
+	loginInput: {
+		fontSize: 24,
+		color: 'rgba(96,100,109, 1)',
+		width: 240,
+
+	},
+	loginLabel: {
+		fontSize: 18,
+		color: '#ffaa00',
+	},
+	loginTitle: {
+		fontSize: 26,
+		color: 'rgba(96,100,109, 1)',
+		marginBottom: 20,
+		textAlign: 'center',
 	},
 	mainViewStyle: {
 		flex: 1,

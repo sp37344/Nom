@@ -24,40 +24,10 @@ export default class HomeScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.homeContainer}>
-      {/*
-        <ImageBackground
-            source={{
-              uri: 'https://image.freepik.com/free-photo/tasty-fresh-unhealthy-hamburgers-with-ketchup-and-vegetables-and-chips-on-yellow-vibrant-bright-background-top-view-with-copy-space_1220-1332.jpg',
-            }}
-            resizeMode='cover'
-            style={{width: null, height: null, flex: 1, backgroundAttachment: 'scroll'}}
-          >
-    */}
-      
+      <View style={styles.homeContainer}>      
           <View style={styles.welcomeContainer}>
             <Text style={Platform.OS === "ios" ? styles.nomTextIOS : styles.nomTextAndroid}>NOM</Text>
           </View>
-          {/*
-          <View style={styles.buttonSection}>
-          <View style={styles.button}>
-            <Button
-              onPress={() => navigate('UserSignIn')}
-              title='User Login'
-              color='white'
-            />
-            </View>
-            <View style={styles.button}>
-            <Button
-              onPress={() => navigate('RestaurantSignIn')}
-              title='Restaurant Login'
-              color='white'
-            />
-            
-            </View>
-            </View>
-          */}
-
         <TouchableOpacity onPress={this.handlPress}>
           <Text 
             onPress={() => navigate('UserSignIn')}
@@ -66,8 +36,7 @@ export default class HomeScreen extends React.Component {
             User Login
           </Text>
         </TouchableOpacity>
-
-         <TouchableOpacity onPress={this.handlPress}>
+        <TouchableOpacity onPress={this.handlPress}>
           <Text 
             onPress={() => navigate('RestaurantSignIn')}
             style={styles.buttonTransparent}
@@ -75,21 +44,6 @@ export default class HomeScreen extends React.Component {
             Restaurant Login
           </Text>
         </TouchableOpacity>
-
-
-
-          {/* <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View> */}
-
-        {/* <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View> */}
       </View>
     );
   }
