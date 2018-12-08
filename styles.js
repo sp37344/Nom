@@ -20,6 +20,21 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		flex: 1,
 	},
+	buttonTransparent: {
+     // opacity: .75,
+	    borderColor: 'white',
+	    borderWidth: 1,
+	    borderRadius: 26,
+	    marginLeft: 60,
+	    marginRight: 60,
+	    marginBottom: 20,
+	    color: 'white',
+	    fontSize: 20,
+	    fontWeight: 'bold',
+	    overflow: 'hidden',
+	    padding: 12,
+	    textAlign:'center',
+    },
 	codeHighlightContainer: {
 		backgroundColor: 'rgba(0,0,0,0.05)',
 		borderRadius: 3,
@@ -104,6 +119,11 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		color: '#2e78b7',
 	},
+	homeContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		backgroundColor: '#ffaa00',
+	},
 	homeScreenFilename: {
 		marginVertical: 7,
 	},
@@ -156,6 +176,19 @@ const styles = StyleSheet.create({
 		color: 'rgba(96,100,109, 1)',
 		lineHeight: 100,
 		textAlign: 'center',
+	},
+	nomTextAndroid: {
+		fontSize: 96,
+		color: 'white',
+		textAlign: 'center',
+		fontFamily: 'Roboto',
+	},
+	nomTextIOS: {
+		fontSize: 96,
+		color: 'white',
+		textAlign: 'center',
+		fontFamily: 'bold',
+		fontFamily: 'Avenir-Light',
 	},
 	postContainer: {
 		paddingTop: 30,
