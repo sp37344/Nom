@@ -78,40 +78,25 @@ export default class UserViewPostScreen extends React.Component {
         console.log('AFTER PUSHING TO OLD FOOD ITEMS');
         console.log(foodItemsOld);
 
-        // var oldTime = orderSnapshot.child("orderTime").val();
-        // console.log('OLD time: ', oldTime);
         var oldTotalRef = firebase.database().ref('activeOrders/' + snapshotKey + '/total');
-          await oldTotalRef.once('value', async function(snapshot) {
-            oldTotal = snapshot.val();
-            console.log('oldTotal', oldTotal);
-            var newTotal = oldTotal + total;
-            console.log("total ", total);
-            console.log("newTotal ", newTotal);
-            console.log("snapshotRef", snapshotRef);
-            await firebase.database().ref('activeOrders/' + snapshotKey).update({
-              orderTime: orderTime,
-              total: newTotal
-            });
-            console.log("all done yay");
-            console.log("NAVIGATING TO USER POST");
-            // updateStarCount(postElement, snapshot.val());
+        await oldTotalRef.once('value', async function(snapshot) {
+          oldTotal = snapshot.val();
+          console.log('oldTotal', oldTotal);
+          var newTotal = oldTotal + total;
+          console.log("total ", total);
+          console.log("newTotal ", newTotal);
+          console.log("snapshotRef", snapshotRef);
+          await firebase.database().ref('activeOrders/' + snapshotKey).update({
+            orderTime: orderTime,
+            total: newTotal
           });
-        //var oldTotal = firebase.database().ref('activeOrders/' + snapshotKey).child("total");
-
-        // console.log("oldTotal ", oldTotal);
-        // //console.log("oldTotal value ", oldTotal.val());
-        // var newTotal = oldTotal + total;
-        // console.log("total ", total);
-        // console.log("newTotal ", newTotal);
-
-
-        // this.props.navigation.navigate("UserPost");
-        // return;
+          console.log("all done yay");
+          console.log("NAVIGATING TO USER POST");
+        });
       }
       else {
         console.log("adding user order")
 
-        // total = 0;
         activeOrdersRef = firebase.database().ref('activeOrders/');
         console.log(activeOrdersRef);
         var newOrder = activeOrdersRef.push();
@@ -121,8 +106,6 @@ export default class UserViewPostScreen extends React.Component {
           orderTime,
           total
         })
-        // var newOrderKey = newOrder.key;
-        // console.log("newOrderKey", newOrder.key);
 
         await newOrder.child("foodItems").push({
           item: item,
@@ -135,21 +118,8 @@ export default class UserViewPostScreen extends React.Component {
           expirationDate: expirationDate
         });
 
-        // await newFoodItem.push({
-        //   item: item,
-        //   price: price,
-        //   description: description,
-        //   quantity: quantity,
-        //   subtotal: total,
-        //   dietaryRestrictions: dietaryRestrictions,
-        //   datePosted: datePosted,
-        //   expirationDate: expirationDate
-        // })
-
         console.log("brand newOrder: ", newOrder);
         console.log("NAVIGATING TO USER POST");
-        // this.props.navigation.navigate("UserPost");
-        // return;
       }
     });
     this.props.navigation.navigate("UserPost");
