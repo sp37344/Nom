@@ -78,20 +78,21 @@ export default class UserViewPostScreen extends React.Component {
         console.log('AFTER PUSHING TO OLD FOOD ITEMS');
         console.log(foodItemsOld);
 
-        var oldTotal = firebase.database().ref('activeOrders/' + snapshotKey).child("total");
-        console.log("oldTotal ", oldTotal);
-        var newTotal = oldTotal + total;
-        console.log(newTotal);
-
-        console.log("snapshotRef", snapshotRef);
-        await firebase.database().ref('activeOrders/' + snapshotKey).update({
-          orderTime: orderTime,
-          total: newTotal
+        var oldTotalRef = firebase.database().ref('activeOrders/' + snapshotKey + '/total');
+        await oldTotalRef.once('value', async function(snapshot) {
+          oldTotal = snapshot.val();
+          console.log('oldTotal', oldTotal);
+          var newTotal = oldTotal + total;
+          console.log("total ", total);
+          console.log("newTotal ", newTotal);
+          console.log("snapshotRef", snapshotRef);
+          await firebase.database().ref('activeOrders/' + snapshotKey).update({
+            orderTime: orderTime,
+            total: newTotal
+          });
+          console.log("all done yay");
+          console.log("NAVIGATING TO USER POST");
         });
-        console.log("all done yay");
-        console.log("NAVIGATING TO USER POST");
-        // this.props.navigation.navigate("UserPost");
-        // return;
       }
       else {
         console.log("adding user order")
@@ -105,8 +106,6 @@ export default class UserViewPostScreen extends React.Component {
           orderTime,
           total
         })
-        // var newOrderKey = newOrder.key;
-        // console.log("newOrderKey", newOrder.key);
 
         await newOrder.child("foodItems").push({
           item: item,
@@ -119,21 +118,8 @@ export default class UserViewPostScreen extends React.Component {
           expirationDate: expirationDate
         });
 
-        // await newFoodItem.push({
-        //   item: item,
-        //   price: price,
-        //   description: description,
-        //   quantity: quantity,
-        //   subtotal: total,
-        //   dietaryRestrictions: dietaryRestrictions,
-        //   datePosted: datePosted,
-        //   expirationDate: expirationDate
-        // })
-
         console.log("brand newOrder: ", newOrder);
         console.log("NAVIGATING TO USER POST");
-        // this.props.navigation.navigate("UserPost");
-        // return;
       }
     });
     this.props.navigation.navigate("UserPost");
