@@ -64,9 +64,6 @@ export default class UserViewPostScreen extends React.Component {
         console.log('OLD FOOD ITEMS REFERENCE: ');
         console.log(foodItemsOld);
 
-        var oldTotal = orderSnapshot.child("total").val();
-        console.log("oldTotal ", oldTotal);
-
         await foodItemsOld.push({
           item: item,
           price: price,
@@ -81,6 +78,8 @@ export default class UserViewPostScreen extends React.Component {
         console.log('AFTER PUSHING TO OLD FOOD ITEMS');
         console.log(foodItemsOld);
 
+        var oldTotal = firebase.database().ref('activeOrders/' + snapshotKey).child("total");
+        console.log("oldTotal ", oldTotal);
         var newTotal = oldTotal + total;
         console.log(newTotal);
 

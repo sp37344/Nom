@@ -128,7 +128,7 @@ export default class RestaurantSignInScreen extends React.Component {
         </View>
         <View style={styles.buttons}>
         <TouchableOpacity onPress={this.handlPress}>
-          <Text 
+          <Text
             onPress={() => this.verifyRestaurantSignIn(this.state.email, this.state.password)}
             style={styles.buttonOpaque}
             textDecorationLine={'underline'}>
