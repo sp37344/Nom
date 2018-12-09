@@ -34,7 +34,7 @@ export default class UserPostScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Posts',
+    title: 'Home',
   }
 
   async checkIfAlreadyInCart(item, price, description, dietaryRestrictions, quantity, restaurant, expirationDate, datePosted) {

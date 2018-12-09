@@ -337,6 +337,20 @@ const styles = StyleSheet.create({
 		paddingLeft: 15,
 		paddingRight: 15,
 	},
+	userProfileName: {
+		marginBottom: 5,
+		letterSpacing: 1,
+		color: Colors.black,
+		fontSize: 36,
+		fontWeight: '400',
+	},
+	userProfileSubtitle: {
+		marginBottom: 5,
+		letterSpacing: 1,
+		color: Colors.black,
+		fontSize: 28,
+		fontWeight: '400',
+	},
 	userSelectionText: {
 		fontSize: 24,
 		color: 'rgba(96,100,109, 1)',
