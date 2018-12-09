@@ -8,9 +8,12 @@ import {
   TextInput,
   Platform,
   DatePickerIOS,
+  // CheckBox
+  TouchableHighlight,
 } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
 import { ExpoLinksView } from '@expo/samples';
+import { FontAwesome } from '@expo/vector-icons';
 import Picker from 'react-native-picker';
 import DatePicker from 'react-native-date-picker';
 import styles from '../styles';
@@ -29,6 +32,11 @@ export default class RestaurantNewPostScreen extends React.Component {
       dietaryRestrictions: 'List dietary restrictions here',
       cuisine: 'List cuisine types here',
       // dietaryRestrictions: [],
+      vegetarian: false,
+      vegan: false,
+      dairyFree: false,
+      nutFree: false,
+      glutenFree: false,
       expirationDate: new Date(),
       active: 1,
     };
@@ -65,6 +73,13 @@ export default class RestaurantNewPostScreen extends React.Component {
       // error callback
       console.log('error ', error)
     })
+  }
+
+  _onHideUnderlay() {
+    this.setState({ vegan: false });
+  }
+  _onShowUnderlay() {
+    this.setState({ vegan: true });
   }
 
   render() {
@@ -122,14 +137,90 @@ export default class RestaurantNewPostScreen extends React.Component {
             value={this.state.description}
           />
         </View>
-        <View style={styles.inputContainer}>
+        <View style={styles.inputContainerDiet}>
           <Text style={styles.label}> Dietary Restrictions: </Text>
-          <TextInput
-            onFocus={() => this.setState({dietaryRestrictions: ''})}
-            onChangeText={(text) => this.setState({dietaryRestrictions: text})}
-            style={styles.input}
-            value={this.state.dietaryRestrictions}
-          />
+          <TouchableHighlight
+            style={
+              this.state.vegetarian
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            } 
+            onPress={() => this.setState({vegetarian:!this.state.vegetarian})}
+            >
+            <Text 
+              style={
+                this.state.vegetarian
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > vegetarian </Text>
+          </TouchableHighlight>
+        </View>
+        <View style={styles.inputContainer}>
+          <TouchableHighlight
+            style={
+              this.state.vegan
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            } 
+            onPress={() => this.setState({vegan:!this.state.vegan})}
+            >
+            <Text 
+              style={
+                this.state.vegan
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > vegan </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={
+              this.state.dairyFree
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            } 
+            onPress={() => this.setState({dairyFree:!this.state.dairyFree})}
+            >
+            <Text 
+              style={
+                this.state.dairyFree
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > dairy-free </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={
+              this.state.nutFree
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            } 
+            onPress={() => this.setState({nutFree:!this.state.nutFree})}
+            >
+            <Text 
+              style={
+                this.state.nutFree
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > nut-free </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={
+              this.state.glutenFree
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            } 
+            onPress={() => this.setState({glutenFree:!this.state.glutenFree})}
+            >
+            <Text 
+              style={
+                this.state.glutenFree
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > gluten-free </Text>
+          </TouchableHighlight>
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Cuisine Type: </Text>
@@ -139,15 +230,6 @@ export default class RestaurantNewPostScreen extends React.Component {
             style={styles.input}
             value={this.state.cuisine}
           />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Item: </Text>
-          <SearchBar
-            lightTheme
-            round
-            showLoading
-            containerStyle={styles.searchContainer}
-            placeholder='Search' />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Expiration Date: </Text>
