@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
@@ -16,13 +17,13 @@ export default class UserSignInScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'example@gmail.com',
+      email: '',
       password: '',
     };
   }
 
   static navigationOptions = {
-    title: 'User Sign In',
+    header: null,
   };
 
   verifyUserSignIn(email, password) {
@@ -50,24 +51,27 @@ export default class UserSignInScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Email </Text>
+      <View style={styles.loginContainer}>
+        <View style={styles.loginInputContainer}>
+        <View style={styles.loginField}>
+          <Text style={styles.loginTitle}> User Login </Text>
+          <Text style={styles.loginLabel}>email</Text>
           <TextInput
             onFocus={() => this.setState({email: ''})}
             onChangeText={(text) => this.setState({email: text})}
-            style={styles.input}
+            style={styles.loginInput}
             value={this.state.email}
           />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Password </Text>
+          </View>
+          <View style={styles.loginField}>
+          <Text style={styles.loginLabel}>password</Text>
           <TextInput
             onChangeText={(text) => this.setState({password: text})}
             secureTextEntry={true}
-            style={styles.input}
+            style={styles.loginInput}
             value={this.state.password}
           />
+          </View>
         </View>
         <View style={styles.inputContainer}>
           <Text> New user? Sign up </Text>
@@ -78,12 +82,16 @@ export default class UserSignInScreen extends React.Component {
           </Text>
         </View>
         <View style={styles.buttons}>
-          <Button
+        <TouchableOpacity onPress={this.handlPress}>
+          <Text 
             onPress={() => this.verifyUserSignIn(this.state.email, this.state.password)}
-            title='Submit'
-          />
+            style={styles.buttonOpaque}
+            textDecorationLine={'underline'}>
+            Log In
+          </Text>
+        </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     );
   }
 }

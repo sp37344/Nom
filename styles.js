@@ -20,6 +20,37 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		flex: 1,
 	},
+	buttonOpaque: {
+     // opacity: .75,
+     	backgroundColor: '#ffaa00',
+	    borderColor: 'white',
+	    borderWidth: 1,
+	    borderRadius: 26,
+	    marginLeft: 60,
+	    marginRight: 60,
+	    marginBottom: 20,
+	    color: 'white',
+	    fontSize: 20,
+	    fontWeight: 'bold',
+	    overflow: 'hidden',
+	    padding: 12,
+	    textAlign:'center',
+    },
+	buttonTransparent: {
+     // opacity: .75,
+	    borderColor: 'white',
+	    borderWidth: 1,
+	    borderRadius: 26,
+	    marginLeft: 60,
+	    marginRight: 60,
+	    marginBottom: 20,
+	    color: 'white',
+	    fontSize: 20,
+	    fontWeight: 'bold',
+	    overflow: 'hidden',
+	    padding: 12,
+	    textAlign:'center',
+    },
 	codeHighlightContainer: {
 		backgroundColor: 'rgba(0,0,0,0.05)',
 		borderRadius: 3,
@@ -49,16 +80,16 @@ const styles = StyleSheet.create({
 	},
 	descriptionText: {
 		marginBottom: 4,
-		color: Colors.gray,
+		color: '#ffaa00',
 		fontSize: 16,
 		fontWeight: '400',
 		letterSpacing: 1,
 	},
 	detailText: {
 		marginBottom: 4,
-		color: Colors.black,
-		fontSize: 22,
-		fontWeight: '600',
+		color: 'gray',
+		fontSize: 16,
+		fontWeight: '500',
 		letterSpacing: 0.5,
 	},
 	developmentModeText: {
@@ -104,16 +135,21 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		color: '#2e78b7',
 	},
+	homeContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		backgroundColor: '#ffaa00',
+	},
 	homeScreenFilename: {
 		marginVertical: 7,
 	},
 	input: {
-		fontSize: 24,
+		fontSize: 22,
 		color: 'rgba(96,100,109, 1)',
 		flex: 1,
 	},
 	inputContainer: {
-		paddingTop: 25,
+		paddingTop: 10,
 		paddingLeft: 15,
 		paddingRight: 15,
 		paddingBottom: 15,
@@ -124,12 +160,45 @@ const styles = StyleSheet.create({
 		height: 130, 
 	},
 	label: {
-		fontSize: 24,
-		color: 'rgba(0, 122, 255, 1)',
+		fontSize: 22,
+		color: '#ffaa00',
+		fontWeight: '500',
 		paddingRight: 10,
 	},
 	link: {
 		color: 'rgba(0, 122, 255, 1)',
+	},
+	loadingContainer: {
+		backgroundColor: 'white',
+	},
+	loginContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		backgroundColor: '#fff',
+		paddingTop: 100,
+		alignItems: 'center',
+	},
+	loginField: { // Wraps login label and input
+		borderBottomColor: 'rgba(96,100,109, 1)',
+		borderBottomWidth: 1,
+		marginBottom: 10,
+
+	},
+	loginInput: {
+		fontSize: 24,
+		color: 'rgba(96,100,109, 1)',
+		width: 240,
+
+	},
+	loginLabel: {
+		fontSize: 18,
+		color: '#ffaa00',
+	},
+	loginTitle: {
+		fontSize: 26,
+		color: 'rgba(96,100,109, 1)',
+		marginBottom: 20,
+		textAlign: 'center',
 	},
 	mainViewStyle: {
 		flex: 1,
@@ -146,10 +215,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
+		backgroundColor: 'white',
 	},
 	newPostText: {
-		fontSize: 20,
-		color: 'rgba(0, 122, 255, 1)',
+		fontSize: 18,
+		color: '#ffaa00',
 	},
 	nomText: {
 		fontSize: 64,
@@ -157,10 +227,29 @@ const styles = StyleSheet.create({
 		lineHeight: 100,
 		textAlign: 'center',
 	},
+	nomTextAndroid: {
+		fontSize: 96,
+		color: 'white',
+		textAlign: 'center',
+		fontFamily: 'Roboto',
+	},
+	nomTextIOS: {
+		fontSize: 96,
+		color: 'white',
+		textAlign: 'center',
+		fontFamily: 'bold',
+		fontFamily: 'Avenir-Light',
+	},
 	postContainer: {
 		paddingTop: 30,
 		paddingLeft: 15,
 		paddingRight: 15,
+		backgroundColor: 'white',
+	},
+	postText: {
+		fontSize: 24,
+		color: '#ffaa00',
+		paddingRight: 10,
 	},
 	productRow: {
 		margin: 25,
@@ -183,8 +272,18 @@ const styles = StyleSheet.create({
 	},
 	scroll: {
 		backgroundColor: '#FFF',
-		flex: 1,
-		marginBottom: 55,
+	},
+	statsDescriptionText: {
+		textAlign: 'center',
+		fontWeight: '500',
+		letterSpacing: 0.5,
+		marginBottom: 10,
+		color: '#ffaa00',
+	},
+	statsContainer: {
+		paddingTop: 10,
+		paddingLeft: 30,
+		paddingRight: 30,
 	},
 	subDetailText: {
 		color: Colors.black,

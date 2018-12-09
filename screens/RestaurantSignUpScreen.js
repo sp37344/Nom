@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import styles from '../styles';
@@ -16,17 +17,18 @@ export default class RestaurantSignUpScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Restaurant Name',
+      name: '',
       password: '',
-      address: 'Restaurant Address',
-      phone: 'Phone Number',
-      email: 'example@gmail.com',
+      address: '',
+      phone: '',
+      email: '',
       active: 1,
     };
   }
 
   static navigationOptions = {
-    title: 'Restaurant Registration',
+    // title: 'Restaurant Registration',
+    header: null,
   };
 
   writeRestaurantData(name, password, address, phone, email) {
@@ -61,55 +63,57 @@ export default class RestaurantSignUpScreen extends React.Component {
         console.log(error);
       });
   }
-
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Name </Text>
-          <TextInput
-            onFocus={() => this.setState({name: ''})}
-            onChangeText={(text) => this.setState({name: text})}
-            style={styles.input}
-            value={this.state.name}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Password </Text>
-          <TextInput
-            onChangeText={(text) => this.setState({password: text})}
-            secureTextEntry={true}
-            style={styles.input}
-            value={this.state.password}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Address </Text>
-          <TextInput
-            onFocus={() => this.setState({address: ''})}
-            onChangeText={(text) => this.setState({address: text})}
-            style={styles.input}
-            value={this.state.address}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Phone Number </Text>
-          <TextInput
-            onFocus={() => this.setState({phone: ''})}
-            onChangeText={(text) => this.setState({phone: text})}
-            style={styles.input}
-            value={this.state.phone}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Email </Text>
-          <TextInput
-            onFocus={() => this.setState({email: ''})}
-            onChangeText={(text) => this.setState({email: text})}
-            style={styles.input}
-            value={this.state.email}
-          />
+      <View style={styles.loginContainer}>
+        <View style={styles.loginInputContainer}>
+          <View style={styles.loginField}>
+            <Text style={styles.loginTitle}> Restaurant Sign Up </Text>
+            <Text style={styles.loginLabel}>name</Text>
+            <TextInput
+              onFocus={() => this.setState({name: ''})}
+              onChangeText={(text) => this.setState({name: text})}
+              style={styles.loginInput}
+              value={this.state.name}
+            />
+          </View>
+          <View style={styles.loginField}>
+            <Text style={styles.loginLabel}>email</Text>
+            <TextInput
+              onFocus={() => this.setState({email: ''})}
+              onChangeText={(text) => this.setState({email: text})}
+              style={styles.loginInput}
+              value={this.state.email}
+            />
+          </View>
+          <View style={styles.loginField}>
+            <Text style={styles.loginLabel}>password</Text>
+            <TextInput
+              onChangeText={(text) => this.setState({password: text})}
+              secureTextEntry={true}
+              style={styles.loginInput}
+              value={this.state.password}
+            />
+          </View>
+          <View style={styles.loginField}>
+            <Text style={styles.loginLabel}>phone</Text>
+            <TextInput
+              onFocus={() => this.setState({phone: ''})}
+              onChangeText={(text) => this.setState({phone: text})}
+              style={styles.loginInput}
+              value={this.state.phone}
+            />
+          </View>
+          <View style={styles.loginField}>
+            <Text style={styles.loginLabel}>address</Text>
+            <TextInput
+              onChangeText={(text) => this.setState({address: text})}
+              onFocus={() => this.setState({address: ''})}
+              style={styles.loginInput}
+              value={this.state.address}
+            />
+          </View>
         </View>
         <View style={styles.inputContainer}>
           <Text> Already have an account? Sign in </Text>
@@ -120,18 +124,18 @@ export default class RestaurantSignUpScreen extends React.Component {
           </Text>
         </View>
         <View style={styles.buttons}>
-          <Button
-            onPress={() =>
-              this.writeRestaurantData(this.state.name, this.state.password, this.state.address, this.state.phone, this.state.email)
+          <TouchableOpacity onPress={this.handlPress}>
+            <Text 
+              onPress={() => 
+                this.writeRestaurantData(this.state.name, this.state.password, this.state.address, this.state.phone, this.state.email)
               }
-            title='Submit'
-          />
-          <Button
-            onPress={() => navigate('Home')}
-            title='Go Home'
-          />
+              style={styles.buttonOpaque}
+              textDecorationLine={'underline'}>
+              Sign Up
+            </Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     );
   }
 }

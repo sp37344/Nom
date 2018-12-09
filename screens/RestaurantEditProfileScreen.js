@@ -33,7 +33,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
   renderDetail = () => {
     return (
       <View>
-        <Text style={styles.detailText}>description</Text>
+        <Text style={styles.detailText}>Add description here.</Text>
         <Text style={styles.subDetailText}>{this.props.detail}</Text>
       </View>
     )
@@ -65,9 +65,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
       <View style={styles.headerContainer}>
         <View style={styles.coverContainer}>
           <ImageBackground
-            source={{
-              uri: 'https://www.bandarrestaurant.com/wp-content/uploads/2018/04/Bandar-Lobby.jpg',
-            }}
+            source={require("../assets/images/barbecue.jpg")}
             style={styles.coverImage}
           >
           </ImageBackground>
@@ -89,7 +87,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
           <View style={styles.productRow}>{this.renderDescription()}</View>
           <View style={styles.productRow}>{this.renderDetail()}</View>
         </ScrollView>
-        <View style={styles.footer}>
+{/*        <View style={styles.footer}>
           <TouchableOpacity style={styles.buttonFooter}>
             <Text style={styles.textFooter}>CALL</Text>
           </TouchableOpacity>
@@ -97,7 +95,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
           <TouchableOpacity style={styles.buttonFooter}>
             <Text style={styles.textFooter}>EMAIL</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     );
   }

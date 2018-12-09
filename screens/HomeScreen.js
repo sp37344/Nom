@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles';
 import {
   Image,
+  ImageBackground,
   Platform,
   ScrollView,
   StyleSheet,
@@ -14,6 +15,7 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -22,41 +24,26 @@ export default class HomeScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
-
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <View style={styles.homeContainer}>      
           <View style={styles.welcomeContainer}>
-
-            <Text style={styles.nomText}>Nom</Text>
+            <Text style={Platform.OS === "ios" ? styles.nomTextIOS : styles.nomTextAndroid}>NOM</Text>
           </View>
-
-          <View style={styles.getStartedContainer}>
-
-            <Text style={styles.userSelectionText}>I am a ...</Text>
-            <Button
-              onPress={() => navigate('UserSignIn')}
-              title='USER'
-            />
-            <Button
-              onPress={() => navigate('RestaurantSignIn')}
-              title='RESTAURANT'
-            />
-          </View>
-
-          {/* <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View> */}
-        </ScrollView>
-
-        {/* <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View> */}
+        <TouchableOpacity onPress={this.handlPress}>
+          <Text 
+            onPress={() => navigate('UserSignIn')}
+            style={styles.buttonTransparent}>
+          
+            User Login
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.handlPress}>
+          <Text 
+            onPress={() => navigate('RestaurantSignIn')}
+            style={styles.buttonTransparent}
+            textDecorationLine={'underline'}>
+            Restaurant Login
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
