@@ -8,10 +8,10 @@ import RestaurantNewPost from '../screens/RestaurantNewPostScreen';
 import RestaurantViewPost from '../screens/RestaurantViewPostScreen';
 import RestaurantViewFilledPost from '../screens/RestaurantViewFilledPostScreen';
 import RestaurantEditPost from '../screens/RestaurantEditPostScreen';
-import RestaurantProfile from '../screens/RestaurantProfileScreen';
-import RestaurantSettingsScreen from '../screens/RestaurantSettingsScreen';
 
 import UserPost from '../screens/UserPostScreen';
+import UserProfile from '../screens/UserProfileScreen';
+import UserSettingsScreen from '../screens/RestaurantSettingsScreen';
 import UserViewPost from '../screens/UserViewPostScreen';
 import UserPayment from '../screens/UserPaymentScreen';
 
@@ -42,7 +42,7 @@ UserPostStack.navigationOptions = {
 
 // User Profile
 const UserProfileStack = createStackNavigator({
-  Profile: RestaurantProfile,
+  UserProfile: UserProfile,
 });
 
 UserProfileStack.navigationOptions = {
@@ -56,7 +56,7 @@ UserProfileStack.navigationOptions = {
 };
 
 const UserSettingsStack = createStackNavigator({
-  RestaurantSettings: RestaurantSettingsScreen,
+  UserSettings: UserSettingsScreen,
 });
 
 UserSettingsStack.navigationOptions = {

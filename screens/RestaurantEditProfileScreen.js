@@ -23,6 +23,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
       address: 'Restaurant Address',
       phone: 'Phone Number',
       email: 'example@gmail.com',
+      description: 'Add description here.',
     };
   }
 
@@ -33,7 +34,12 @@ export default class RestaurantEditProfileScreen extends React.Component {
   renderDetail = () => {
     return (
       <View>
-        <Text style={styles.detailText}>Add description here.</Text>
+        <TextInput 
+          onFocus={() => this.setState({description: ''})}
+          onChangeText={(text) => this.setState({description: text})}
+          style={styles.detailText}
+          value={this.state.description}
+        />
         <Text style={styles.subDetailText}>{this.props.detail}</Text>
       </View>
     )
@@ -55,6 +61,12 @@ export default class RestaurantEditProfileScreen extends React.Component {
             style={styles.descriptionEditText}
             value={this.state.address}
           />
+        <TextInput 
+          onFocus={() => this.setState({phone: ''})}
+          onChangeText={(text) => this.setState({phone: text})}
+          style={styles.descriptionEditText}
+          value={this.state.phone}
+        />
       </View>
     )
   }
@@ -86,6 +98,15 @@ export default class RestaurantEditProfileScreen extends React.Component {
           </View>
           <View style={styles.productRow}>{this.renderDescription()}</View>
           <View style={styles.productRow}>{this.renderDetail()}</View>
+        </ScrollView>
+        <ScrollView style={styles.scroll}>
+          <TouchableOpacity onPress={this.handlPress}>
+            <Text
+              style={styles.buttonOpaque}
+              textDecorationLine={'underline'}>
+              Update Profile
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
 {/*        <View style={styles.footer}>
           <TouchableOpacity style={styles.buttonFooter}>

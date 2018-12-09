@@ -162,6 +162,7 @@ export default class RestaurantStatsScreen extends React.Component {
               data={ this.getAreaData() }
               svg={{ fill: 'orange' }}
               contentInset={{ top: 20, bottom: 30 }}
+              animate={true}
           >
               <Grid/>
               <Line/>
@@ -203,6 +204,7 @@ export default class RestaurantStatsScreen extends React.Component {
                 contentInset={{ top: 10, bottom: 10 }}
                 spacing={0.2}
                 gridMin={0}
+                animate={true}
             >
                 <Grid direction={Grid.Direction.VERTICAL}/>
             </BarChart>
@@ -218,6 +220,7 @@ export default class RestaurantStatsScreen extends React.Component {
               progressColor={'orange'}
               startAngle={ -Math.PI * 0.8 }
               endAngle={ Math.PI * 0.8 }
+              animate={true}
           />
           <Text
             style={{
