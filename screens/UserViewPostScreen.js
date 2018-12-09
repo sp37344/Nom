@@ -41,7 +41,7 @@ export default class UserViewPostScreen extends React.Component {
     const description = navigation.getParam('description', "Delicious freshly baked");
     const dietaryRestrictions = navigation.getParam('dietaryRestrictions', "None");
     // const quantity = navigation.getParam('quantity', "4");
-    const restaurant = navigation.getParam('restaurant', "Panera");
+    const foodRestaurant = navigation.getParam('restaurant', "Panera");
     const expirationDate = navigation.getParam('expirationDate', "9:00PM today")
     const datePosted = navigation.getParam('datePosted', "2:45PM today")
     var user = firebase.auth().currentUser;
@@ -58,41 +58,86 @@ export default class UserViewPostScreen extends React.Component {
         var snapshotKey = Object.keys(orderSnapshot.val())[0];
         console.log("order Snapshot: ", orderSnapshot);
         console.log('user already has active order');
+        var existingRestaurant = firebase.database().ref('activeOrders/' + snapshotKey + '/restaurant');
+        await existingRestaurant.once('value', async function(snapshot) {
+          console.log("oldRestaurant ", snapshot.val());
+          console.log("foodRestaraunt ", foodRestaraunt);
+          if (snapshot.val() != foodRestaurant) {
+            console.log('MUST ORDER FROM THE SAME RESTAURANT');
+            alert("MUST ORDER FOOD ITEMS FROM THE SAME RESTAURANT");
+          }
+          else {
+            var foodItemsOld = firebase.database().ref('activeOrders/' + snapshotKey).child("foodItems");
 
-        var foodItemsOld = firebase.database().ref('activeOrders/' + snapshotKey).child("foodItems");
+            console.log('OLD FOOD ITEMS REFERENCE: ');
+            console.log(foodItemsOld);
 
-        console.log('OLD FOOD ITEMS REFERENCE: ');
-        console.log(foodItemsOld);
+            await foodItemsOld.push({
+              item: item,
+              price: price,
+              description: description,
+              quantity: quantity,
+              subtotal: total,
+              dietaryRestrictions: dietaryRestrictions,
+              datePosted: datePosted,
+              expirationDate: expirationDate
+            })
 
-        await foodItemsOld.push({
-          item: item,
-          price: price,
-          description: description,
-          quantity: quantity,
-          subtotal: total,
-          dietaryRestrictions: dietaryRestrictions,
-          datePosted: datePosted,
-          expirationDate: expirationDate
+            console.log('AFTER PUSHING TO OLD FOOD ITEMS');
+            console.log(foodItemsOld);
+
+            var oldTotalRef = firebase.database().ref('activeOrders/' + snapshotKey + '/total');
+            await oldTotalRef.once('value', async function(snapshot) {
+              oldTotal = snapshot.val();
+              console.log('oldTotal', oldTotal);
+              var newTotal = oldTotal + total;
+              console.log("total ", total);
+              console.log("newTotal ", newTotal);
+              console.log("snapshotRef", snapshotRef);
+              await firebase.database().ref('activeOrders/' + snapshotKey).update({
+                orderTime: orderTime,
+                total: newTotal
+              });
+              console.log("all done yay");
+              console.log("NAVIGATING TO USER POST");
+            });
+          }
         })
 
-        console.log('AFTER PUSHING TO OLD FOOD ITEMS');
-        console.log(foodItemsOld);
-
-        var oldTotalRef = firebase.database().ref('activeOrders/' + snapshotKey + '/total');
-        await oldTotalRef.once('value', async function(snapshot) {
-          oldTotal = snapshot.val();
-          console.log('oldTotal', oldTotal);
-          var newTotal = oldTotal + total;
-          console.log("total ", total);
-          console.log("newTotal ", newTotal);
-          console.log("snapshotRef", snapshotRef);
-          await firebase.database().ref('activeOrders/' + snapshotKey).update({
-            orderTime: orderTime,
-            total: newTotal
-          });
-          console.log("all done yay");
-          console.log("NAVIGATING TO USER POST");
-        });
+        // var foodItemsOld = firebase.database().ref('activeOrders/' + snapshotKey).child("foodItems");
+        //
+        // console.log('OLD FOOD ITEMS REFERENCE: ');
+        // console.log(foodItemsOld);
+        //
+        // await foodItemsOld.push({
+        //   item: item,
+        //   price: price,
+        //   description: description,
+        //   quantity: quantity,
+        //   subtotal: total,
+        //   dietaryRestrictions: dietaryRestrictions,
+        //   datePosted: datePosted,
+        //   expirationDate: expirationDate
+        // })
+        //
+        // console.log('AFTER PUSHING TO OLD FOOD ITEMS');
+        // console.log(foodItemsOld);
+        //
+        // var oldTotalRef = firebase.database().ref('activeOrders/' + snapshotKey + '/total');
+        // await oldTotalRef.once('value', async function(snapshot) {
+        //   oldTotal = snapshot.val();
+        //   console.log('oldTotal', oldTotal);
+        //   var newTotal = oldTotal + total;
+        //   console.log("total ", total);
+        //   console.log("newTotal ", newTotal);
+        //   console.log("snapshotRef", snapshotRef);
+        //   await firebase.database().ref('activeOrders/' + snapshotKey).update({
+        //     orderTime: orderTime,
+        //     total: newTotal
+        //   });
+        //   console.log("all done yay");
+        //   console.log("NAVIGATING TO USER POST");
+        // });
       }
       else {
         console.log("adding user order")

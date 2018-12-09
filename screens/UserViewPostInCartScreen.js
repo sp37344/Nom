@@ -40,7 +40,6 @@ export default class UserViewPostInCartScreen extends React.Component {
     const price = navigation.getParam('price', "3.00");
     const description = navigation.getParam('description', "Delicious freshly baked");
     const dietaryRestrictions = navigation.getParam('dietaryRestrictions', "None");
-
     const restaurant = navigation.getParam('restaurant', "Panera");
     const expirationDate = navigation.getParam('expirationDate', "9:00PM today");
     const datePosted = navigation.getParam('datePosted', "2:45PM today");
