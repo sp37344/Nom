@@ -78,24 +78,40 @@ export default class UserViewPostScreen extends React.Component {
         console.log('AFTER PUSHING TO OLD FOOD ITEMS');
         console.log(foodItemsOld);
 
-        var oldTotal = firebase.database().ref('activeOrders/' + snapshotKey).child("total");
-        console.log("oldTotal ", oldTotal);
-        var newTotal = oldTotal + total;
-        console.log(newTotal);
+        // var oldTime = orderSnapshot.child("orderTime").val();
+        // console.log('OLD time: ', oldTime);
+        var oldTotalRef = firebase.database().ref('activeOrders/' + snapshotKey + '/total');
+          await oldTotalRef.once('value', async function(snapshot) {
+            oldTotal = snapshot.val();
+            console.log('oldTotal', oldTotal);
+            var newTotal = oldTotal + total;
+            console.log("total ", total);
+            console.log("newTotal ", newTotal);
+            console.log("snapshotRef", snapshotRef);
+            await firebase.database().ref('activeOrders/' + snapshotKey).update({
+              orderTime: orderTime,
+              total: newTotal
+            });
+            console.log("all done yay");
+            console.log("NAVIGATING TO USER POST");
+            // updateStarCount(postElement, snapshot.val());
+          });
+        //var oldTotal = firebase.database().ref('activeOrders/' + snapshotKey).child("total");
 
-        console.log("snapshotRef", snapshotRef);
-        await firebase.database().ref('activeOrders/' + snapshotKey).update({
-          orderTime: orderTime,
-          total: newTotal
-        });
-        console.log("all done yay");
-        console.log("NAVIGATING TO USER POST");
+        // console.log("oldTotal ", oldTotal);
+        // //console.log("oldTotal value ", oldTotal.val());
+        // var newTotal = oldTotal + total;
+        // console.log("total ", total);
+        // console.log("newTotal ", newTotal);
+
+
         // this.props.navigation.navigate("UserPost");
         // return;
       }
       else {
         console.log("adding user order")
 
+        // total = 0;
         activeOrdersRef = firebase.database().ref('activeOrders/');
         console.log(activeOrdersRef);
         var newOrder = activeOrdersRef.push();
