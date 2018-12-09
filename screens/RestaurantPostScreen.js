@@ -150,7 +150,7 @@ componentDidMount() {
   render() {
     if (this.state.isLoading == true || this.state.availableList == undefined || this.state.filledList == undefined) {
       return (
-        <View style={styles.postContainer}>
+        <View style={styles.loadingContainer}>
           <Text style={styles.postText}>
             Loading...
           </Text>
@@ -183,7 +183,7 @@ componentDidMount() {
       ]
 
       return (
-        <ScrollView style={styles.container}>
+        <ScrollView>
           <View style={styles.newPostContainer}>
             <Text onPress={() => navigate("RestaurantNewPost")} style={styles.newPostText}> New Post </Text>
             <Ionicons

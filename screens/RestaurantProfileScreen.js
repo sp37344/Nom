@@ -61,9 +61,7 @@ export default class RestaurantProfileScreen extends React.Component {
       <View style={styles.headerContainer}>
         <View style={styles.coverContainer}>
           <ImageBackground
-            source={{
-              uri: 'https://www.bandarrestaurant.com/wp-content/uploads/2018/04/Bandar-Lobby.jpg',
-            }}
+            source={require("../assets/images/barbecue.jpg")}
             style={styles.coverImage}
           >
           </ImageBackground>

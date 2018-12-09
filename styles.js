@@ -87,9 +87,9 @@ const styles = StyleSheet.create({
 	},
 	detailText: {
 		marginBottom: 4,
-		color: Colors.black,
+		color: 'gray',
 		fontSize: 16,
-		fontWeight: '100',
+		fontWeight: '500',
 		letterSpacing: 0.5,
 	},
 	developmentModeText: {
@@ -162,10 +162,14 @@ const styles = StyleSheet.create({
 	label: {
 		fontSize: 22,
 		color: '#ffaa00',
+		fontWeight: '500',
 		paddingRight: 10,
 	},
 	link: {
 		color: 'rgba(0, 122, 255, 1)',
+	},
+	loadingContainer: {
+		backgroundColor: 'white',
 	},
 	loginContainer: {
 		flex: 1,
@@ -271,16 +275,15 @@ const styles = StyleSheet.create({
 	},
 	statsDescriptionText: {
 		textAlign: 'center',
-		fontSize: 16, 
-		fontWeight: '100',
+		fontWeight: '500',
 		letterSpacing: 0.5,
 		marginBottom: 10,
 		color: '#ffaa00',
 	},
 	statsContainer: {
 		paddingTop: 10,
-		paddingLeft: 60,
-		paddingRight: 60,
+		paddingLeft: 30,
+		paddingRight: 30,
 	},
 	subDetailText: {
 		color: Colors.black,

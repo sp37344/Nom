@@ -14,9 +14,8 @@ import RestaurantEditProfile from '../screens/RestaurantEditProfileScreen';
 import RestaurantSettingsScreen from '../screens/RestaurantSettingsScreen';
 
 const RestaurantPostStack = createStackNavigator({
-  RestaurantNewPost: RestaurantNewPost,
   RestaurantPost: RestaurantPost,
-  // RestaurantNewPost: RestaurantNewPost,
+  RestaurantNewPost: RestaurantNewPost,
   RestaurantViewPost: RestaurantViewPost,
   RestaurantEditPost: RestaurantEditPost,
   RestaurantViewFilledPost: RestaurantViewFilledPost,

@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import { FontAwesome } from '@expo/vector-icons';
@@ -113,6 +114,8 @@ export default class RestaurantStatsScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
 
+    const deviceWidth = Dimensions.get('window').width
+
     const Line = ({ line }) => (
             <Path
                 d={ line }
@@ -166,7 +169,7 @@ export default class RestaurantStatsScreen extends React.Component {
           </AreaChart>
         </View>
         <View style={styles.statsContainer}>
-          <Text style={styles.statsDescriptionText}>Sales Overview (week)</Text>
+          <Text style={styles.statsDescriptionText}>Sales Overview (this week)</Text>
 {/*          <BarChart
               style={ { height: 200 } }
               data={ this.getBarData() }
@@ -183,26 +186,26 @@ export default class RestaurantStatsScreen extends React.Component {
 */}
 
           <View style={{ flexDirection: 'row', height: 200, paddingVertical: 16 }}>
-                <YAxis
-                    data={this.getHorizontalBarData()}
-                    yAccessor={({ index }) => index}
-                    scale={scale.scaleBand}
-                    contentInset={{ top: 10, bottom: 10 }}
-                    spacing={0.2}
-                    formatLabel={(_, index) => this.getHorizontalBarData()[ index ].label}
-                />
-                <BarChart
-                    style={{ flex: 1, marginLeft: 8 }}
-                    data={this.getHorizontalBarData()}
-                    horizontal={true}
-                    yAccessor={({ item }) => item.value}
-                    svg={{ fill: 'orange' }}
-                    contentInset={{ top: 10, bottom: 10 }}
-                    spacing={0.2}
-                    gridMin={0}
-                >
-                    <Grid direction={Grid.Direction.VERTICAL}/>
-                </BarChart>
+            <YAxis
+                data={this.getHorizontalBarData()}
+                yAccessor={({ index }) => index}
+                scale={scale.scaleBand}
+                contentInset={{ top: 10, bottom: 10 }}
+                spacing={0.2}
+                formatLabel={(_, index) => this.getHorizontalBarData()[ index ].label}
+            />
+            <BarChart
+                style={{ flex: 1, marginLeft: 8 }}
+                data={this.getHorizontalBarData()}
+                horizontal={true}
+                yAccessor={({ item }) => item.value}
+                svg={{ fill: 'orange' }}
+                contentInset={{ top: 10, bottom: 10 }}
+                spacing={0.2}
+                gridMin={0}
+            >
+                <Grid direction={Grid.Direction.VERTICAL}/>
+            </BarChart>
               {/* <Labels/> */}
             </View>
 
@@ -216,6 +219,17 @@ export default class RestaurantStatsScreen extends React.Component {
               startAngle={ -Math.PI * 0.8 }
               endAngle={ Math.PI * 0.8 }
           />
+          <Text
+            style={{
+              position: 'absolute',
+              left: deviceWidth / 2 - 48,
+              top: 105,
+              textAlign: 'center',
+              fontSize: '48',
+              color: 'orange'
+            }}>
+            65%
+          </Text>
         </View>
       </ScrollView>
     );
