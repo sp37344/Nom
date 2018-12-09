@@ -37,7 +37,7 @@ export default class RestaurantProfileScreen extends React.Component {
           <SettingsList.Item
             hasNavArrow={false}
             title='Payment'
-            titleStyle={{color:'#009688', marginBottom:10, fontWeight:'500'}}
+            titleStyle={{color:'orange', marginBottom:10, fontWeight:'500'}}
             itemWidth={50}
             borderHide={'Both'}
           />
@@ -60,7 +60,7 @@ export default class RestaurantProfileScreen extends React.Component {
           <SettingsList.Item
             hasNavArrow={false}
             title='Account'
-            titleStyle={{color:'#009688', marginBottom:10, fontWeight:'500'}}
+            titleStyle={{color:'orange', marginBottom:10, fontWeight:'500'}}
             itemWidth={50}
             borderHide={'Both'}
           />

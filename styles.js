@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 	},
 	descriptionText: {
 		marginBottom: 4,
-		color: Colors.gray,
+		color: '#ffaa00',
 		fontSize: 16,
 		fontWeight: '400',
 		letterSpacing: 1,
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
 	detailText: {
 		marginBottom: 4,
 		color: Colors.black,
-		fontSize: 22,
-		fontWeight: '600',
+		fontSize: 16,
+		fontWeight: '100',
 		letterSpacing: 0.5,
 	},
 	developmentModeText: {
@@ -144,12 +144,12 @@ const styles = StyleSheet.create({
 		marginVertical: 7,
 	},
 	input: {
-		fontSize: 24,
+		fontSize: 22,
 		color: 'rgba(96,100,109, 1)',
 		flex: 1,
 	},
 	inputContainer: {
-		paddingTop: 25,
+		paddingTop: 10,
 		paddingLeft: 15,
 		paddingRight: 15,
 		paddingBottom: 15,
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
 		height: 130, 
 	},
 	label: {
-		fontSize: 24,
-		color: 'rgba(0, 122, 255, 1)',
+		fontSize: 22,
+		color: '#ffaa00',
 		paddingRight: 10,
 	},
 	link: {
@@ -211,10 +211,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
+		backgroundColor: 'white',
 	},
 	newPostText: {
-		fontSize: 20,
-		color: 'rgba(0, 122, 255, 1)',
+		fontSize: 18,
+		color: '#ffaa00',
 	},
 	nomText: {
 		fontSize: 64,
@@ -239,6 +240,12 @@ const styles = StyleSheet.create({
 		paddingTop: 30,
 		paddingLeft: 15,
 		paddingRight: 15,
+		backgroundColor: 'white',
+	},
+	postText: {
+		fontSize: 24,
+		color: '#ffaa00',
+		paddingRight: 10,
 	},
 	productRow: {
 		margin: 25,
@@ -261,8 +268,19 @@ const styles = StyleSheet.create({
 	},
 	scroll: {
 		backgroundColor: '#FFF',
-		flex: 1,
-		marginBottom: 55,
+	},
+	statsDescriptionText: {
+		textAlign: 'center',
+		fontSize: 16, 
+		fontWeight: '100',
+		letterSpacing: 0.5,
+		marginBottom: 10,
+		color: '#ffaa00',
+	},
+	statsContainer: {
+		paddingTop: 10,
+		paddingLeft: 60,
+		paddingRight: 60,
 	},
 	subDetailText: {
 		color: Colors.black,

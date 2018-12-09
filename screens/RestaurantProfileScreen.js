@@ -29,7 +29,7 @@ export default class RestaurantProfileScreen extends React.Component {
   renderDetail = () => {
     return (
       <View>
-        <Text style={styles.detailText}>description</Text>
+        <Text style={styles.detailText}>Nom Cafe is a restaurant established in 2018 dedicated to serving the students of Princeton University.</Text>
         <Text style={styles.subDetailText}>{this.props.detail}</Text>
       </View>
     )
@@ -50,6 +50,7 @@ export default class RestaurantProfileScreen extends React.Component {
           />
         </View>
         <Text style={styles.descriptionText}>1 Nassau St., Princeton NJ 08544</Text>
+        <Text style={styles.descriptionText}>000-000-0000</Text>
       </View>
     )
   }
@@ -76,8 +77,8 @@ export default class RestaurantProfileScreen extends React.Component {
     return (
       <View style={styles.mainViewStyle}>
         <ScrollView style={styles.scroll}>
-          <View style={[styles.container, this.props.containerStyle]}>
-            <View style={styles.cardContainer}>
+          <View>
+            <View>
               {this.renderContactHeader()}
             </View>
           </View>
@@ -85,7 +86,7 @@ export default class RestaurantProfileScreen extends React.Component {
           <View style={styles.productRow}>{this.renderDetail()}</View>
         {/* <Text onPress={() => navigate("Stats")}>Stats</Text> */}
         </ScrollView>
-        <View style={styles.footer}>
+{/*        <View style={styles.footer}>
           <TouchableOpacity style={styles.buttonFooter}>
             <Text style={styles.textFooter}>CALL</Text>
           </TouchableOpacity>
@@ -93,7 +94,7 @@ export default class RestaurantProfileScreen extends React.Component {
           <TouchableOpacity style={styles.buttonFooter}>
             <Text style={styles.textFooter}>EMAIL</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     );
   }

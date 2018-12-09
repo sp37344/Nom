@@ -83,7 +83,7 @@ export default class RestaurantNewPostScreen extends React.Component {
     ]
 
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.postContainer}>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Item: </Text>
           <TextInput
@@ -154,15 +154,15 @@ export default class RestaurantNewPostScreen extends React.Component {
         </View>
         <DatePickerIOS
               date={this.state.expirationDate}
-              style={{borderBottomWidth: 1, borderColor: '#d7dbe2',backgroundColor:'white'}}
+              style={{backgroundColor:'white'}}
               mode="date"
               onDateChange={expirationDate => this.setState({expirationDate})}/>
-        <View style={styles.buttons}>
-          <Button
-            onPress={() => this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)}
-            title='Submit'
-          />
-        </View>
+        <Text 
+          onPress={() => this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)}
+          style={styles.buttonOpaque}
+          textDecorationLine={'underline'}>
+          Submit
+        </Text>
       </ScrollView>
     );
   }

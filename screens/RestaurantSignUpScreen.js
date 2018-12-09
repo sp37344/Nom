@@ -69,7 +69,7 @@ export default class RestaurantSignUpScreen extends React.Component {
       <View style={styles.loginContainer}>
         <View style={styles.loginInputContainer}>
           <View style={styles.loginField}>
-            <Text style={styles.loginTitle}> User Sign Up </Text>
+            <Text style={styles.loginTitle}> Restaurant Sign Up </Text>
             <Text style={styles.loginLabel}>name</Text>
             <TextInput
               onFocus={() => this.setState({name: ''})}

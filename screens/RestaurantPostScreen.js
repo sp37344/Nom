@@ -151,7 +151,7 @@ componentDidMount() {
     if (this.state.isLoading == true || this.state.availableList == undefined || this.state.filledList == undefined) {
       return (
         <View style={styles.postContainer}>
-          <Text style={styles.label}>
+          <Text style={styles.postText}>
             Loading...
           </Text>
         </View>
@@ -188,13 +188,13 @@ componentDidMount() {
             <Text onPress={() => navigate("RestaurantNewPost")} style={styles.newPostText}> New Post </Text>
             <Ionicons
               name={Platform.OS === "ios" ? "ios-add-circle" : "md-add-circle"}
-              color="gray"
+              color="orange"
               size={22}
               onPress={() => navigate("RestaurantNewPost")}
             />
           </View>
           <View style={styles.postContainer}>
-            <Text style={styles.label}>
+            <Text style={styles.postText}>
               Available Orders
             </Text>
             <View>
@@ -211,7 +211,7 @@ componentDidMount() {
             </View>
           </View>
           <View style={styles.postContainer}>
-            <Text style={styles.label}>
+            <Text style={styles.postText}>
               Filled Orders
             </Text>
             <View>

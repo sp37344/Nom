@@ -151,9 +151,9 @@ export default class RestaurantStatsScreen extends React.Component {
     //     )
 
     return (
-      <ScrollView>
-        <View style={styles.titleContainer}>
-          <Text>Revenue</Text>
+      <ScrollView style={styles.scroll}>
+        <View style={styles.statsContainer}>
+          <Text style={styles.statsDescriptionText}>Revenue</Text>
           <AreaChart
               style={{ height: 200 }}
               data={ this.getAreaData() }
@@ -165,8 +165,8 @@ export default class RestaurantStatsScreen extends React.Component {
               <Decorator/>
           </AreaChart>
         </View>
-        <View style={styles.titleContainer}>
-          <Text>Sales Overview (week)</Text>
+        <View style={styles.statsContainer}>
+          <Text style={styles.statsDescriptionText}>Sales Overview (week)</Text>
 {/*          <BarChart
               style={ { height: 200 } }
               data={ this.getBarData() }
@@ -207,8 +207,8 @@ export default class RestaurantStatsScreen extends React.Component {
             </View>
 
         </View>
-        <View style={styles.titleContainer}>
-          <Text>Waste Eliminated</Text>
+        <View style={styles.statsContainer}>
+          <Text style={styles.statsDescriptionText}>Waste Eliminated</Text>
           <ProgressCircle
               style={ { height: 200 } }
               progress={ this.getPiData() }
