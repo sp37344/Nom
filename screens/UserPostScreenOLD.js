@@ -37,6 +37,111 @@ export default class UserPostScreen extends React.Component {
     title: 'Posts',
   }
 
+  async checkIfAlreadyInCart(item, price, description, dietaryRestrictions, quantity, restaurant, expirationDate, datePosted) {
+    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
+    var user = firebase.auth().currentUser;
+    var email = user.email;
+    var userOrderQuery = firebase.database().ref('activeOrders/').orderByChild("userEmail").equalTo(email).limitToFirst(1);
+    console.log('going through query')
+    var foodItemExists = false;
+    await userOrderQuery.once("value", async function(orderSnapshot) {
+      if (orderSnapshot.exists()) {
+        var snapshotRef = orderSnapshot.ref;
+        console.log("snapshotRef", snapshotRef);
+        var snapshotKey = Object.keys(orderSnapshot.val())[0];
+        console.log("snapshotKey", snapshotKey);
+
+        console.log("order Snapshot: ", orderSnapshot);
+        console.log('user already has active order');
+
+        var foodItemsQuery = firebase.database().ref('activeOrders/' + snapshotKey).child("foodItems/").orderByChild("item").equalTo(item).limitToFirst(1);
+        console.log("created foodItemsQuery: ", foodItemsQuery);
+
+        await foodItemsQuery.once("value", async function (foodSnapshot) {
+          if (foodSnapshot.exists()) {
+            foodItemExists = true;
+            console.log(foodSnapshot);
+            // the food item already exists in the cart, so update the quantity
+            console.log("item IS already in cart");
+            console.log(foodSnapshot.val());
+            var oldQuantity = foodSnapshot.child("quantity").val();
+            var oldSubtotal = foodSnapshot.child("subtotal").val();
+            console.log("Now navigating to the VIEW POST IN CART page");
+            navigate('UserViewPostInCart', {
+              item,
+              price,
+              description,
+              dietaryRestrictions,
+              quantity,
+              restaurant,
+              expirationDate,
+              datePosted,
+              oldQuantity,
+              oldSubtotal
+            });
+            return;
+          }
+          else {
+            console.log("active order BUT item NOT already in cart");
+            navigate('UserViewPost', {
+              item,
+              price,
+              description,
+              dietaryRestrictions,
+              quantity,
+              restaurant,
+              expirationDate,
+              datePosted
+            });
+            return;
+          }
+        });
+      }
+      else {
+        navigate('UserViewPost', {
+          item,
+          price,
+          description,
+          dietaryRestrictions,
+          quantity,
+          restaurant,
+          expirationDate,
+          datePosted
+        });
+        return;
+      }
+    });
+    // if (!foodItemExists) {
+    //   navigate('UserViewPost', {
+    //     item,
+    //     price,
+    //     description,
+    //     dietaryRestrictions,
+    //     quantity,
+    //     restaurant,
+    //     expirationDate,
+    //     datePosted
+    //   });
+    //   return;
+    // }
+    // else {
+    //   navigate('UserViewPostInCart', {
+    //     item,
+    //     price,
+    //     description,
+    //     dietaryRestrictions,
+    //     quantity,
+    //     restaurant,
+    //     expirationDate,
+    //     datePosted,
+    //     oldQuantity,
+    //     oldSubtotal
+    //   });
+    //   return;
+    // }
+  }
+
   async getAvailablePosts() {
     var foodList = [];
     var restaurantAvailableList = [];
@@ -64,7 +169,6 @@ export default class UserPostScreen extends React.Component {
               console.log("SNAPSHOT: ", snapshot);
               var foodAvailableList = [];
               await snapshot.forEach(function(childSnapshot) {
-                var key = childSnapshot.key;
                 console.log("Food item in populate food list function", childSnapshot.child("item").val());
                 foodAvailableList.push({
                   item: childSnapshot.child("item").val(),
@@ -75,8 +179,7 @@ export default class UserPostScreen extends React.Component {
                   expirationDate: childSnapshot.child("expirationDate").val(),
                   datePosted: childSnapshot.child("datePosted").val(),
                   quantity: childSnapshot.child("quantity").val(),
-                  restaurant: childSnapshot.child("restaurant").val(),
-                  key: key
+                  restaurant: childSnapshot.child("restaurant").val()
                 });
               })
               console.log("availableList after the for each", foodAvailableList);
@@ -142,18 +245,16 @@ export default class UserPostScreen extends React.Component {
                       key={j}
                       title={item.item}
                       subtitle={item.price}
-                      onPress={async () =>
-                        navigate("UserViewPost", {
-                        item: item.item,
-                        price: item.price,
-                        description: item.description,
-                        dietaryRestrictions: item.dietaryRestrictions,
-                        quantity: item.quantity,
-                        restaurant: item.restaurant,
-                        expirationDate: item.expirationDate,
-                        datePosted: item.datePosted,
-                        foodKey: item.key
-                      })}
+                      onPress={async () => this.checkIfAlreadyInCart(
+                        item.item,
+                        item.price,
+                        item.description,
+                        item.dietaryRestrictions,
+                        item.quantity,
+                        item.restaurant,
+                        item.expirationDate,
+                        item.datePosted
+                      )}
                     />
                   ))}
                 </View>

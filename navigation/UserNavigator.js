@@ -13,13 +13,13 @@ import RestaurantSettingsScreen from '../screens/RestaurantSettingsScreen';
 
 import UserPost from '../screens/UserPostScreen';
 import UserViewPost from '../screens/UserViewPostScreen';
-import UserViewPostInCart from '../screens/UserViewPostInCartScreen';
+import UserPayment from '../screens/UserPaymentScreen';
 
 // Posts for User
 const UserPostStack = createStackNavigator({
   UserPost: UserPost,
   UserViewPost: UserViewPost,
-  UserViewPostInCart: UserViewPostInCart,
+  UserPayment: UserPayment,
   RestaurantNewPost: RestaurantNewPost,
   RestaurantViewPost: RestaurantViewPost,
   RestaurantEditPost: RestaurantEditPost,

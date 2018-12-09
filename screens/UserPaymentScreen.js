@@ -16,7 +16,7 @@ import styles from '../styles';
 import App from '../App.js';
 import * as firebase from 'firebase';
 
-export default class UserViewPostScreen extends React.Component {
+export default class UserPaymentScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,124 +29,102 @@ export default class UserViewPostScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'View Post',
+    title: 'Payment',
   };
 
-
-  async addOrder(quantity) {
+  async purchase() {
     const { navigate } = this.props.navigation;
     const { navigation } = this.props;
     const item = navigation.getParam('item', "Bread");
     const price = navigation.getParam('price', "3.00");
     const description = navigation.getParam('description', "Delicious freshly baked");
     const dietaryRestrictions = navigation.getParam('dietaryRestrictions', "None");
+    const quantity = navigation.getParam('quantity', "4");
     const restaurant = navigation.getParam('restaurant', "Panera");
     const expirationDate = navigation.getParam('expirationDate', "9:00PM today")
     const datePosted = navigation.getParam('datePosted', "2:45PM today")
+    const orderTime = navigation.getParam('orderTime', '4:21PM today')
+    const total = (navigation.getParam('total', '4')).toFixed(2);
     const foodKey = navigation.getParam('foodKey', '1')
+    const orderKey = navigation.getParam('orderKey', '1')
 
     var user = firebase.auth().currentUser;
     var email = user.email;
-    var total = price * quantity;
-    var currentTime = new Date();
-    var orderTime = currentTime.valueOf();
+
+    var timeNow = new Date();
+    var currentTime = timeNow.valueOf();
+
+    console.log('hello');
+    console.log('currentTime: ', currentTime);
+    console.log('expirationDate: ', expirationDate);
+    // check to verify that the expiration date is not passed
+
+    if (currentTime < expirationDate) {
+      alert("expired!");
+      return;
+    }
+
+
     var userOrderQuery = firebase.database().ref('activeOrders/').orderByChild("userEmail").equalTo(email).limitToFirst(1);
     console.log('going through query')
     var alreadyHasActiveOrder = false;
+
     await userOrderQuery.once("value", async function(orderSnapshot) {
       if (orderSnapshot.exists()) {
         var snapshotRef = orderSnapshot.ref;
-        var orderKey = Object.keys(orderSnapshot.val())[0];
+        var snapshotKey = Object.keys(orderSnapshot.val())[0];
         console.log("order Snapshot: ", orderSnapshot);
         console.log('user already has active order');
 
-        await firebase.database().ref('activeOrders/' + orderKey).update({
-          restaurant,
-          orderTime,
-          item: item,
-          price: price,
-          description: description,
-          quantity: quantity,
-          dietaryRestrictions: dietaryRestrictions,
-          datePosted: datePosted,
-          expirationDate: expirationDate,
-          total
-        });
+        var quantityRef = firebase.database().ref('activeFood/' + foodKey).child("quantity");
+        await quantityRef.once('value', async (quantitySnapshot) => {
+          quantityLeft = quantitySnapshot.val();
+          await firebase.database().ref('activeOrders/' + snapshotKey).remove();
+          console.log('removed item');
+          await firebase.database().ref('orderHistory/').push({
+            email,
+            restaurant,
+            orderTime,
+            item: item,
+            price: price,
+            description: description,
+            quantity: quantity,
+            dietaryRestrictions: dietaryRestrictions,
+            datePosted: datePosted,
+            expirationDate: expirationDate,
+            total
+          });
+          console.log('added order to history');
 
-        console.log("foodKey", foodKey);
-        navigate("UserPayment",
-        {
-          userEmail: email,
-          restaurant,
-          orderTime,
-          item: item,
-          price: price,
-          description: description,
-          quantity: quantity,
-          dietaryRestrictions: dietaryRestrictions,
-          datePosted: datePosted,
-          expirationDate: expirationDate,
-          total,
-          foodKey,
-          orderKey
-        });
-        return;
+          console.log('foodKey: ', foodKey);
+          console.log('quantityLeft: ', quantityLeft);
+          console.log('quantity: ', quantity);
+
+          var quantityRemaining = quantityLeft - quantity;
+          console.log('quantityRemaining: ', quantityRemaining);
+
+          if (quantityRemaining == 0) {
+            console.log('removing this food listing');
+            await firebase.database().ref('activeFood/' + foodKey).remove();
+          }
+          else {
+            console.log('updating active food quantity');
+            await firebase.database().ref('activeFood/' + foodKey).update({
+              quantity: quantityRemaining
+            })
+          }
+
+          this.props.navigation.navigate("UserPost");
+          return;
+        })
       }
       else {
-        console.log("adding user order")
-
-        var orderKey = await firebase.database().ref('activeOrders/').push({
-          userEmail: email,
-          restaurant,
-          orderTime,
-          item: item,
-          price: price,
-          description: description,
-          quantity: quantity,
-          dietaryRestrictions: dietaryRestrictions,
-          datePosted: datePosted,
-          expirationDate: expirationDate,
-          total
-        }).key;
-
-        console.log("orderKey", orderKey);
-        console.log("foodKey", foodKey);
-        navigate("UserPayment", {
-          userEmail: email,
-          restaurant,
-          orderTime,
-          item: item,
-          price: price,
-          description: description,
-          quantity: quantity,
-          dietaryRestrictions: dietaryRestrictions,
-          datePosted: datePosted,
-          expirationDate: expirationDate,
-          total,
-          foodKey,
-          orderKey
-        });
-        return;
+        console.log("ERROR")
       }
     });
-    navigate("UserPayment",
-    (
-      userEmail: email,
-      restaurant,
-      orderTime,
-      item: item,
-      price: price,
-      description: description,
-      quantity: quantity,
-      dietaryRestrictions: dietaryRestrictions,
-      datePosted: datePosted,
-      expirationDate: expirationDate,
-      total,
-      foodKey
-    ));
+    this.props.navigation.navigate("UserPost");
     return;
   }
-
 
 
 
@@ -160,19 +138,26 @@ export default class UserViewPostScreen extends React.Component {
     const quantity = navigation.getParam('quantity', "4");
     const restaurant = navigation.getParam('restaurant', "Panera");
     const expirationDate = navigation.getParam('expirationDate', "9:00PM today")
-    const postedDate = navigation.getParam('postedDate', "2:45PM today")
+    const datePosted = navigation.getParam('datePosted', "2:45PM today")
+    const orderTime = navigation.getParam('orderTime', '4:21PM today')
+    const total = (navigation.getParam('total', '4')).toFixed(2);
+    const foodKey = navigation.getParam('foodKey', '1')
+    const orderKey = navigation.getParam('orderKey', '1')
 
     return (
       <ScrollView style={styles.container}>
       <View>
         <Text style={styles.label}>
-          {JSON.stringify(item)}
-          ${JSON.stringify(price)}
-          {JSON.stringify(description)}
-          {JSON.stringify(dietaryRestrictions)}
-          {JSON.stringify(quantity)}
-          {JSON.stringify(restaurant)}
-          {JSON.stringify(postedDate)}
+        {JSON.stringify(total)}
+        {JSON.stringify(orderTime)}
+        {JSON.stringify(expirationDate)}
+        {JSON.stringify(item)}
+        ${JSON.stringify(price)}
+        {JSON.stringify(description)}
+        {JSON.stringify(dietaryRestrictions)}
+        {JSON.stringify(quantity)}
+        {JSON.stringify(restaurant)}
+        {JSON.stringify(datePosted)}
         </Text>
         <View
           style={{
@@ -192,13 +177,13 @@ export default class UserViewPostScreen extends React.Component {
         </View>
       </View>
       <View style={styles.newPostContainer}>
-        <Text onPress={() => this.addOrder(this.state.quantity)} style={styles.newPostText}> Add to cart </Text>
+        <Text onPress={() => this.purchase()} style={styles.newPostText}> Purchase </Text>
         <Ionicons
           name={Platform.OS === "ios" ? "ios-add-circle" : "md-add-circle"}
           color="gray"
           size={22}
           onPress={async () =>
-            this.addOrder(this.state.quantity)
+            this.purchase()
           }
         />
       </View>

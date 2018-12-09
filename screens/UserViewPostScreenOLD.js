@@ -40,11 +40,10 @@ export default class UserViewPostScreen extends React.Component {
     const price = navigation.getParam('price', "3.00");
     const description = navigation.getParam('description', "Delicious freshly baked");
     const dietaryRestrictions = navigation.getParam('dietaryRestrictions', "None");
-    const restaurant = navigation.getParam('restaurant', "Panera");
+    // const quantity = navigation.getParam('quantity', "4");
+    const foodRestaurant = navigation.getParam('restaurant', "Panera");
     const expirationDate = navigation.getParam('expirationDate', "9:00PM today")
     const datePosted = navigation.getParam('datePosted', "2:45PM today")
-    const foodKey = navigation.getParam('foodKey', '1')
-
     var user = firebase.auth().currentUser;
     var email = user.email;
     var total = price * quantity;
@@ -56,94 +55,119 @@ export default class UserViewPostScreen extends React.Component {
     await userOrderQuery.once("value", async function(orderSnapshot) {
       if (orderSnapshot.exists()) {
         var snapshotRef = orderSnapshot.ref;
-        var orderKey = Object.keys(orderSnapshot.val())[0];
+        var snapshotKey = Object.keys(orderSnapshot.val())[0];
         console.log("order Snapshot: ", orderSnapshot);
         console.log('user already has active order');
+        var existingRestaurant = firebase.database().ref('activeOrders/' + snapshotKey + '/restaurant');
+        await existingRestaurant.once('value', async function(snapshot) {
+          console.log("oldRestaurant ", snapshot.val());
+          console.log("foodRestaraunt ", foodRestaraunt);
+          if (snapshot.val() != foodRestaurant) {
+            console.log('MUST ORDER FROM THE SAME RESTAURANT');
+            alert("MUST ORDER FOOD ITEMS FROM THE SAME RESTAURANT");
+          }
+          else {
+            var foodItemsOld = firebase.database().ref('activeOrders/' + snapshotKey).child("foodItems");
 
-        await firebase.database().ref('activeOrders/' + orderKey).update({
-          restaurant,
-          orderTime,
-          item: item,
-          price: price,
-          description: description,
-          quantity: quantity,
-          dietaryRestrictions: dietaryRestrictions,
-          datePosted: datePosted,
-          expirationDate: expirationDate,
-          total
-        });
+            console.log('OLD FOOD ITEMS REFERENCE: ');
+            console.log(foodItemsOld);
 
-        console.log("foodKey", foodKey);
-        navigate("UserPayment",
-        {
-          userEmail: email,
-          restaurant,
-          orderTime,
-          item: item,
-          price: price,
-          description: description,
-          quantity: quantity,
-          dietaryRestrictions: dietaryRestrictions,
-          datePosted: datePosted,
-          expirationDate: expirationDate,
-          total,
-          foodKey,
-          orderKey
-        });
-        return;
+            await foodItemsOld.push({
+              item: item,
+              price: price,
+              description: description,
+              quantity: quantity,
+              subtotal: total,
+              dietaryRestrictions: dietaryRestrictions,
+              datePosted: datePosted,
+              expirationDate: expirationDate
+            })
+
+            console.log('AFTER PUSHING TO OLD FOOD ITEMS');
+            console.log(foodItemsOld);
+
+            var oldTotalRef = firebase.database().ref('activeOrders/' + snapshotKey + '/total');
+            await oldTotalRef.once('value', async function(snapshot) {
+              oldTotal = snapshot.val();
+              console.log('oldTotal', oldTotal);
+              var newTotal = oldTotal + total;
+              console.log("total ", total);
+              console.log("newTotal ", newTotal);
+              console.log("snapshotRef", snapshotRef);
+              await firebase.database().ref('activeOrders/' + snapshotKey).update({
+                orderTime: orderTime,
+                total: newTotal
+              });
+              console.log("all done yay");
+              console.log("NAVIGATING TO USER POST");
+            });
+          }
+        })
+
+        // var foodItemsOld = firebase.database().ref('activeOrders/' + snapshotKey).child("foodItems");
+        //
+        // console.log('OLD FOOD ITEMS REFERENCE: ');
+        // console.log(foodItemsOld);
+        //
+        // await foodItemsOld.push({
+        //   item: item,
+        //   price: price,
+        //   description: description,
+        //   quantity: quantity,
+        //   subtotal: total,
+        //   dietaryRestrictions: dietaryRestrictions,
+        //   datePosted: datePosted,
+        //   expirationDate: expirationDate
+        // })
+        //
+        // console.log('AFTER PUSHING TO OLD FOOD ITEMS');
+        // console.log(foodItemsOld);
+        //
+        // var oldTotalRef = firebase.database().ref('activeOrders/' + snapshotKey + '/total');
+        // await oldTotalRef.once('value', async function(snapshot) {
+        //   oldTotal = snapshot.val();
+        //   console.log('oldTotal', oldTotal);
+        //   var newTotal = oldTotal + total;
+        //   console.log("total ", total);
+        //   console.log("newTotal ", newTotal);
+        //   console.log("snapshotRef", snapshotRef);
+        //   await firebase.database().ref('activeOrders/' + snapshotKey).update({
+        //     orderTime: orderTime,
+        //     total: newTotal
+        //   });
+        //   console.log("all done yay");
+        //   console.log("NAVIGATING TO USER POST");
+        // });
       }
       else {
         console.log("adding user order")
 
-        var orderKey = await firebase.database().ref('activeOrders/').push({
+        activeOrdersRef = firebase.database().ref('activeOrders/');
+        console.log(activeOrdersRef);
+        var newOrder = activeOrdersRef.push();
+        await newOrder.update({
           userEmail: email,
           restaurant,
           orderTime,
-          item: item,
-          price: price,
-          description: description,
-          quantity: quantity,
-          dietaryRestrictions: dietaryRestrictions,
-          datePosted: datePosted,
-          expirationDate: expirationDate,
           total
-        }).key;
+        })
 
-        console.log("orderKey", orderKey);
-        console.log("foodKey", foodKey);
-        navigate("UserPayment", {
-          userEmail: email,
-          restaurant,
-          orderTime,
+        await newOrder.child("foodItems").push({
           item: item,
           price: price,
           description: description,
           quantity: quantity,
+          subtotal: total,
           dietaryRestrictions: dietaryRestrictions,
           datePosted: datePosted,
-          expirationDate: expirationDate,
-          total,
-          foodKey,
-          orderKey
+          expirationDate: expirationDate
         });
-        return;
+
+        console.log("brand newOrder: ", newOrder);
+        console.log("NAVIGATING TO USER POST");
       }
     });
-    navigate("UserPayment",
-    (
-      userEmail: email,
-      restaurant,
-      orderTime,
-      item: item,
-      price: price,
-      description: description,
-      quantity: quantity,
-      dietaryRestrictions: dietaryRestrictions,
-      datePosted: datePosted,
-      expirationDate: expirationDate,
-      total,
-      foodKey
-    ));
+    this.props.navigation.navigate("UserPost");
     return;
   }
 
