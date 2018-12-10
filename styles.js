@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 	},
 	descriptionText: {
 		marginBottom: 4,
-		color: '#ffaa00',
+		color: Colors.gray,
 		fontSize: 16,
 		fontWeight: '400',
 		letterSpacing: 1,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
 		paddingRight: 15,
 		flex: 1,
 		flexDirection: 'row',
-		justifyContent: 'flex-end',
+		justifyContent: 'left',
 		backgroundColor: 'white',
 	},
 	newPostText: {
@@ -244,7 +244,6 @@ const styles = StyleSheet.create({
 		paddingTop: 30,
 		paddingLeft: 15,
 		paddingRight: 15,
-		backgroundColor: 'white',
 	},
 	postText: {
 		fontSize: 24,
@@ -337,8 +336,51 @@ const styles = StyleSheet.create({
 		paddingLeft: 15,
 		paddingRight: 15,
 	},
+	userItemList: {
+		backgroundColor: 'rgba(0,0,0,0.05)',
+	},
+	userPostContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+	},
+	userPostNewPriceText: {
+		color: Colors.black,
+		alignItems: 'center',
+		fontSize: 30,
+	},
+	userPostOldPriceText: {
+		textDecorationLine: 'line-through', 
+		textDecorationStyle: 'solid',
+		fontSize: 18,
+		color: '#c0c0c0',
+	},
+	userPostQuantity: {
+		backgroundColor: '#ffaa00',
+		flex: 1,
+		flexDirection: 'row',
+	},
+	userPostQuantityText: {
+		color: 'white',
+		fontWeight: 'bold',
+		paddingLeft: 14,
+		alignItems: 'left',
+		fontSize: 18,
+	},
+	userPostTitleText: {
+		paddingTop: 10,
+		color: '#ffaa00',
+		fontSize: 40,
+		textAlign: 'center',
+	},
+	userPostInfoText: {
+		paddingTop: 5,
+		fontSize: 17,
+		color: 'rgba(96,100,109, 1)',
+		textAlign: 'center',
+	},
 	userProfileName: {
-		marginBottom: 5,
+		marginBottom: 4,
 		letterSpacing: 1,
 		color: Colors.black,
 		fontSize: 36,
@@ -346,6 +388,22 @@ const styles = StyleSheet.create({
 	},
 	userProfileSubtitle: {
 		marginBottom: 5,
+		letterSpacing: 1,
+		color: Colors.black,
+		fontSize: 28,
+		fontWeight: '400',
+	},
+	userQuantityField: {
+		borderBottomColor: 'rgba(96,100,109, 1)',
+		borderBottomWidth: 1,
+		marginBottom: 20,
+		marginLeft: 20,
+		marginRight: 20,
+	},
+	userRestaurantLabel: {
+		marginBottom: 5,
+		marginLeft: 20,
+		marginTop: 5,
 		letterSpacing: 1,
 		color: Colors.black,
 		fontSize: 28,
