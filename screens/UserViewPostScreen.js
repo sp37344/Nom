@@ -2,10 +2,12 @@ import React from 'react';
 import {
   Button,
   ScrollView,
+  ImageBackground,
   View,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   Platform,
   AppRegistry
 } from 'react-native';
@@ -29,7 +31,7 @@ export default class UserViewPostScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'View Post',
+    title: 'Information',
   };
 
 
@@ -45,18 +47,18 @@ export default class UserViewPostScreen extends React.Component {
     const datePosted = navigation.getParam('datePosted', "2:45PM today")
     const foodKey = navigation.getParam('foodKey', '1')
 
-    var user = firebase.auth().currentUser;
-    var email = user.email;
-    var total = price * quantity;
-    var currentTime = new Date();
-    var orderTime = currentTime.valueOf();
-    var userOrderQuery = firebase.database().ref('activeOrders/').orderByChild("userEmail").equalTo(email).limitToFirst(1);
+    const user = firebase.auth().currentUser;
+    const email = user.email;
+    const total = price * quantity;
+    const currentTime = new Date();
+    const orderTime = currentTime.valueOf();
+    const userOrderQuery = firebase.database().ref('activeOrders/').orderByChild("userEmail").equalTo(email).limitToFirst(1);
     console.log('going through query')
-    var alreadyHasActiveOrder = false;
+    const alreadyHasActiveOrder = false;
     await userOrderQuery.once("value", async function(orderSnapshot) {
       if (orderSnapshot.exists()) {
-        var snapshotRef = orderSnapshot.ref;
-        var orderKey = Object.keys(orderSnapshot.val())[0];
+        const snapshotRef = orderSnapshot.ref;
+        const orderKey = Object.keys(orderSnapshot.val())[0];
         console.log("order Snapshot: ", orderSnapshot);
         console.log('user already has active order');
 
@@ -95,7 +97,7 @@ export default class UserViewPostScreen extends React.Component {
       else {
         console.log("adding user order")
 
-        var orderKey = await firebase.database().ref('activeOrders/').push({
+        const orderKey = await firebase.database().ref('activeOrders/').push({
           userEmail: email,
           restaurant,
           orderTime,
@@ -147,9 +149,43 @@ export default class UserViewPostScreen extends React.Component {
     return;
   }
 
+  timeConverter(UNIX_timestamp){
+    const a = new Date(UNIX_timestamp);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const year = a.getFullYear();
+    const month = months[a.getMonth()];
+    const date = a.getDate();
+    const hour = a.getHours();
+    const min = a.getMinutes();
+    const sec = a.getSeconds();
+    const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+  }
 
+  changeQuantity(text, limit){
+    console.log(limit);
+    const num = parseInt(text);
+    console.log(num);
+    if (num > 0 && num <= limit) {
+      this.setState({quantity: num});
+    }
+    console.log(this.state.quantity);
+  }
 
-
+  renderContactHeader = () => {
+    const { img } = this.props
+    return (
+      <View style={styles.headerContainer}>
+        <View style={styles.coverContainer}>
+          <ImageBackground
+            source={require("../assets/images/mehek.jpg")}
+            style={styles.coverImage}
+          >
+          </ImageBackground>
+        </View>
+      </View>
+    )
+  }
   render() {
     const { navigate } = this.props.navigation;
     const { navigation } = this.props;
@@ -164,44 +200,72 @@ export default class UserViewPostScreen extends React.Component {
 
     return (
       <ScrollView style={styles.container}>
-      <View>
-        <Text style={styles.label}>
-          {JSON.stringify(item)}
-          ${JSON.stringify(price)}
-          {JSON.stringify(description)}
-          {JSON.stringify(dietaryRestrictions)}
-          {JSON.stringify(quantity)}
-          {JSON.stringify(restaurant)}
-          {JSON.stringify(postedDate)}
-        </Text>
-        <View
-          style={{
-            borderBottomColor: 'black',
-            borderBottomWidth: 1,
-          }}
-        />
+        <View> 
+         {this.renderContactHeader()}
+        </View>
+        <View style={styles.userPostQuantity}>
+          <Text style={styles.userPostQuantityText}> 
+            {JSON.stringify(quantity).replace(/\"/g, "")}
+            {" more left"}
+          </Text>
+        </View>
+        <View style={styles.userPostContainer}>
+          <Text style={styles.userPostTitleText}> 
+            {JSON.stringify(item).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View style={styles.userPostContainer}>
+          <Text style={styles.userPostNewPriceText}> 
+            ${JSON.stringify(price).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View style={styles.userPostContainer}>
+          <Text style={styles.userPostOldPriceText}> $10 </Text>
+        </View>
+        <View style={styles.userPostContainer}>
+          <Text style={styles.userPostInfoText}> 
+            {JSON.stringify(description).replace(/\"/g, "")} 
+          </Text>
+        </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Quantity: </Text>
+          <Text style={styles.label}> Dietary Restrictions </Text>
+          <Text style={styles.userPostInfoText}> 
+            {JSON.stringify(dietaryRestrictions).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Date Posted </Text>
+          <Text style={styles.userPostInfoText}> 
+            {this.timeConverter(parseInt(JSON.stringify(postedDate).replace(/\"/g, "")))} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Expiration </Text>
+          <Text style={styles.userPostInfoText}> 
+            {this.timeConverter(parseInt(JSON.stringify(expirationDate).replace(/\"/g, "")))} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Quantity to Purchase: </Text>
+        </View>
+        <View style={styles.userQuantityField}>
           <TextInput
-            onFocus={() => this.setState({quantity: ''})}
-            onChangeText={(text) => this.setState({quantity: text})}
-            style={styles.input}
+            onChangeText={(text) => this.changeQuantity(text, parseInt(JSON.stringify(quantity).replace(/\"/g, "")))}
             keyboardType='numeric'
+            style={styles.loginInput}
             value={this.state.quantity}
           />
         </View>
-      </View>
-      <View style={styles.newPostContainer}>
-        <Text onPress={() => this.addOrder(this.state.quantity)} style={styles.newPostText}> Add to cart </Text>
-        <Ionicons
-          name={Platform.OS === "ios" ? "ios-add-circle" : "md-add-circle"}
-          color="gray"
-          size={22}
-          onPress={async () =>
-            this.addOrder(this.state.quantity)
-          }
-        />
-      </View>
+        <View style={styles.userPostContainer}>
+          <TouchableOpacity>
+            <Text 
+              onPress={() => this.addOrder(this.state.quantity)}
+              style={styles.buttonOpaque}
+              textDecorationLine={'underline'}>
+              Purchase
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }

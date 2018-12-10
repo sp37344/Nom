@@ -24,12 +24,11 @@ export default class UserPaymentScreen extends React.Component {
       details: 'List description of dish',
       ingredients: '',
       dietaryRestrictions: '',
-      quantity: '1',
     };
   }
 
   static navigationOptions = {
-    title: 'Payment',
+    title: 'Order Confirmation',
   };
 
   async purchase() {
@@ -185,7 +184,7 @@ export default class UserPaymentScreen extends React.Component {
   }
 
 
-
+/*
   render() {
     const { navigate } = this.props.navigation;
     const { navigation } = this.props;
@@ -248,4 +247,117 @@ export default class UserPaymentScreen extends React.Component {
       </ScrollView>
     );
   }
+}*/
+  timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+  }
+
+  render() {
+    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
+    const item = navigation.getParam('item', "Bread");
+    const price = navigation.getParam('price', "3.00");
+    const description = navigation.getParam('description', "Delicious freshly baked");
+    const dietaryRestrictions = navigation.getParam('dietaryRestrictions', "None");
+    const quantity = navigation.getParam('quantity', "4");
+    const restaurant = navigation.getParam('restaurant', "Panera");
+    const expirationDate = navigation.getParam('expirationDate', "9:00PM today")
+    const datePosted = navigation.getParam('datePosted', "2:45PM today")
+    const orderTime = navigation.getParam('orderTime', '4:21PM today')
+    const total = (navigation.getParam('total', '4')).toFixed(2);
+    const foodKey = navigation.getParam('foodKey', '1')
+    const orderKey = navigation.getParam('orderKey', '1')
+    return (
+
+      <ScrollView style={styles.container}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Item </Text>
+          <Text style={styles.userPostInfoText}> 
+            {JSON.stringify(item).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Order Time </Text>
+          <Text style={styles.userPostInfoText}> 
+            {this.timeConverter(parseInt(JSON.stringify(orderTime).replace(/\"/g, "")))} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Description </Text>
+          <Text style={styles.userPostInfoText}> 
+            {JSON.stringify(description).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Dietary Restrictions </Text>
+          <Text style={styles.userPostInfoText}> 
+            {JSON.stringify(dietaryRestrictions).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Restaurant </Text>
+          <Text style={styles.userPostInfoText}> 
+            {JSON.stringify(restaurant).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Date Posted </Text>
+          <Text style={styles.userPostInfoText}> 
+            {this.timeConverter(parseInt(JSON.stringify(datePosted).replace(/\"/g, "")))} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Expiration Date </Text>
+          <Text style={styles.userPostInfoText}> 
+            {this.timeConverter(parseInt(JSON.stringify(expirationDate).replace(/\"/g, "")))} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Price </Text>
+          <Text style={styles.userPostInfoText}> 
+            ${JSON.stringify(price).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Quantity </Text>
+          <Text style={styles.userPostInfoText}> 
+            {JSON.stringify(quantity).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Total </Text>
+          <Text style={styles.userPostInfoText}> 
+            ${JSON.stringify(total).replace(/\"/g, "")} 
+          </Text>
+        </View>
+        <View
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: 1,
+          }}
+        />
+      <View style={styles.newPostContainer}>
+        <Text onPress={() => this.addOrder(this.state.quantity)} style={styles.newPostText}> Add to cart </Text>
+        <Ionicons
+          name={Platform.OS === "ios" ? "ios-add-circle" : "md-add-circle"}
+          color="gray"
+          size={22}
+          onPress={async () =>
+            this.addOrder(this.state.quantity)
+          }
+        />
+      </View>
+      </ScrollView>
+    );
+  }
 }
+
