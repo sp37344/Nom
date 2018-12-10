@@ -61,7 +61,10 @@ export default class RestaurantPostScreen extends React.Component {
               dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
               cuisine: childSnapshot.child("cuisine").val(),
               expirationDate: childSnapshot.child("expirationDate").val(),
-              datePosted: childSnapshot.child("datePosted").val()
+              datePosted: childSnapshot.child("datePosted").val(),
+              quantity: childSnapshot.child("quantity").val(),
+              quantitySold: childSnapshot.child('quantitySold').val(),
+              quantityUnsold: childSnapshot.child('quantityUnsold').val()
             });
           })
         })

@@ -81,8 +81,10 @@ export default class UserPaymentScreen extends React.Component {
         var quantityRef = firebase.database().ref('activeFood/' + foodKey);
         console.log("quantityRef", quantityRef);
         await quantityRef.once('value', async (quantitySnapshot) => {
-          var quantityLeft = quantitySnapshot.child('quantity').val();
+          var quantityLeft = parseInt(quantitySnapshot.child('quantity').val());
+          var quantitySoldOld = parseInt(quantitySnapshot.child('quantitySold').val());
           console.log('quantityLeft', quantityLeft);
+          console.log('quantitySoldOld', quantitySoldOld);
           await firebase.database().ref('activeOrders/' + snapshotKey).remove();
           console.log('removed item');
           await firebase.database().ref('orderHistory/').push({
@@ -113,8 +115,11 @@ export default class UserPaymentScreen extends React.Component {
           }
           else {
             console.log('updating active food quantity');
+            var quantitySold = quantitySoldOld + parseInt(quantity);
+            console.log('quantitySold');
             await firebase.database().ref('activeFood/' + foodKey).update({
-              quantity: quantityRemaining
+              quantity: quantityRemaining,
+              quantitySold
             })
           }
 

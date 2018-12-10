@@ -85,7 +85,7 @@ export default class RestaurantProfileScreen extends React.Component {
     )
   }
 
-  renderDescription = (name, address, phone) => {
+  renderDescription = (name, address, phone, description) => {
     const { navigate } = this.props.navigation;
     return (
       <View>
@@ -96,7 +96,7 @@ export default class RestaurantProfileScreen extends React.Component {
             name="edit"
             color="gray"
             size={22}
-            onPress={() => navigate("EditProfile")}
+            onPress={() => navigate("EditProfile", {name, address, phone, description})}
           />
         </View>
         <Text style={styles.descriptionText}>{address}</Text>

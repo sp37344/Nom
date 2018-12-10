@@ -52,6 +52,7 @@ export default class RestaurantNewPostScreen extends React.Component {
     console.log(typeof restaurant);
     var today = new Date();
     var datePosted = today.valueOf();
+    var quantitySold = 0;
     var expirationDate_value = expirationDate.valueOf();
     console.log("datePosted", datePosted);
     console.log("expirationDate", expirationDate_value);
@@ -64,7 +65,8 @@ export default class RestaurantNewPostScreen extends React.Component {
       restaurant,
       dietaryRestrictions,
       cuisine,
-      datePosted
+      datePosted,
+      quantitySold
     }).then((data) => {
       // success callback
       console.log('data ', data)
