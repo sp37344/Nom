@@ -34,7 +34,7 @@ export default class UserPostScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Home',
+    title: 'Posts',
   }
 
   async getAvailablePosts() {
@@ -64,7 +64,7 @@ export default class UserPostScreen extends React.Component {
               console.log("SNAPSHOT: ", snapshot);
               var foodAvailableList = [];
               await snapshot.forEach(function(childSnapshot) {
-                var key = childSnapshot.key;
+                var key = childSnapshot.ref;
                 console.log("Food item in populate food list function", childSnapshot.child("item").val());
                 foodAvailableList.push({
                   item: childSnapshot.child("item").val(),

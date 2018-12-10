@@ -69,9 +69,91 @@ export default class RestaurantSignInScreen extends React.Component {
     })
     console.log("response", list);*/
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => {
-          this.props.navigation.navigate('Restaurant');
-        })
+      .then(async () => {
+        this.props.navigation.navigate('Profile');
+        // var restaurantQuery = firebase.database().ref('restaurants/').orderByChild('email').equalTo(email).limitToFirst(1);
+        // console.log('going through query');
+        //
+        // await restaurantQuery.once('value', async function(restaurantSnapshot) {
+        //   if (restaurantSnapshot.exists()) {
+        //     var restaurantRef = restaurantSnapshot.ref;
+        //     var restaurantKey = Object.keys(restaurantSnapshot.val())[0];
+        //     console.log("restaurant snapshot: ", restaurantSnapshot);
+        //     console.log('restaurantKey: ', restaurantKey);
+        //
+        //
+        //     var name = restaurantSnapshot.child("name").val();
+        //     var address = restaurantSnapshot.child("address").val();
+        //     var phone = restaurantSnapshot.child("phone").val();
+        //     var description = restaurantSnapshot.child("description").val();
+        //
+        //   //   var name = firebase.database().ref('restaurants/' + restaurantKey).child("name").val();
+        //   //   console.log("name ", name);
+        //   //
+        //   //
+        //   //   await firebase.database().ref('restaurants/' + restaurantKey).child("name").once('value', async (nameSnapshot) => {
+        //   //      name = nameSnapshot.val();
+        //   //   })
+        //   //
+        //   //   //var addressRef = restaurantSnapshot.child("address");
+        //   //   await firebase.database().ref('restaurants/' + restaurantKey).child("address").once('value', async (addressSnapshot) => {
+        //   //     var address = addressSnapshot.val();
+        //   //   })
+        //   //
+        //   // //  var phoneRef = restaurantSnapshot.child("phone");
+        //   //   await firebase.database().ref('restaurants/' + restaurantKey).child("phone").once('value', async (phoneSnapshot) => {
+        //   //     var phone = phoneSnapshot.val();
+        //   //   })
+        //   //
+        //   //   //var descriptionRef = restaurantSnapshot.child("description");
+        //   //   await firebase.database().ref('restaurants/' + restaurantKey).child("description").once('value', async (descriptionSnapshot) => {
+        //   //     var descripton = descriptonSnapshot.val();
+        //   //   })
+        //
+        //     console.log("name", name);
+        //     console.log('address', address);
+        //     console.log('phone', phone);
+        //     console.log('description', description);
+        //
+        //     this.props.navigation.navigate('Profile', {
+        //       name,
+        //       address,
+        //       phone,
+        //       description
+        //     });
+        //
+        //     // var restaurantInfo = {
+        //     //   name,
+        //     //   address,
+        //     //   phone,
+        //     //   description
+        //     // }
+        //     // resolve(restaurantInfo);
+        //
+        //   } else {
+        //     this.props.navigation.navigate('Profile', {
+        //       name: "Name",
+        //       address: "Address",
+        //       phone: "Phone",
+        //       description: "Description"
+        //     });
+        //     // var restaurantInfo = {
+        //     //   name: "Name",
+        //     //   address: "Address",
+        //     //   phone: "Phone",
+        //     //   description: "Description"
+        //     // }
+        //     // resolve(restaurantInfo);
+        //   }
+        // });
+        // console.log('at the end')
+        // this.props.navigation.navigate('Profile', {
+        //   name: "Name",
+        //   address: "Address",
+        //   phone: "Phone",
+        //   description: "Description"
+        // });
+      })
         /*
           var list =  await this.getRestaurantAvailableList();
           console.log("list ", list);
