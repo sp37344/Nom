@@ -144,9 +144,9 @@ export default class RestaurantNewPostScreen extends React.Component {
               this.state.vegetarian
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
-            } 
+            }
             onPress={() => {
-              // this.setState({vegetarian:!this.state.vegetarian}); 
+              // this.setState({vegetarian:!this.state.vegetarian});
               if (this.state.dietaryRestrictions.includes('vegetarian')) {
                 this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('vegetarian'), 1);
               }
@@ -154,10 +154,10 @@ export default class RestaurantNewPostScreen extends React.Component {
                 this.state.dietaryRestrictions.push('vegetarian');
               }
               this.setState({vegetarian:!this.state.vegetarian})
-              console.log(this.state.dietaryRestrictions); 
+              console.log(this.state.dietaryRestrictions);
             }}
             >
-            <Text 
+            <Text
               style={
                 this.state.vegetarian
                 ? styles.tagTextPressed
@@ -172,7 +172,7 @@ export default class RestaurantNewPostScreen extends React.Component {
               this.state.vegan
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
-            } 
+            }
             onPress={() => {
               if (this.state.dietaryRestrictions.includes('vegan')) {
                 this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('vegan'), 1);
@@ -181,10 +181,10 @@ export default class RestaurantNewPostScreen extends React.Component {
                 this.state.dietaryRestrictions.push('vegan');
               }
               this.setState({vegan:!this.state.vegan})
-              console.log(this.state.dietaryRestrictions); 
+              console.log(this.state.dietaryRestrictions);
             }}
             >
-            <Text 
+            <Text
               style={
                 this.state.vegan
                 ? styles.tagTextPressed
@@ -197,7 +197,7 @@ export default class RestaurantNewPostScreen extends React.Component {
               this.state.dairyFree
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
-            } 
+            }
             onPress={() => {
               if (this.state.dietaryRestrictions.includes('dairyFree')) {
                 this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('dairyFree'), 1);
@@ -206,10 +206,10 @@ export default class RestaurantNewPostScreen extends React.Component {
                 this.state.dietaryRestrictions.push('dairyFree');
               }
               this.setState({dairyFree:!this.state.dairyFree})
-              console.log(this.state.dietaryRestrictions); 
+              console.log(this.state.dietaryRestrictions);
             }}
             >
-            <Text 
+            <Text
               style={
                 this.state.dairyFree
                 ? styles.tagTextPressed
@@ -222,7 +222,7 @@ export default class RestaurantNewPostScreen extends React.Component {
               this.state.nutFree
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
-            } 
+            }
             onPress={() => {
               if (this.state.dietaryRestrictions.includes('nutFree')) {
                 this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('nutFree'), 1);
@@ -231,10 +231,10 @@ export default class RestaurantNewPostScreen extends React.Component {
                 this.state.dietaryRestrictions.push('nutFree');
               }
               this.setState({nutFree:!this.state.nutFree})
-              console.log(this.state.dietaryRestrictions); 
+              console.log(this.state.dietaryRestrictions);
             }}
             >
-            <Text 
+            <Text
               style={
                 this.state.nutFree
                 ? styles.tagTextPressed
@@ -247,7 +247,7 @@ export default class RestaurantNewPostScreen extends React.Component {
               this.state.glutenFree
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
-            } 
+            }
             onPress={() => {
               if (this.state.dietaryRestrictions.includes('glutenFree')) {
                 this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('glutenFree'), 1);
@@ -256,10 +256,10 @@ export default class RestaurantNewPostScreen extends React.Component {
                 this.state.dietaryRestrictions.push('glutenFree');
               }
               this.setState({glutenFree:!this.state.glutenFree})
-              console.log(this.state.dietaryRestrictions); 
+              console.log(this.state.dietaryRestrictions);
             }}
             >
-            <Text 
+            <Text
               style={
                 this.state.glutenFree
                 ? styles.tagTextPressed
@@ -285,7 +285,7 @@ export default class RestaurantNewPostScreen extends React.Component {
               style={{backgroundColor:'white'}}
               mode="date"
               onDateChange={expirationDate => this.setState({expirationDate})}/>
-        <Text 
+        <Text
           onPress={() => this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)}
           style={styles.buttonOpaque}
           textDecorationLine={'underline'}>
