@@ -96,7 +96,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
     )
   }
 
-  renderDescription = (name, address, phone) => {
+  renderDescription = (name, address, phone, description) => {
     const { navigate } = this.props.navigation;
     return (
       <View>
@@ -128,7 +128,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
       <View style={styles.headerContainer}>
         <View style={styles.coverContainer}>
           <ImageBackground
-            source={require("../assets/images/barbecue.jpg")}
+            source={require("../assets/images/indianfood.jpg")}
             style={styles.coverImage}
           >
           </ImageBackground>
@@ -186,7 +186,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
               {this.renderContactHeader()}
             </View>
           </View>
-          <View style={styles.productRow}>{this.renderDescription(name, address, phone)}</View>
+          <View style={styles.productRow}>{this.renderDescription(name, address, phone, description)}</View>
           <View style={styles.productRow}>{this.renderDetail(description)}</View>
         </ScrollView>
         <ScrollView style={styles.scroll}>
