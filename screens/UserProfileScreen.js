@@ -59,11 +59,11 @@ export default class UserProfileScreen extends React.Component {
     return (
       <View>
         <Text style={styles.userProfileSubtitle}>Purchases</Text>
-        <Text style={styles.descriptionText}>Here we grab from DB and map</Text>
+        <Text style={styles.descriptionText}> [ Here we grab from DB and map ] </Text>
       </View>
     )
   }
-
+/*
   renderStatistics = () => {
     return (
       <View>
@@ -72,7 +72,64 @@ export default class UserProfileScreen extends React.Component {
       </View>
     )
   }
+*/
+  getBarData() {
+    const data1 = [10, 4, 5 , 2, 7]
+            .map((value) => ({ value }))
+        const data2 = [4, 5, 7, 3, 8]
+            .map((value) => ({ value }))
 
+        const barData = [
+            {
+                data: data1,
+                svg: {
+                    fill: 'rgb(226, 226, 226)',
+                },
+            },
+            {
+                data: data2,
+            },
+        ]
+
+    return barData
+  }
+
+  getHorizontalBarData() {
+    const data = [
+            {
+                value: 50,
+                label: 'M',
+            },
+            {
+                value: 10,
+                label: 'T',
+            },
+            {
+                value: 40,
+                label: 'W',
+            },
+            {
+                value: 95,
+                label: 'T',
+            },
+            {
+                value: 85,
+                label: 'F',
+            },
+        ]
+
+    return data
+  }
+
+  getPiData() {
+    const percentageFilled = 0.7
+    return percentageFilled
+  }
+
+  getAreaData() {
+    const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
+    return data
+  }
 
 
   render() {

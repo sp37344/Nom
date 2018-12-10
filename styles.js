@@ -371,8 +371,21 @@ const styles = StyleSheet.create({
 		paddingLeft: 15,
 		paddingRight: 15,
 	},
+	userDietContainer: {
+		paddingTop: 10,
+		paddingLeft: 15,
+		paddingRight: 15,
+		flex: 1,
+		flexDirection: 'row',
+	},
 	userItemList: {
 		backgroundColor: 'rgba(0,0,0,0.05)',
+	},
+	userLabel: {
+		fontSize: 22,
+		color: '#ffaa00',
+		fontWeight: '300',
+		paddingRight: 14,
 	},
 	userPostContainer: {
 		flex: 1,

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableHighlight,
   TouchableOpacity,
   Platform,
   AppRegistry
@@ -158,7 +159,7 @@ export default class UserViewPostScreen extends React.Component {
     const hour = a.getHours();
     const min = a.getMinutes();
     const sec = a.getSeconds();
-    const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
     return time;
   }
 
@@ -186,6 +187,7 @@ export default class UserViewPostScreen extends React.Component {
       </View>
     )
   }
+  
   render() {
     const { navigate } = this.props.navigation;
     const { navigation } = this.props;
@@ -227,26 +229,28 @@ export default class UserViewPostScreen extends React.Component {
             {JSON.stringify(description).replace(/\"/g, "")} 
           </Text>
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Dietary Restrictions </Text>
-          <Text style={styles.userPostInfoText}> 
-            {JSON.stringify(dietaryRestrictions).replace(/\"/g, "")} 
+        <View style={styles.userPostContainer}>
+          <Text style={styles.userPostInfoText}>
+            {"Posted on " + this.timeConverter(parseInt(JSON.stringify(postedDate).replace(/\"/g, ""))) + ". "} 
           </Text>
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Date Posted </Text>
-          <Text style={styles.userPostInfoText}> 
-            {this.timeConverter(parseInt(JSON.stringify(postedDate).replace(/\"/g, "")))} 
+        <View style={styles.userPostContainer}>
+          <Text style={styles.userPostInfoText}>
+            {"Expires " + this.timeConverter(parseInt(JSON.stringify(expirationDate).replace(/\"/g, ""))) + ". "} 
           </Text>
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Expiration </Text>
-          <Text style={styles.userPostInfoText}> 
-            {this.timeConverter(parseInt(JSON.stringify(expirationDate).replace(/\"/g, "")))} 
-          </Text>
+        <View style={styles.userDietContainer}>
+          <TouchableHighlight
+            style={styles.tagButtonUnpressed}>
+            <Text style={styles.tagTextUnpressed}> Dairy </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.tagButtonUnpressed}>
+            <Text style={styles.tagTextUnpressed}> Meat </Text>
+          </TouchableHighlight>
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Quantity to Purchase: </Text>
+          <Text style={styles.userLabel}> Quantity to Purchase: </Text>
         </View>
         <View style={styles.userQuantityField}>
           <TextInput

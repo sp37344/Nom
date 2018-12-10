@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   Platform,
   AppRegistry
 } from 'react-native';
@@ -24,6 +25,10 @@ export default class UserPaymentScreen extends React.Component {
       details: 'List description of dish',
       ingredients: '',
       dietaryRestrictions: '',
+      creditCardNum: '',
+      cvv: '',
+      expDate: '',
+      
     };
   }
 
@@ -248,6 +253,22 @@ export default class UserPaymentScreen extends React.Component {
     );
   }
 }*/
+
+  renderContactHeader = () => {
+    const { img } = this.props
+    return (
+      <View style={styles.headerContainer}>
+        <View style={styles.coverContainer}>
+          <ImageBackground
+            source={require("../assets/images/mehek.jpg")}
+            style={styles.coverImage}
+          >
+          </ImageBackground>
+        </View>
+      </View>
+    )
+  }
+
   timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp);
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -257,7 +278,7 @@ export default class UserPaymentScreen extends React.Component {
     var hour = a.getHours();
     var min = a.getMinutes();
     var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
     return time;
   }
 
@@ -279,46 +300,12 @@ export default class UserPaymentScreen extends React.Component {
     return (
 
       <ScrollView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Item </Text>
-          <Text style={styles.userPostInfoText}> 
+        <View> 
+         {this.renderContactHeader()}
+        </View>
+        <View style={styles.userPostContainer}>
+          <Text style={styles.userPostTitleText}> 
             {JSON.stringify(item).replace(/\"/g, "")} 
-          </Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Order Time </Text>
-          <Text style={styles.userPostInfoText}> 
-            {this.timeConverter(parseInt(JSON.stringify(orderTime).replace(/\"/g, "")))} 
-          </Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Description </Text>
-          <Text style={styles.userPostInfoText}> 
-            {JSON.stringify(description).replace(/\"/g, "")} 
-          </Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Dietary Restrictions </Text>
-          <Text style={styles.userPostInfoText}> 
-            {JSON.stringify(dietaryRestrictions).replace(/\"/g, "")} 
-          </Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Restaurant </Text>
-          <Text style={styles.userPostInfoText}> 
-            {JSON.stringify(restaurant).replace(/\"/g, "")} 
-          </Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Date Posted </Text>
-          <Text style={styles.userPostInfoText}> 
-            {this.timeConverter(parseInt(JSON.stringify(datePosted).replace(/\"/g, "")))} 
-          </Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}> Expiration Date </Text>
-          <Text style={styles.userPostInfoText}> 
-            {this.timeConverter(parseInt(JSON.stringify(expirationDate).replace(/\"/g, "")))} 
           </Text>
         </View>
         <View style={styles.inputContainer}>
@@ -330,7 +317,7 @@ export default class UserPaymentScreen extends React.Component {
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Quantity </Text>
           <Text style={styles.userPostInfoText}> 
-            {JSON.stringify(quantity).replace(/\"/g, "")} 
+            {"x " + JSON.stringify(quantity).replace(/\"/g, "")} 
           </Text>
         </View>
         <View style={styles.inputContainer}>
@@ -339,23 +326,16 @@ export default class UserPaymentScreen extends React.Component {
             ${JSON.stringify(total).replace(/\"/g, "")} 
           </Text>
         </View>
-        <View
-          style={{
-            borderBottomColor: 'black',
-            borderBottomWidth: 1,
-          }}
-        />
-      <View style={styles.newPostContainer}>
-        <Text onPress={() => this.addOrder(this.state.quantity)} style={styles.newPostText}> Add to cart </Text>
-        <Ionicons
-          name={Platform.OS === "ios" ? "ios-add-circle" : "md-add-circle"}
-          color="gray"
-          size={22}
-          onPress={async () =>
-            this.addOrder(this.state.quantity)
-          }
-        />
-      </View>
+      <View style={styles.userPostContainer}>
+          <TouchableOpacity>
+            <Text 
+              onPress={() => this.addOrder(this.state.quantity)}
+              style={styles.buttonOpaque}
+              textDecorationLine={'underline'}>
+              Purchase
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }
