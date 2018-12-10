@@ -191,7 +191,10 @@ export default class RestaurantEditProfileScreen extends React.Component {
         </ScrollView>
         <ScrollView style={styles.scroll}>
           <TouchableOpacity onPress={this.handlPress}>
-            <Text onPress = {() => this.updateProfile(this.state.name, this.state.address, this.state.phone, this.state.description)}
+            <Text onPress = {() => {
+              this.updateProfile(this.state.name, this.state.address, this.state.phone, this.state.description);
+              navigate('Profile', {name, address, phone, description});
+            }}
               style={styles.buttonOpaque}
               textDecorationLine={'underline'}>
               Update Profile

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 	},
 	descriptionText: {
 		marginBottom: 4,
-		color: Colors.gray,
+		color: '#ffaa00',
 		fontSize: 16,
 		fontWeight: '400',
 		letterSpacing: 1,
