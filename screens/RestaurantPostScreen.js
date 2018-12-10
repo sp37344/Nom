@@ -79,31 +79,44 @@ export default class RestaurantPostScreen extends React.Component {
   }
 
   getFilledList() {
-    return new Promise(function (resolve, reject) {
+    return new Promise(async function (resolve, reject) {
       var user = firebase.auth().currentUser;
       var restaurant = user.email;
       console.log('Getting restaurant filled list')
       var filledList = [];
-      var query = firebase.database().ref('activeFood/').orderByChild("restaurant").equalTo(restaurant);
+      var currentTime = new Date();
+      var now = currentTime.valueOf();
+      var query = firebase.database().ref('foodHistory/').orderByChild("restaurant").equalTo(restaurant);
       query.once("value")
-        .then(function(snapshot) {
-          snapshot.forEach(function(childSnapshot) {
-            console.log(childSnapshot.child("item").val());
-            console.log(childSnapshot.child("description").val());
-            console.log(childSnapshot.child("price").val());
-            console.log(childSnapshot.child("restaurant").val());
-            console.log(childSnapshot.child("dietaryRestrictions").val());
-            console.log(childSnapshot.child("cuisine").val());
+        .then(async function(snapshot) {
+          snapshot.forEach(async function(childSnapshot) {
+            var expirationDate = childSnapshot.child("expirationDate").val();
+            if (expirationDate < now) {
+              console.log('expired item!');
+              console.log(childSnapshot.child("item").val());
+              console.log(childSnapshot.child("description").val());
+              console.log(childSnapshot.child("price").val());
+              console.log(childSnapshot.child("restaurant").val());
+              console.log(childSnapshot.child("dietaryRestrictions").val());
+              console.log(childSnapshot.child("cuisine").val());
+              console.log(childSnapshot.child("expirationDate").val());
+              console.log(childSnapshot.child("datePosted").val());
+              await filledList.push(
+              { item: childSnapshot.child("item").val(),
+                description: childSnapshot.child("description").val(),
+                price: childSnapshot.child("price").val(),
+                dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
+                cuisine: childSnapshot.child("cuisine").val(),
+                quantitySold: childSnapshot.child("quantitySold").val(),
+                quantityUnsold: childSnapshot.child("quantityUnsold").val(),
+                quantityTotal: childSnapshot.child("quantityTotal").val(),
+                expirationDate: childSnapshot.child("expirationDate").val(),
+                datePosted: childSnapshot.child("datePosted").val(),
+                subtitle: "Quantity Sold: " + childSnapshot.child("quantitySold").val() + " Quantity Unsold: " + childSnapshot.child("quantityUnsold").val()
+              });
+            }
 
-            filledList.push(
-            { item: childSnapshot.child("item").val(),
-              description: childSnapshot.child("description").val(),
-              price: childSnapshot.child("price").val(),
-              dietaryRestrictions: childSnapshot.child("dietaryRestrictions").val(),
-              cuisine: childSnapshot.child("cuisine").val(),
-              expirationDate: childSnapshot.child("expirationDate").val(),
-              datePosted: childSnapshot.child("datePosted").val()
-            });
+            console.log('not expired item');
 
           })
         })
@@ -220,7 +233,7 @@ componentDidMount() {
                   <ListItem
                     key={i}
                     title={item.item}
-                    subtitle={item.price}
+                    subtitle={item.subtitle}
                     onPress={() => navigate("RestaurantViewFilledPost")}
                   />
                 ))
