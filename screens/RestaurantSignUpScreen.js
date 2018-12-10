@@ -125,8 +125,8 @@ export default class RestaurantSignUpScreen extends React.Component {
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity onPress={this.handlPress}>
-            <Text 
-              onPress={() => 
+            <Text
+              onPress={() =>
                 this.writeRestaurantData(this.state.name, this.state.password, this.state.address, this.state.phone, this.state.email)
               }
               style={styles.buttonOpaque}

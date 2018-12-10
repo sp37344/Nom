@@ -20,27 +20,77 @@ import * as firebase from 'firebase';
 export default class RestaurantProfileScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLoading: true,
+    };
   }
 
   static navigationOptions = {
     title: 'Business Profile',
   };
 
-  renderDetail = () => {
+
+  setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
+    });
+  }
+
+  async getRestaurantInfo() {
+    return new Promise(async function (resolve, reject) {
+      var user = firebase.auth().currentUser;
+      var email = user.email;
+
+      var restaurantQuery = firebase.database().ref('restaurants/').orderByChild('email').equalTo(email).limitToFirst(1);
+      console.log('going through query');
+      var restaurantInfo;
+
+      restaurantQuery.once('value')
+        .then(function (bigSnapshot) {
+          bigSnapshot.forEach(function(snapshot) {
+            var name = snapshot.child("name").val();
+            var address = snapshot.child("address").val();
+            var phone = snapshot.child("phone").val();
+            var description = snapshot.child("description").val();
+
+            console.log("name", name);
+            console.log("address", address);
+            console.log('phone', phone);
+            console.log('description', description);
+
+            restaurantInfo = {
+              name,
+              address,
+              phone,
+              description
+            }
+          })
+        }).then(function () {
+          console.log('restaurantInfo: ', restaurantInfo);
+          resolve(restaurantInfo);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject('error: ', error);
+        })
+    })
+  }
+
+  renderDetail = (description) => {
     return (
       <View>
-        <Text style={styles.detailText}>Nom Cafe is a restaurant established in 2018 dedicated to serving the students of Princeton University.</Text>
+        <Text style={styles.detailText}>{description}</Text>
         <Text style={styles.subDetailText}>{this.props.detail}</Text>
       </View>
     )
   }
 
-  renderDescription = () => {
+  renderDescription = (name, address, phone) => {
     const { navigate } = this.props.navigation;
     return (
       <View>
         <View style={{flex:1, flexDirection:'row'}}>
-          <Text style={styles.restaurantText}>Nom Cafe</Text>
+          <Text style={styles.restaurantText}>{name}</Text>
           <FontAwesome
             style={{alignSelf:'center'}}
             name="edit"
@@ -49,8 +99,8 @@ export default class RestaurantProfileScreen extends React.Component {
             onPress={() => navigate("EditProfile")}
           />
         </View>
-        <Text style={styles.descriptionText}>1 Nassau St., Princeton NJ 08544</Text>
-        <Text style={styles.descriptionText}>000-000-0000</Text>
+        <Text style={styles.descriptionText}>{address}</Text>
+        <Text style={styles.descriptionText}>{phone}</Text>
       </View>
     )
   }
@@ -70,8 +120,40 @@ export default class RestaurantProfileScreen extends React.Component {
     )
   }
 
+  async componentWillMount() {
+    this.getRestaurantInfo().then((restaurant) => {
+      console.log("STATE", this.state);
+      console.log("RESTAURANT", restaurant);
+      var name = restaurant.name;
+      var address = restaurant.address;
+      var phone = restaurant.phone;
+      var description = restaurant.description;
+      console.log("1 name", name);
+      console.log("1 address", address);
+      console.log('1 phone', phone);
+      console.log('1 description', description);
+      console.log('promise returned');
+      this.setState({
+        name,
+        address,
+        phone,
+        description,
+        isLoading: false
+      });
+      console.log("NEW STATE", this.state)
+    }, (error) => {
+      alert(error);
+    })
+  }
+
   render() {
     const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
+    const name = navigation.getParam('name', "Name");
+    const address = navigation.getParam('address', "Address");
+    const phone = navigation.getParam('phone', "Phone Number");
+    const description = navigation.getParam('description', "Description");
+
     return (
       <View style={styles.mainViewStyle}>
         <ScrollView style={styles.scroll}>
@@ -80,8 +162,8 @@ export default class RestaurantProfileScreen extends React.Component {
               {this.renderContactHeader()}
             </View>
           </View>
-          <View style={styles.productRow}>{this.renderDescription()}</View>
-          <View style={styles.productRow}>{this.renderDetail()}</View>
+          <View style={styles.productRow}>{this.renderDescription(this.state.name, this.state.address, this.state.phone)}</View>
+          <View style={styles.productRow}>{this.renderDetail(this.state.description)}</View>
         {/* <Text onPress={() => navigate("Stats")}>Stats</Text> */}
         </ScrollView>
 {/*        <View style={styles.footer}>
@@ -96,4 +178,5 @@ export default class RestaurantProfileScreen extends React.Component {
       </View>
     );
   }
+
 }

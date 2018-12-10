@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
+import {
   Button,
-  ScrollView, 
-  View, 
-  StyleSheet, 
-  Text, 
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
   TextInput,
   ImageBackground,
   TouchableOpacity,
@@ -31,10 +31,54 @@ export default class RestaurantEditProfileScreen extends React.Component {
     title: 'Edit Profile',
   };
 
+  async updateProfile(name, address, phone, description) {
+    var user = firebase.auth().currentUser;
+    var email = user.email;
+
+    var restaurantQuery = firebase.database().ref('restaurants/').orderByChild('email').equalTo(email).limitToFirst(1);
+    console.log('going through query');
+
+    await restaurantQuery.once('value', async function(restaurantSnapshot) {
+      if (restaurantSnapshot.exists()) {
+        var restaurantRef = restaurantSnapshot.ref;
+        var restaurantKey = Object.keys(restaurantSnapshot.val())[0];
+        console.log("restaurant snapshot: ", restaurantSnapshot);
+
+        await firebase.database().ref('restaurants/' + restaurantKey).update({
+          name,
+          address,
+          phone,
+          description
+        });
+        console.log("done updating");
+        navigate("Profile");
+        return;
+      } else {
+        console.log('adding restaurant')
+
+        var restaurantKey = await firebase.database().ref('restaurants/').push({
+          name,
+          address,
+          phone,
+          email,
+          description
+        }).key;
+
+        console.log("restaurantKey", restaurantKey);
+        console.log("done adding restaurant");
+        navigate("Profile");
+        return;
+
+      }
+    });
+    navigate("Profile");
+    return;
+  }
+
   renderDetail = () => {
     return (
       <View>
-        <TextInput 
+        <TextInput
           onFocus={() => this.setState({description: ''})}
           onChangeText={(text) => this.setState({description: text})}
           style={styles.detailText}
@@ -49,19 +93,19 @@ export default class RestaurantEditProfileScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View>
-        <TextInput 
+        <TextInput
           onFocus={() => this.setState({name: ''})}
           onChangeText={(text) => this.setState({name: text})}
           style={styles.restaurantEditText}
           value={this.state.name}
         />
-        <TextInput 
+        <TextInput
             onFocus={() => this.setState({address: ''})}
             onChangeText={(text) => this.setState({address: text})}
             style={styles.descriptionEditText}
             value={this.state.address}
           />
-        <TextInput 
+        <TextInput
           onFocus={() => this.setState({phone: ''})}
           onChangeText={(text) => this.setState({phone: text})}
           style={styles.descriptionEditText}
@@ -101,7 +145,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
         </ScrollView>
         <ScrollView style={styles.scroll}>
           <TouchableOpacity onPress={this.handlPress}>
-            <Text
+            <Text onPress = {() => this.updateProfile(this.state.name, this.state.address, this.state.phone, this.state.description)}
               style={styles.buttonOpaque}
               textDecorationLine={'underline'}>
               Update Profile
@@ -121,4 +165,3 @@ export default class RestaurantEditProfileScreen extends React.Component {
     );
   }
 }
-
