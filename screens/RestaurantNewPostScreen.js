@@ -273,16 +273,10 @@ export default class RestaurantNewPostScreen extends React.Component {
               style={{backgroundColor:'white'}}
               mode="date"
               onDateChange={expirationDate => this.setState({expirationDate})}/>
-<<<<<<< HEAD
-        <Text
-          onPress={() => this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)}
-=======
-        <Text 
-          onPress={() => {
+        <Text onPress={() => {
             this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)
             navigate("RestaurantPost");
           }}
->>>>>>> b9849cda84591a8a3585439b49163a258ebefc8c
           style={styles.buttonOpaque}
           textDecorationLine={'underline'}>
           Submit
