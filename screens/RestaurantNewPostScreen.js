@@ -255,7 +255,7 @@ export default class RestaurantNewPostScreen extends React.Component {
               else  {
                 this.state.dietaryRestrictions.push('glutenFree');
               }
-              this.setState({glutenFree:!this.state.nutFree})
+              this.setState({glutenFree:!this.state.glutenFree})
               console.log(this.state.dietaryRestrictions); 
             }}
             >
