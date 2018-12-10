@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 	},
 	descriptionText: {
 		marginBottom: 4,
-		color: Colors.gray,
+		color: '#ffaa00',
 		fontSize: 16,
 		fontWeight: '400',
 		letterSpacing: 1,
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
 		paddingRight: 15,
 		flex: 1,
 		flexDirection: 'row',
-		justifyContent: 'left',
+		justifyContent: 'flex-end',
 		backgroundColor: 'white',
 	},
 	newPostText: {

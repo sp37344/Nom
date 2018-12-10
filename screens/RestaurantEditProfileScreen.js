@@ -19,11 +19,16 @@ export default class RestaurantEditProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Restaurant Name',
-      address: 'Restaurant Address',
-      phone: 'Phone Number',
+      name: '',
+      address: '',
+      phone: '',
       email: 'example@gmail.com',
-      description: 'Add description here.',
+      description: ''
+      // name: "Name",
+      // address: "Address",
+      // phone: "Phone Number",
+      // email: 'example@gmail.com',
+      // description: "Description"
     };
   }
 
@@ -51,7 +56,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
           description
         });
         console.log("done updating");
-        navigate("Profile");
+        navigate("RestaurantProfile", {name, address, phone, description});
         return;
       } else {
         console.log('adding restaurant')
@@ -66,20 +71,22 @@ export default class RestaurantEditProfileScreen extends React.Component {
 
         console.log("restaurantKey", restaurantKey);
         console.log("done adding restaurant");
-        navigate("Profile");
+        // navigate("Profile");
+        navigate("RestaurantProfile", {name, address, phone, description});
         return;
 
       }
     });
-    navigate("Profile");
+    //navigate("Profile");
+    navigate("RestaurantProfile", {name, address, phone, description});
     return;
   }
 
-  renderDetail = () => {
+  renderDetail = (description) => {
     return (
       <View>
         <TextInput
-          onFocus={() => this.setState({description: ''})}
+          onFocus={() => this.setState({description})}
           onChangeText={(text) => this.setState({description: text})}
           style={styles.detailText}
           value={this.state.description}
@@ -89,24 +96,24 @@ export default class RestaurantEditProfileScreen extends React.Component {
     )
   }
 
-  renderDescription = () => {
+  renderDescription = (name, address, phone, description) => {
     const { navigate } = this.props.navigation;
     return (
       <View>
         <TextInput
-          onFocus={() => this.setState({name: ''})}
+          onFocus={() => this.setState({name})}
           onChangeText={(text) => this.setState({name: text})}
           style={styles.restaurantEditText}
           value={this.state.name}
         />
         <TextInput
-            onFocus={() => this.setState({address: ''})}
+            onFocus={() => this.setState({address})}
             onChangeText={(text) => this.setState({address: text})}
             style={styles.descriptionEditText}
             value={this.state.address}
           />
         <TextInput
-          onFocus={() => this.setState({phone: ''})}
+          onFocus={() => this.setState({phone})}
           onChangeText={(text) => this.setState({phone: text})}
           style={styles.descriptionEditText}
           value={this.state.phone}
@@ -121,7 +128,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
       <View style={styles.headerContainer}>
         <View style={styles.coverContainer}>
           <ImageBackground
-            source={require("../assets/images/barbecue.jpg")}
+            source={require("../assets/images/indianfood.jpg")}
             style={styles.coverImage}
           >
           </ImageBackground>
@@ -130,8 +137,47 @@ export default class RestaurantEditProfileScreen extends React.Component {
     )
   }
 
+  componentDidMount() {
+    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
+    const name = navigation.getParam('name', "Name");
+    const address = navigation.getParam('address', "Address");
+    const phone = navigation.getParam('phone', "Phone Number");
+    const description = navigation.getParam('description', "Description");
+    this.setState({
+      name,
+      address,
+      phone,
+      description
+    });
+
+
+    // this.getAvailableList().then((availableList) => {
+    //   console.log('promise returned');
+    //   this.setState({
+    //     availableList: availableList
+    //     // isLoading: false
+    //   });
+    //   this.getFilledList().then((filledList) => {
+    //     console.log('filled list promise returned');
+    //     this.setState({
+    //       filledList: filledList,
+    //       isLoading: false
+    //     })
+    //   })
+    // }, (error) => {
+    //   alert(error);
+    // })
+  }
+
   render() {
     const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
+    const name = navigation.getParam('name', "Name");
+    const address = navigation.getParam('address', "Address");
+    const phone = navigation.getParam('phone', "Phone Number");
+    const description = navigation.getParam('description', "Description");
+
     return (
       <View style={styles.mainViewStyle}>
         <ScrollView style={styles.scroll}>
@@ -140,12 +186,15 @@ export default class RestaurantEditProfileScreen extends React.Component {
               {this.renderContactHeader()}
             </View>
           </View>
-          <View style={styles.productRow}>{this.renderDescription()}</View>
-          <View style={styles.productRow}>{this.renderDetail()}</View>
+          <View style={styles.productRow}>{this.renderDescription(name, address, phone, description)}</View>
+          <View style={styles.productRow}>{this.renderDetail(description)}</View>
         </ScrollView>
         <ScrollView style={styles.scroll}>
           <TouchableOpacity onPress={this.handlPress}>
-            <Text onPress = {() => this.updateProfile(this.state.name, this.state.address, this.state.phone, this.state.description)}
+            <Text onPress = {() => {
+              this.updateProfile(this.state.name, this.state.address, this.state.phone, this.state.description);
+              navigate('Profile', {name, address, phone, description});
+            }}
               style={styles.buttonOpaque}
               textDecorationLine={'underline'}>
               Update Profile

@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  RefreshControl
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import { FontAwesome } from '@expo/vector-icons';
@@ -22,6 +23,7 @@ export default class RestaurantProfileScreen extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
+      refreshing: false,
     };
   }
 
@@ -29,6 +31,33 @@ export default class RestaurantProfileScreen extends React.Component {
     title: 'Business Profile',
   };
 
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this.getRestaurantInfo().then((restaurant) => {
+      console.log("STATE", this.state);
+      console.log("RESTAURANT", restaurant);
+      var name = restaurant.name;
+      var address = restaurant.address;
+      var phone = restaurant.phone;
+      var description = restaurant.description;
+      console.log("1 name", name);
+      console.log("1 address", address);
+      console.log('1 phone', phone);
+      console.log('1 description', description);
+      console.log('promise returned');
+      this.setState({
+        name,
+        address,
+        phone,
+        description,
+        isLoading: false,
+        refreshing: false,
+      });
+      console.log("NEW STATE", this.state)
+    }, (error) => {
+      alert(error);
+    })
+  }
 
   setStateAsync(state) {
     return new Promise((resolve) => {
@@ -85,7 +114,7 @@ export default class RestaurantProfileScreen extends React.Component {
     )
   }
 
-  renderDescription = (name, address, phone) => {
+  renderDescription = (name, address, phone, description) => {
     const { navigate } = this.props.navigation;
     return (
       <View>
@@ -96,7 +125,7 @@ export default class RestaurantProfileScreen extends React.Component {
             name="edit"
             color="gray"
             size={22}
-            onPress={() => navigate("EditProfile")}
+            onPress={() => navigate("EditProfile", {name, address, phone, description})}
           />
         </View>
         <Text style={styles.descriptionText}>{address}</Text>
@@ -111,7 +140,7 @@ export default class RestaurantProfileScreen extends React.Component {
       <View style={styles.headerContainer}>
         <View style={styles.coverContainer}>
           <ImageBackground
-            source={require("../assets/images/barbecue.jpg")}
+            source={require("../assets/images/indianfood.jpg")}
             style={styles.coverImage}
           >
           </ImageBackground>
@@ -155,7 +184,15 @@ export default class RestaurantProfileScreen extends React.Component {
     const description = navigation.getParam('description', "Description");
 
     return (
-      <View style={styles.mainViewStyle}>
+      <ScrollView
+      	refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />
+        }
+      	style={styles.scroll}
+      >
         <ScrollView style={styles.scroll}>
           <View>
             <View>
@@ -175,7 +212,7 @@ export default class RestaurantProfileScreen extends React.Component {
             <Text style={styles.textFooter}>EMAIL</Text>
           </TouchableOpacity>
         </View> */}
-      </View>
+      </ScrollView>
     );
   }
 

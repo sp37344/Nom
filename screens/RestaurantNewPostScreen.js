@@ -27,6 +27,7 @@ export default class RestaurantNewPostScreen extends React.Component {
     this.state = {
       item: 'Item Name',
       price: 'Price',
+      originalPrice: 'Original Price',
       quantity: 'Quantity',
       description: 'List description of dish',
       // dietaryRestrictions: 'List dietary restrictions here',
@@ -46,12 +47,13 @@ export default class RestaurantNewPostScreen extends React.Component {
     title: 'New Post',
   };
 
-  restaurantPostFood(item, price, quantity, description, expirationDate, dietaryRestrictions, cuisine) {
+  restaurantPostFood(item, price, originalPrice, quantity, description, expirationDate, dietaryRestrictions, cuisine) {
     var user = firebase.auth().currentUser;
     var restaurant = user.email;
     console.log(typeof restaurant);
     var today = new Date();
     var datePosted = today.valueOf();
+    var quantitySold = 0;
     var expirationDate_value = expirationDate.valueOf();
     console.log("datePosted", datePosted);
     console.log("expirationDate", expirationDate_value);
@@ -64,7 +66,9 @@ export default class RestaurantNewPostScreen extends React.Component {
       restaurant,
       dietaryRestrictions,
       cuisine,
-      datePosted
+      datePosted,
+      quantitySold,
+      originalPrice
     }).then((data) => {
       // success callback
       console.log('data ', data)
@@ -86,7 +90,7 @@ export default class RestaurantNewPostScreen extends React.Component {
     const { navigate } = this.props.navigation;
 
     return (
-      <ScrollView style={styles.postContainer}>
+      <ScrollView style={styles.scroll}>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Item: </Text>
           <TextInput
@@ -104,6 +108,16 @@ export default class RestaurantNewPostScreen extends React.Component {
             style={styles.input}
             keyboardType='numeric'
             value={this.state.price}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}> Original Price: $</Text>
+          <TextInput
+            onFocus={() => this.setState({originalPrice: ''})}
+            onChangeText={(text) => this.setState({originalPrice: text})}
+            style={styles.input}
+            keyboardType='numeric'
+            value={this.state.originalPrice}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -271,10 +285,10 @@ export default class RestaurantNewPostScreen extends React.Component {
         <DatePickerIOS
               date={this.state.expirationDate}
               style={{backgroundColor:'white'}}
-              mode="date"
+              mode="datetime"
               onDateChange={expirationDate => this.setState({expirationDate})}/>
         <Text onPress={() => {
-            this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)
+            this.restaurantPostFood(this.state.item, this.state.price, this.state.originalPrice, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)
             navigate("RestaurantPost");
           }}
           style={styles.buttonOpaque}
