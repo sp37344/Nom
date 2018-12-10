@@ -29,9 +29,9 @@ export default class RestaurantNewPostScreen extends React.Component {
       price: 'Price',
       quantity: 'Quantity',
       description: 'List description of dish',
-      dietaryRestrictions: 'List dietary restrictions here',
+      // dietaryRestrictions: 'List dietary restrictions here',
       cuisine: 'List cuisine types here',
-      // dietaryRestrictions: [],
+      dietaryRestrictions: [],
       vegetarian: false,
       vegan: false,
       dairyFree: false,
@@ -145,7 +145,17 @@ export default class RestaurantNewPostScreen extends React.Component {
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
             } 
-            onPress={() => this.setState({vegetarian:!this.state.vegetarian})}
+            onPress={() => {
+              // this.setState({vegetarian:!this.state.vegetarian}); 
+              if (this.state.dietaryRestrictions.includes('vegetarian')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('vegetarian'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('vegetarian');
+              }
+              this.setState({vegetarian:!this.state.vegetarian})
+              console.log(this.state.dietaryRestrictions); 
+            }}
             >
             <Text 
               style={
@@ -163,7 +173,16 @@ export default class RestaurantNewPostScreen extends React.Component {
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
             } 
-            onPress={() => this.setState({vegan:!this.state.vegan})}
+            onPress={() => {
+              if (this.state.dietaryRestrictions.includes('vegan')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('vegan'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('vegan');
+              }
+              this.setState({vegan:!this.state.vegan})
+              console.log(this.state.dietaryRestrictions); 
+            }}
             >
             <Text 
               style={
@@ -179,7 +198,16 @@ export default class RestaurantNewPostScreen extends React.Component {
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
             } 
-            onPress={() => this.setState({dairyFree:!this.state.dairyFree})}
+            onPress={() => {
+              if (this.state.dietaryRestrictions.includes('dairyFree')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('dairyFree'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('dairyFree');
+              }
+              this.setState({dairyFree:!this.state.dairyFree})
+              console.log(this.state.dietaryRestrictions); 
+            }}
             >
             <Text 
               style={
@@ -195,7 +223,16 @@ export default class RestaurantNewPostScreen extends React.Component {
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
             } 
-            onPress={() => this.setState({nutFree:!this.state.nutFree})}
+            onPress={() => {
+              if (this.state.dietaryRestrictions.includes('nutFree')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('nutFree'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('nutFree');
+              }
+              this.setState({nutFree:!this.state.nutFree})
+              console.log(this.state.dietaryRestrictions); 
+            }}
             >
             <Text 
               style={
@@ -211,7 +248,16 @@ export default class RestaurantNewPostScreen extends React.Component {
               ? styles.tagButtonPressed
               : styles.tagButtonUnpressed
             } 
-            onPress={() => this.setState({glutenFree:!this.state.glutenFree})}
+            onPress={() => {
+              if (this.state.dietaryRestrictions.includes('glutenFree')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('glutenFree'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('glutenFree');
+              }
+              this.setState({glutenFree:!this.state.nutFree})
+              console.log(this.state.dietaryRestrictions); 
+            }}
             >
             <Text 
               style={
