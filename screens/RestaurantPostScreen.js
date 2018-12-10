@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   Platform,
+  RefreshControl,
 } from 'react-native';
 import { ListItem } from 'react-native-elements'
 import { ExpoLinksView } from '@expo/samples';
@@ -24,7 +25,29 @@ export default class RestaurantPostScreen extends React.Component {
     this.state = {
       isLoading: true,
       availableList: [],
+      refreshing: false,
     };
+  }
+
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this.getAvailableList().then((availableList) => {
+    console.log('promise returned');
+    this.setState({
+      availableList: availableList
+      // isLoading: false
+    });
+    this.getFilledList().then((filledList) => {
+      console.log('filled list promise returned');
+      this.setState({
+        filledList: filledList,
+        isLoading: false, 
+        refreshing: false,
+      })
+    })
+  }, (error) => {
+    alert(error);
+  })
   }
 
   setStateAsync(state) {
@@ -199,7 +222,15 @@ componentDidMount() {
       ]
 
       return (
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />
+          }
+          style={styles.scroll}
+        >
           <View style={styles.newPostContainer}>
             <Text onPress={() => navigate("RestaurantNewPost")} style={styles.newPostText}> New Post </Text>
             <Ionicons

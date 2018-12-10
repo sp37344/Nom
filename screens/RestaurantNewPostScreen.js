@@ -88,7 +88,7 @@ export default class RestaurantNewPostScreen extends React.Component {
     const { navigate } = this.props.navigation;
 
     return (
-      <ScrollView style={styles.postContainer}>
+      <ScrollView style={styles.scroll}>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Item: </Text>
           <TextInput
