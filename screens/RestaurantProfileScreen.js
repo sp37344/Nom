@@ -121,15 +121,6 @@ export default class RestaurantProfileScreen extends React.Component {
   }
 
   async componentWillMount() {
-    // var user = firebase.auth().currentUser;
-    // var email = user.email;
-    //
-    // var restaurantQuery = firebase.database().ref('restaurants/').orderByChild('email').equalTo(email).limitToFirst(1);
-    // console.log('going through query');
-    //
-    //
-    //
-
     this.getRestaurantInfo().then((restaurant) => {
       console.log("STATE", this.state);
       console.log("RESTAURANT", restaurant);
