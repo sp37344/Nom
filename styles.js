@@ -156,6 +156,13 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 	},
+	inputContainerDiet: {
+		paddingTop: 10,
+		paddingLeft: 15,
+		paddingRight: 15,
+		flex: 1,
+		flexDirection: 'row',
+	},
 	itemsContainer: {
 		height: 130, 
 	},
@@ -315,6 +322,34 @@ const styles = StyleSheet.create({
 		fontSize: 17,
 		color: 'rgba(96,100,109, 1)',
 		textAlign: 'center',
+	},
+	tagButtonPressed: {
+		// margin: 10,
+		marginRight: 10,
+		textAlign: 'center',
+		backgroundColor: "#ffaa00",
+		borderWidth: 1,
+		borderColor: '#ffaa00',
+		borderRadius: 6,
+	},
+	tagButtonUnpressed: {
+		// margin: 10,
+		marginRight: 10,
+		textAlign: 'center',
+		backgroundColor: "#EEE",
+		borderWidth: 1,
+		borderColor: '#EEE',
+		borderRadius: 6,
+	},
+	tagTextPressed: {
+		fontSize: 18,
+		color: 'white',
+		flex: 1,
+	},
+	tagTextUnpressed: {
+		fontSize: 18,
+		color: 'gray',
+		flex: 1,
 	},
 	textContainer: {
 		paddingTop: 100,

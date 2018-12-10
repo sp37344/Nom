@@ -74,10 +74,14 @@ export default class UserPaymentScreen extends React.Component {
         var snapshotKey = Object.keys(orderSnapshot.val())[0];
         console.log("order Snapshot: ", orderSnapshot);
         console.log('user already has active order');
+        console.log('foodKey, ', foodKey);
+        console.log('snapshotKey, ', snapshotKey);
 
-        var quantityRef = firebase.database().ref('activeFood/' + foodKey).child("quantity");
+        var quantityRef = firebase.database().ref('activeFood/' + foodKey);
+        console.log("quantityRef", quantityRef);
         await quantityRef.once('value', async (quantitySnapshot) => {
-          quantityLeft = quantitySnapshot.val();
+          var quantityLeft = quantitySnapshot.child('quantity').val();
+          console.log('quantityLeft', quantityLeft);
           await firebase.database().ref('activeOrders/' + snapshotKey).remove();
           console.log('removed item');
           await firebase.database().ref('orderHistory/').push({
@@ -113,8 +117,62 @@ export default class UserPaymentScreen extends React.Component {
             })
           }
 
-          this.props.navigation.navigate("UserPost");
-          return;
+          var foodHistoryRef = firebase.database().ref('foodHistory/').orderByChild("datePosted").equalTo(datePosted).limitToFirst(1);
+          await foodHistoryRef.once("value", async (foodHistorySnapshot) => {
+            if (foodHistorySnapshot.exists()) {
+              var snapshotRef = foodHistorySnapshot.ref;
+              var snapshotKey = Object.keys(foodHistorySnapshot.val())[0];
+              console.log("order Snapshot: ", foodHistorySnapshot);
+              console.log('user already has active order');
+
+              foodHistorySnapshot.forEach(async (foodHistory) => {
+                var foodHistoryItem = foodHistory.child('item').val();
+                if (foodHistoryItem == item) {
+                  console.log('item already exists in the food history as ', item);
+                  var foodHistoryTotalQuantity = parseInt(foodHistory.child('quantityTotal').val());
+                  var foodHistorySoldQuantity = parseInt(foodHistory.child('quantitySold').val());
+                  var foodHistoryUnsoldQuantity = parseInt(foodHistory.child('quantityUnsold').val());
+                  console.log('total quantity', foodHistoryTotalQuantity);
+                  console.log('sold quantity', foodHistorySoldQuantity);
+                  console.log('unsold quantity', foodHistoryUnsoldQuantity);
+                  console.log('quantity', quantity);
+                  var quantityNum = parseInt(quantity);
+                  console.log(typeof(quantity));
+                  var quantitySold = parseInt(foodHistorySoldQuantity + quantityNum);
+                  console.log('quantitySold', quantitySold);
+                  await foodHistory.ref.update({
+                    quantitySold,
+                    quantityUnsold: quantityRemaining
+                  })
+                  this.props.navigation.navigate("UserPost");
+                  return;
+                }
+              })
+            }
+            else {
+              quantityLeft = quantitySnapshot.child('quantity').val();
+              await firebase.database().ref('foodHistory/').push({
+                restaurant,
+                item: item,
+                price: price,
+                description: description,
+                dietaryRestrictions: dietaryRestrictions,
+                datePosted: datePosted,
+                expirationDate: expirationDate,
+                total,
+                quantityTotal: quantityLeft,
+                quantitySold: quantity,
+                quantityUnsold: quantityRemaining
+              });
+              console.log('added food to history');
+              this.props.navigation.navigate("UserPost");
+              return;
+            }
+          })
+
+
+
+
         })
       }
       else {

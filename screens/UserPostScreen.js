@@ -34,7 +34,7 @@ export default class UserPostScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Home',
+    title: 'Posts',
   }
 
   async getAvailablePosts() {

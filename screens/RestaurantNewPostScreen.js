@@ -8,9 +8,12 @@ import {
   TextInput,
   Platform,
   DatePickerIOS,
+  // CheckBox
+  TouchableHighlight,
 } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
 import { ExpoLinksView } from '@expo/samples';
+import { FontAwesome } from '@expo/vector-icons';
 import Picker from 'react-native-picker';
 import DatePicker from 'react-native-date-picker';
 import styles from '../styles';
@@ -26,9 +29,14 @@ export default class RestaurantNewPostScreen extends React.Component {
       price: 'Price',
       quantity: 'Quantity',
       description: 'List description of dish',
-      dietaryRestrictions: 'List dietary restrictions here',
+      // dietaryRestrictions: 'List dietary restrictions here',
       cuisine: 'List cuisine types here',
-      // dietaryRestrictions: [],
+      dietaryRestrictions: [],
+      vegetarian: false,
+      vegan: false,
+      dairyFree: false,
+      nutFree: false,
+      glutenFree: false,
       expirationDate: new Date(),
       active: 1,
     };
@@ -67,20 +75,15 @@ export default class RestaurantNewPostScreen extends React.Component {
     })
   }
 
+  _onHideUnderlay() {
+    this.setState({ vegan: false });
+  }
+  _onShowUnderlay() {
+    this.setState({ vegan: true });
+  }
+
   render() {
     const { navigate } = this.props.navigation;
-
-    const diets = [
-      {
-        name: 'gluten-free'
-      },
-      {
-        name: 'vegan'
-      },
-      {
-        name: 'pescatarian'
-      },
-    ]
 
     return (
       <ScrollView style={styles.postContainer}>
@@ -122,14 +125,136 @@ export default class RestaurantNewPostScreen extends React.Component {
             value={this.state.description}
           />
         </View>
-        <View style={styles.inputContainer}>
+        <View style={styles.inputContainerDiet}>
           <Text style={styles.label}> Dietary Restrictions: </Text>
-          <TextInput
-            onFocus={() => this.setState({dietaryRestrictions: ''})}
-            onChangeText={(text) => this.setState({dietaryRestrictions: text})}
-            style={styles.input}
-            value={this.state.dietaryRestrictions}
-          />
+          <TouchableHighlight
+            style={
+              this.state.vegetarian
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            }
+            onPress={() => {
+              // this.setState({vegetarian:!this.state.vegetarian});
+              if (this.state.dietaryRestrictions.includes('vegetarian')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('vegetarian'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('vegetarian');
+              }
+              this.setState({vegetarian:!this.state.vegetarian})
+              console.log(this.state.dietaryRestrictions);
+            }}
+            >
+            <Text
+              style={
+                this.state.vegetarian
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > vegetarian </Text>
+          </TouchableHighlight>
+        </View>
+        <View style={styles.inputContainer}>
+          <TouchableHighlight
+            style={
+              this.state.vegan
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            }
+            onPress={() => {
+              if (this.state.dietaryRestrictions.includes('vegan')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('vegan'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('vegan');
+              }
+              this.setState({vegan:!this.state.vegan})
+              console.log(this.state.dietaryRestrictions);
+            }}
+            >
+            <Text
+              style={
+                this.state.vegan
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > vegan </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={
+              this.state.dairyFree
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            }
+            onPress={() => {
+              if (this.state.dietaryRestrictions.includes('dairyFree')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('dairyFree'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('dairyFree');
+              }
+              this.setState({dairyFree:!this.state.dairyFree})
+              console.log(this.state.dietaryRestrictions);
+            }}
+            >
+            <Text
+              style={
+                this.state.dairyFree
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > dairy-free </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={
+              this.state.nutFree
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            }
+            onPress={() => {
+              if (this.state.dietaryRestrictions.includes('nutFree')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('nutFree'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('nutFree');
+              }
+              this.setState({nutFree:!this.state.nutFree})
+              console.log(this.state.dietaryRestrictions);
+            }}
+            >
+            <Text
+              style={
+                this.state.nutFree
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > nut-free </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={
+              this.state.glutenFree
+              ? styles.tagButtonPressed
+              : styles.tagButtonUnpressed
+            }
+            onPress={() => {
+              if (this.state.dietaryRestrictions.includes('glutenFree')) {
+                this.state.dietaryRestrictions.splice(this.state.dietaryRestrictions.indexOf('glutenFree'), 1);
+              }
+              else  {
+                this.state.dietaryRestrictions.push('glutenFree');
+              }
+              this.setState({glutenFree:!this.state.glutenFree})
+              console.log(this.state.dietaryRestrictions);
+            }}
+            >
+            <Text
+              style={
+                this.state.glutenFree
+                ? styles.tagTextPressed
+                : styles.tagTextUnpressed
+              }
+            > gluten-free </Text>
+          </TouchableHighlight>
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Cuisine Type: </Text>
@@ -141,15 +266,6 @@ export default class RestaurantNewPostScreen extends React.Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}> Item: </Text>
-          <SearchBar
-            lightTheme
-            round
-            showLoading
-            containerStyle={styles.searchContainer}
-            placeholder='Search' />
-        </View>
-        <View style={styles.inputContainer}>
           <Text style={styles.label}> Expiration Date: </Text>
         </View>
         <DatePickerIOS
@@ -157,8 +273,10 @@ export default class RestaurantNewPostScreen extends React.Component {
               style={{backgroundColor:'white'}}
               mode="date"
               onDateChange={expirationDate => this.setState({expirationDate})}/>
-        <Text 
-          onPress={() => this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)}
+        <Text onPress={() => {
+            this.restaurantPostFood(this.state.item, this.state.price, this.state.quantity, this.state.description, this.state.expirationDate, this.state.dietaryRestrictions, this.state.cuisine)
+            navigate("RestaurantPost");
+          }}
           style={styles.buttonOpaque}
           textDecorationLine={'underline'}>
           Submit
