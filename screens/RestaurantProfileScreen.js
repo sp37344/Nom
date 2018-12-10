@@ -140,7 +140,7 @@ export default class RestaurantProfileScreen extends React.Component {
       <View style={styles.headerContainer}>
         <View style={styles.coverContainer}>
           <ImageBackground
-            source={require("../assets/images/barbecue.jpg")}
+            source={require("../assets/images/indianfood.jpg")}
             style={styles.coverImage}
           >
           </ImageBackground>
@@ -184,7 +184,7 @@ export default class RestaurantProfileScreen extends React.Component {
     const description = navigation.getParam('description', "Description");
 
     return (
-      <ScrollView 
+      <ScrollView
       	refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
