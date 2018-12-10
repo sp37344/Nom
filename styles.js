@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
 		paddingRight: 15,
 		flex: 1,
 		flexDirection: 'row',
-		justifyContent: 'left',
+		justifyContent: 'flex-end',
 		backgroundColor: 'white',
 	},
 	newPostText: {

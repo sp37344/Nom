@@ -226,6 +226,7 @@ componentDidMount() {
               onRefresh={this._onRefresh}
             />
           }
+          style={styles.scroll}
         >
           <View style={styles.newPostContainer}>
             <Text onPress={() => navigate("RestaurantNewPost")} style={styles.newPostText}> New Post </Text>
