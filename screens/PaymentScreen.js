@@ -1,4 +1,9 @@
-/* Code adapted from https://blog.bam.tech/developper-news/setup-stripe-react-native-nodejs and https://www.youtube.com/watch?v=NmNNbQKlF0I */
+/* 
+Code adapted from:
+https://blog.bam.tech/developper-news/setup-stripe-react-native-nodejs
+https://www.youtube.com/watch?v=NmNNbQKlF0I 
+https://github.com/xcarpentier/react-native-stripe-api
+*/
 
 import React, { Component } from 'react';
 import { 
