@@ -32,12 +32,9 @@
     "react-native-svg-charts": "^5.2.0",
     "react-native-vector-icons": "^6.0.2",
     "react-navigation": "^2.18.0",
-<<<<<<< HEAD
     "react-stripe-elements": "^2.0.1",
-=======
     "stripe": "^6.20.0",
     "tipsi-stripe": "^7.0.0",
->>>>>>> e6d7da21a7271ed6fe764a5c993c539f768e8da8
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
