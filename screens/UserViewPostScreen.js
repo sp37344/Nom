@@ -77,7 +77,8 @@ export default class UserViewPostScreen extends React.Component {
         });
 
         console.log("foodKey", foodKey);
-        navigate("UserPayment",
+        // navigate("UserPayment",
+        navigate("Payment",
         {
           userEmail: email,
           restaurant,
@@ -114,6 +115,7 @@ export default class UserViewPostScreen extends React.Component {
 
         console.log("orderKey", orderKey);
         console.log("foodKey", foodKey);
+        // navigate("UserPayment", {
         navigate("UserPayment", {
           userEmail: email,
           restaurant,
@@ -132,6 +134,7 @@ export default class UserViewPostScreen extends React.Component {
         return;
       }
     });
+    // navigate("UserPayment",
     navigate("UserPayment",
     (
       userEmail: email,
