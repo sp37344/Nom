@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 76980,
-  "expoServerNgrokUrl": "https://g2-5yz.janetcl.nom.exp.direct",
-  "packagerNgrokUrl": "https://packager.g2-5yz.janetcl.nom.exp.direct",
-  "ngrokPid": 76996
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

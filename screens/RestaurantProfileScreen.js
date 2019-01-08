@@ -140,7 +140,7 @@ export default class RestaurantProfileScreen extends React.Component {
       <View style={styles.headerContainer}>
         <View style={styles.coverContainer}>
           <ImageBackground
-            source={require("../assets/images/indianfood.jpg")}
+            source={require("../assets/images/kungfutea.jpg")}
             style={styles.coverImage}
           >
           </ImageBackground>
