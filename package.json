@@ -16,6 +16,7 @@
     "@expo/samples": "2.1.1",
     "@expo/vector-icons": "^8.0.0",
     "async": "^2.6.1",
+    "axios": "^0.18.0",
     "expo": "^30.0.1",
     "firebase": "^5.5.7",
     "react": "16.3.1",
@@ -25,10 +26,14 @@
     "react-native-firebase": "^5.1.0",
     "react-native-picker": "^4.3.7",
     "react-native-settings-list": "^1.8.0",
+    "react-native-stripe": "^1.2.2",
+    "react-native-stripe-api": "^0.1.0",
     "react-native-svg": "^6.2.2",
     "react-native-svg-charts": "^5.2.0",
     "react-native-vector-icons": "^6.0.2",
     "react-navigation": "^2.18.0",
+    "stripe": "^6.20.0",
+    "tipsi-stripe": "^7.0.0",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
