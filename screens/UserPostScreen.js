@@ -128,23 +128,20 @@ export default class UserPostScreen extends React.Component {
             {
               this.state.availableList.map((restaurant, i) => (
                 <View>
-                  <Text style={styles.userRestaurantLabel}>
+                  <Text style={styles.label}>
                     {restaurant.name}
                   </Text>
-                  {/*
                   <View
                     style={{
                       borderBottomColor: 'black',
                       borderBottomWidth: 1,
                     }}
-                  />*/}
+                  />
                   {restaurant.available.map((item, j) => (
                     <ListItem
                       key={j}
                       title={item.item}
                       subtitle={item.price}
-                      style={styles.userItemList}
-                      badge={{value: item.quantity}}
                       onPress={async () =>
                         navigate("UserViewPost", {
                         item: item.item,

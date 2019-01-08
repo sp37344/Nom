@@ -3,6 +3,7 @@ import {
   Button,
   ScrollView,
   View,
+  ImageBackground,
   StyleSheet,
   Text,
   TextInput,
@@ -28,7 +29,7 @@ export default class UserPaymentScreen extends React.Component {
       creditCardNum: '',
       cvv: '',
       expDate: '',
-      
+
     };
   }
 
@@ -305,36 +306,36 @@ export default class UserPaymentScreen extends React.Component {
     return (
 
       <ScrollView style={styles.container}>
-        <View> 
+        <View>
          {this.renderContactHeader()}
         </View>
         <View style={styles.userPostContainer}>
-          <Text style={styles.userPostTitleText}> 
-            {JSON.stringify(item).replace(/\"/g, "")} 
+          <Text style={styles.userPostTitleText}>
+            {JSON.stringify(item).replace(/\"/g, "")}
           </Text>
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Price </Text>
-          <Text style={styles.userPostInfoText}> 
-            ${JSON.stringify(price).replace(/\"/g, "")} 
+          <Text style={styles.userPostInfoText}>
+            ${JSON.stringify(price).replace(/\"/g, "")}
           </Text>
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Quantity </Text>
-          <Text style={styles.userPostInfoText}> 
-            {"x " + JSON.stringify(quantity).replace(/\"/g, "")} 
+          <Text style={styles.userPostInfoText}>
+            {"x " + JSON.stringify(quantity).replace(/\"/g, "")}
           </Text>
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}> Total </Text>
-          <Text style={styles.userPostInfoText}> 
-            ${JSON.stringify(total).replace(/\"/g, "")} 
+          <Text style={styles.userPostInfoText}>
+            ${JSON.stringify(total).replace(/\"/g, "")}
           </Text>
         </View>
       <View style={styles.userPostContainer}>
           <TouchableOpacity>
-            <Text 
-              onPress={() => this.addOrder(this.state.quantity)}
+            <Text
+              onPress={() => this.purchase(this.state.quantity)}
               style={styles.buttonOpaque}
               textDecorationLine={'underline'}>
               Purchase
@@ -345,4 +346,3 @@ export default class UserPaymentScreen extends React.Component {
     );
   }
 }
-

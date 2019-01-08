@@ -56,7 +56,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
           description
         });
         console.log("done updating");
-        navigate("RestaurantProfile", {name, address, phone, description});
+        navigate("Profile", {name, address, phone, description});
         return;
       } else {
         console.log('adding restaurant')
@@ -72,13 +72,13 @@ export default class RestaurantEditProfileScreen extends React.Component {
         console.log("restaurantKey", restaurantKey);
         console.log("done adding restaurant");
         // navigate("Profile");
-        navigate("RestaurantProfile", {name, address, phone, description});
+        navigate("Profile", {name, address, phone, description});
         return;
 
       }
     });
     //navigate("Profile");
-    navigate("RestaurantProfile", {name, address, phone, description});
+    navigate("Profile", {name, address, phone, description});
     return;
   }
 
@@ -151,23 +151,6 @@ export default class RestaurantEditProfileScreen extends React.Component {
       description
     });
 
-
-    // this.getAvailableList().then((availableList) => {
-    //   console.log('promise returned');
-    //   this.setState({
-    //     availableList: availableList
-    //     // isLoading: false
-    //   });
-    //   this.getFilledList().then((filledList) => {
-    //     console.log('filled list promise returned');
-    //     this.setState({
-    //       filledList: filledList,
-    //       isLoading: false
-    //     })
-    //   })
-    // }, (error) => {
-    //   alert(error);
-    // })
   }
 
   render() {
@@ -193,7 +176,7 @@ export default class RestaurantEditProfileScreen extends React.Component {
           <TouchableOpacity onPress={this.handlPress}>
             <Text onPress = {() => {
               this.updateProfile(this.state.name, this.state.address, this.state.phone, this.state.description);
-              navigate('Profile', {name, address, phone, description});
+              // navigate('Profile', {name, address, phone, description});
             }}
               style={styles.buttonOpaque}
               textDecorationLine={'underline'}>
